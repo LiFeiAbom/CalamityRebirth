@@ -1,0 +1,1323 @@
+Buffs: {
+	Afflicted: {
+		DisplayName: Afflicted
+		Description: Empowered by otherworldly spirits
+	}
+
+	ShellBoost: {
+		DisplayName: Shell Boost
+		Description: Moving at greatly increased speed after being hit
+	}
+
+	ElementalMixII: {
+		DisplayName: Elemental Mix II
+		Description: The holographic resonance of four elements is tearing at your existence
+	}
+
+	DaybreakII: {
+		DisplayName: Daybreak II
+		Description: Rays of the blazing sun burn without restraint
+	}
+
+	ElectrifiedII: {
+		DisplayName: Electrified II
+		Description: High-voltage arcs tear through body and armor
+	}
+
+	BurningIII: {
+		DisplayName: Burning III
+		Description: Never extinguished; all things turn to ash
+	}
+
+	YharimPower: {
+		DisplayName: Yharim's Power
+		Description: You feel like you can break the world in two...with your bare hands!
+	}
+
+	TequilaSunriseBuff: {
+		DisplayName: Tequila Sunrise
+		Description: Increases damage, critical strike chance, damage reduction, and knockback; further increases defense during the day; greatly reduces life regeneration and increases alcohol level
+	}
+
+	AlcoholPoisoning: {
+		DisplayName: Alcohol Poisoning
+		Description: Too much alcohol is eating away at your life
+	}
+
+	ShadowflameII: {
+		DisplayName: Shadowflame II
+		Description: Shadowfire is consuming your life
+	}
+
+	AbyssalWish: {
+		DisplayName: Abyssal Wish
+		Description: You can breathe underwater, even within the Abyss
+	}
+
+	FungalClumpBuff: {
+		DisplayName: Fungal Clump
+		Description: A fungal clump is protecting you
+	}
+
+	ArmorCrumbling: {
+		DisplayName: Armor Crumbling
+		Description: Attacks shatter enemy armor
+	}
+
+	ArmorShattering: {
+		DisplayName: Armor Shattering
+		Description: Attacks shatter enemy armor
+	}
+
+	Bounding: {
+		DisplayName: Bounding
+		Description: Increases jump height and speed and reduces fall damage
+	}
+
+	Cadence: {
+		DisplayName: Cadence
+		Description: Improves life, pickup, shop discount, and aggro effects
+	}
+
+	Calcium: {
+		DisplayName: Calcium
+		Description: Grants immunity to fall damage
+	}
+
+	CeaselessHunger: {
+		DisplayName: Ceaseless Hunger
+		Description: Pulls in all dropped items
+	}
+
+	HolyWrath: {
+		DisplayName: Holy Wrath
+		Description: Increases damage and mobility and inflicts holy flames
+	}
+
+	Photosynthesis: {
+		DisplayName: Photosynthesis
+		Description: Rapidly regenerates life while stationary, especially during the day; hearts heal more
+	}
+
+	ProfanedRage: {
+		DisplayName: Profaned Rage
+		Description: Increases critical strike chance and movement speed
+	}
+
+	Revivify: {
+		DisplayName: Revivify
+		Description: Damage taken restores a small amount of life
+	}
+
+	Soaring: {
+		DisplayName: Soaring
+		Description: Increases wing time and horizontal flight
+	}
+
+	TitanScale: {
+		DisplayName: Titan Scale
+		Description: Increases knockback resistance, defense, and damage reduction
+	}
+
+	Triumph: {
+		DisplayName: Triumph
+		Description: Reduces contact damage based on the attacker's remaining life
+	}
+
+	BloodyMaryBuff: {
+		DisplayName: Bloody Mary
+		Description: Greatly increases offense and mobility while reducing defense and regeneration
+	}
+
+	CaribbeanRumBuff: {
+		DisplayName: Caribbean Rum
+		Description: Increases regeneration and movement while reducing current defense and granting float
+	}
+
+	MoonshineBuff: {
+		DisplayName: Moonshine
+		Description: Increases defense and damage reduction while reducing regeneration
+	}
+
+	MoscowMuleBuff: {
+		DisplayName: Moscow Mule
+		Description: Increases damage, critical strike chance, and knockback while reducing regeneration
+	}
+
+	RumBuff: {
+		DisplayName: Rum
+		Description: Increases regeneration and movement while reducing defense
+	}
+
+	VodkaBuff: {
+		DisplayName: Vodka
+		Description: Increases damage and critical strike chance while reducing defense and regeneration
+	}
+}
+
+Conditions.ProvidenceDowned: Providence has been defeated
+
+Configs: {
+	VanillaNerfRevertConfig: {
+		DisplayName: Vanilla Nerf Reverts
+		Headers.Gameplay: Gameplay
+
+		RevertVanillaNerfs: {
+			Label: Revert Classic Calamity's Vanilla Nerfs
+			Tooltip:
+				'''
+				Only applies to CalamityModClassicPreTrailer 1.4.2.101 and CalRD 1.4.5.7.
+				Restores reduced vanilla weapon damage, Old One's Army armor stats, the Worm Scarf, Ice Barrier, Nebula buffs, vanilla ranged projectiles, and Revengeance run speed.
+				Requires a mod reload after changing.
+				Default: Off.
+				'''
+		}
+	}
+}
+
+Items: {
+	CelestialOnion: {
+		DisplayName: Celestial Onion
+		Tooltip:
+			'''
+			Grants an additional accessory slot
+			Consuming it does something that cannot be reversed
+			'''
+	}
+
+	AncientAuricWings: {
+		DisplayName: Burnished Auric Wings
+		Tooltip:
+			'''
+			Absolutely Fabulous
+			8% increased damage
+			8% increased critical strike chance
+			8% increased melee attack speed
+			8% damage reduction
+			Horizontal speed: 12
+			Acceleration multiplier: 3
+			Flight time: 400
+			Excellent vertical speed
+			Immunity to fall damage
+			'''
+	}
+
+	BadgeofBravery: {
+		DisplayName: Badge of Bravery
+		Tooltip:
+			'''
+			Increases melee damage and critical strike chance by 10%
+			Increases melee armor penetration by 10
+			'''
+	}
+
+	NecklaceofVexation: {
+		DisplayName: Necklace of Vexation
+		Tooltip:
+			'''
+			Up to 30% increased damage the lower your life is
+			All attacks inflict Venom
+			Revenge
+			'''
+	}
+
+	YharimsInsignia: {
+		DisplayName: Yharim's Insignia
+		Tooltip:
+			'''
+			15% increased melee damage
+			10% increased melee critical strike chance
+			15% increased melee attack speed
+			10% increased damage while below 50% life
+			Increased melee knockback
+			Increased invincibility after taking damage
+			Temporary immunity to lava
+			Melee attacks and melee projectiles inflict holy fire
+			'''
+	}
+
+	ElementalGauntlet: {
+		DisplayName: Elemental Gauntlet
+		Tooltip:
+			'''
+			20% increased melee damage, critical strike chance, and attack speed
+			Allows autoswing for melee weapons and whips
+			Increases melee knockback and melee weapon size
+			Increased invincibility after taking damage
+			Temporary immunity to lava
+			Melee attacks and melee projectiles inflict Elemental Mix II
+			'''
+	}
+
+	WarriorEmblemEX: {
+		DisplayName: Warrior Emblem EX
+		Tooltip:
+			'''
+			18% increased melee damage
+			8% increased melee critical strike chance
+			12% increased melee attack speed
+			Melee hits inflict Burning III
+			'''
+	}
+
+	FireGauntletEX: {
+		DisplayName: Fire Gauntlet EX
+		Tooltip:
+			'''
+			22% increased melee damage
+			22% increased melee critical strike chance
+			22% increased melee attack speed
+			+400 aggro
+			Increases melee knockback and melee weapon size by 10%
+			Allows autoswing for melee weapons and whips
+			Grants the effects of the Fire Gauntlet and Celestial Shell
+			Melee hits inflict Burning III
+			Melee hits inflict Daybreak II
+			'''
+	}
+
+	RangerEmblemEX: {
+		DisplayName: Ranger Emblem EX
+		Tooltip:
+			'''
+			18% increased ranged damage
+			8% increased ranged critical strike chance
+			12% increased ranged attack speed
+			8% increased ammo velocity
+			20% chance not to consume ammo
+			'''
+	}
+
+	DaedalusEmblem: {
+		DisplayName: Daedalus Emblem
+		Tooltip:
+			'''
+			15% increased ranged damage
+			10% increased ranged critical strike chance
+			20% chance not to consume ammo
+			Increases life regeneration, minion knockback, defense, and mining speed
+			'''
+	}
+
+	ElementalQuiver: {
+		DisplayName: Elemental Quiver
+		Tooltip:
+			'''
+			20% increased ranged damage
+			20% increased ranged critical strike chance
+			+5 defense
+			+1 HP/s life regeneration
+			Increases minion knockback by 0.5
+			15% increased mining speed
+			20% chance not to consume ammo
+			Arrows have a small chance to split into two mirrored arrows
+			Non-arrow ranged projectiles deal 5% more final damage
+			'''
+	}
+
+	SniperScopeEX: {
+		DisplayName: Sniper Scope EX
+		Tooltip:
+			'''
+			22% increased ranged damage
+			22% increased ranged critical strike chance
+			22% increased ranged attack speed
+			22% increased ranged projectile velocity
+			40% chance not to consume ammo
+			-400 aggro
+			Grants the remaining effects of the Molten Quiver and the Stalker's Quiver
+			Grants the Rifle Scope's zoom while visible
+			'''
+	}
+
+	SorcererEmblemEX: {
+		DisplayName: Sorcerer Emblem EX
+		Tooltip:
+			'''
+			18% increased magic damage
+			8% increased magic critical strike chance
+			12% increased cast speed
+			+100 maximum mana
+			+2 mana per second
+			10% reduced mana cost
+			'''
+	}
+
+	CelestialEmblemEX: {
+		DisplayName: Celestial Emblem EX
+		Tooltip:
+			'''
+			22% increased magic damage
+			22% increased magic critical strike chance
+			22% increased cast speed
+			+200 maximum mana
+			+4 mana per second
+			40% reduced mana cost
+			Immune to Mana Sickness
+			Grants the effects of the Arcane Flower, Celestial Cuffs, and Mana Cloak
+			'''
+	}
+
+	EtherealTalisman: {
+		DisplayName: Ethereal Talisman
+		Tooltip:
+			'''
+			20% increased magic damage
+			20% increased magic critical strike chance
+			+150 maximum mana
+			20% reduced mana cost
+			Reveals treasure locations
+			Reduces the cooldown of healing potions
+			Automatically uses mana potions when needed
+			'''
+	}
+
+	SigilofCalamitas: {
+		DisplayName: Sigil of Calamitas
+		Tooltip:
+			'''
+			15% increased magic damage
+			10% increased magic critical strike chance
+			+100 maximum mana
+			15% reduced mana cost
+			Reveals treasure locations
+			Reduces the cooldown of healing potions
+			'''
+	}
+
+	ChaosAmulet: {
+		DisplayName: Chaos Amulet
+		Tooltip:
+			'''
+			+1 HP/s life regeneration
+			2% increased magic damage
+			2% increased magic critical strike chance
+			+20 maximum mana
+			Reveals treasure locations
+			'''
+	}
+
+	TheFirstShadowflame: {
+		DisplayName: The First Shadowflame
+		Tooltip:
+			'''
+			+1 minion slot
+			Minion hits inflict Shadowflame
+			'''
+	}
+
+	StatisBlessing: {
+		DisplayName: Statis' Blessing
+		Tooltip:
+			'''
+			+3 minion slots
+			10% increased summon damage
+			+2.5 summon knockback
+			Summon attacks inflict Temporal Sadness
+			'''
+	}
+
+	StatisCurse: {
+		DisplayName: Statis' Curse
+		Tooltip:
+			'''
+			+3 minion slots
+			10% increased summon damage
+			+2.5 summon knockback
+			10% increased whip range and attack speed
+			Summon attacks inflict Temporal Sadness and Shadowflame
+			'''
+	}
+
+	StatisBeltOfCurses: {
+		DisplayName: Statis' Belt of Curses
+		Tooltip:
+			'''
+			+4 minion slots
+			20% increased summon damage
+			+2.5 summon knockback
+			20% increased whip range and attack speed
+			20% increased rogue damage and critical strike chance
+			Summon attacks inflict Temporal Sadness and Shadowflame
+			Allows continuous jumping, wall climbing, dashing, and dodging
+			'''
+	}
+
+	SummonerEmblemEX: {
+		DisplayName: Summoner Emblem EX
+		Tooltip:
+			'''
+			18% increased summon damage
+			+2 minion slots
+			+1 sentry slot
+			12% increased whip attack speed
+			12% increased whip range
+			24% increased summon knockback
+			Summon damage ignores 10% of target defense
+			'''
+	}
+
+	PapyrusScarabEX: {
+		DisplayName: Papyrus Scarab EX
+		Tooltip:
+			'''
+			22% increased summon damage
+			22% increased whip attack speed
+			22% increased whip range
+			+4 minion slots
+			+1 sentry slot
+			44% increased summon knockback
+			Summon damage ignores 30% of target defense
+			'''
+	}
+
+	RogueEmblemEX: {
+		DisplayName: Rogue Emblem EX
+		Tooltip:
+			'''
+			18% increased rogue damage
+			8% increased rogue critical strike chance
+			12% increased rogue weapon attack speed
+			+60 maximum stealth
+			Stealth strikes consume only 75% of maximum stealth
+			5% increased stealth regeneration speed
+			An additional 5% increased stealth regeneration speed while standing still
+			'''
+	}
+
+	CrystalSkull: {
+		DisplayName: Crystal Skull
+		Tooltip:
+			'''
+			+120 maximum stealth
+			+22% rogue damage
+			+22% rogue critical strike chance
+			+22% rogue attack speed
+			+10% stealth regeneration speed
+			Stealth strikes consume only 50% of maximum stealth
+			Rogue attacks have a 10% chance to call down lightning
+			Lightning inflicts Electrified II
+			Grants the effects of the Electrician's Glove
+			Stealth strikes summon electric sparks that deal 95 base damage each
+			Electrified II enemies: take 5% more damage, lose 5 defense, and lose 125 life per second
+			Electrified II players: lose 15 defense and 30 life per second
+			'''
+	}
+
+	CoinofDeceit: {
+		DisplayName: Coin of Deceit
+		Tooltip:
+			'''
+			3% increased rogue damage
+			3% increased rogue critical strike chance
+			Stealth strikes consume only 75% of maximum stealth
+			'''
+	}
+
+	RuinMedallion: {
+		DisplayName: Ruin Medallion
+		Tooltip:
+			'''
+			4% increased rogue damage
+			4% increased rogue critical strike chance
+			+10 maximum stealth
+			Stealth strikes consume only 50% of maximum stealth
+			'''
+	}
+
+	SilencingSheath: {
+		DisplayName: Silencing Sheath
+		Tooltip:
+			'''
+			2% increased rogue damage
+			2% increased rogue critical strike chance
+			+20 maximum stealth
+			15% increased stealth regeneration while standing and moving
+			'''
+	}
+
+	MirageMirror: {
+		DisplayName: Mirage Mirror
+		Tooltip:
+			'''
+			2% increased rogue damage
+			2% increased rogue critical strike chance
+			+15 maximum stealth
+			30% increased standing stealth regeneration
+			20% increased moving stealth regeneration
+			-200 aggro
+			'''
+	}
+
+	AbyssalMirror: {
+		DisplayName: Abyssal Mirror
+		Tooltip:
+			'''
+			5% increased rogue damage
+			5% increased rogue critical strike chance
+			+20 maximum stealth
+			Increases standing and moving stealth regeneration by 30% and 20%
+			-450 aggro
+			Grants a dodge that restores 50% stealth
+			'''
+	}
+
+	DarkMatterSheath: {
+		DisplayName: Dark Matter Sheath
+		Tooltip:
+			'''
+			6% increased rogue damage
+			6% increased rogue critical strike chance
+			+20 maximum stealth
+			Stealth strikes consume 50% maximum stealth and always critically strike
+			Accelerates stealth regeneration while moving
+			'''
+	}
+
+	EclipseMirror: {
+		DisplayName: Eclipse Mirror
+		Tooltip:
+			'''
+			10% increased rogue damage
+			10% increased rogue critical strike chance
+			+25 maximum stealth
+			20% increased standing stealth regeneration
+			Accelerates stealth regeneration while moving
+			Stealth strikes consume 50% maximum stealth and always critically strike
+			-700 aggro
+			Grants a light-burst dodge that restores all stealth
+			'''
+	}
+
+	Nanotech: {
+		DisplayName: Nanotech
+		Tooltip:
+			'''
+			20% increased rogue damage
+			20% increased rogue critical strike chance
+			15% increased rogue projectile velocity
+			+30 defense and 10% damage reduction while holding a rogue weapon
+			Rogue projectiles leave nanoblades as they travel
+			Stealth strikes gain 20 armor penetration, 5% final damage, healing, and nanotech flares
+			'''
+	}
+
+	YharimsStimulants: {
+		DisplayName: Yharim's Stimulants
+		Tooltip: Gives decent buffs to all offensive and defensive stats
+	}
+
+	TequilaSunrise: {
+		DisplayName: Tequila Sunrise
+		Tooltip:
+			'''
+			3% increased all damage, 2 increased critical strike chance, 3% increased damage reduction and knockback
+			During the day: an additional 7% increased all damage, 3 increased critical strike chance, 10 defense, 7% increased damage reduction and knockback
+			Greatly reduces life regeneration
+			Increases alcohol level by 1
+			'''
+	}
+
+	AbyssalElixir: {
+		DisplayName: Abyssal Elixir
+		Tooltip: Grants underwater breathing, even in the Abyss, for 3 minutes
+	}
+
+	BoundingPotion: {
+		DisplayName: Bounding Potion
+		Tooltip: Increases jump height, jump speed, and fall resistance
+	}
+
+	CadencePotion: {
+		DisplayName: Cadence Potion
+		Tooltip:
+			'''
+			Reduces shop prices and enemy aggro
+			Increases life regeneration, heart pickup range, and maximum life
+			'''
+	}
+
+	CalciumPotion: {
+		DisplayName: Calcium Potion
+		Tooltip: Grants immunity to fall damage for 10 minutes
+	}
+
+	CeaselessHungerPotion: {
+		DisplayName: Ceaseless Hunger Potion
+		Tooltip: Pulls in all dropped items for 10 seconds
+	}
+
+	CrumblingPotion: {
+		DisplayName: Crumbling Potion
+		Tooltip:
+			'''
+			5% increased critical strike chance
+			Attacks shatter enemy armor
+			'''
+	}
+
+	HolyWrathPotion: {
+		DisplayName: Holy Wrath Potion
+		Tooltip:
+			'''
+			12% increased damage
+			5% increased movement speed
+			Attacks inflict holy flames
+			'''
+	}
+
+	PhotosynthesisPotion: {
+		DisplayName: Photosynthesis Potion
+		Tooltip:
+			'''
+			Rapidly regenerates life while stationary, five times stronger during the day
+			Hearts heal more
+			'''
+	}
+
+	ProfanedRagePotion: {
+		DisplayName: Profaned Rage Potion
+		Tooltip: 12% increased critical strike chance and 5% increased movement speed
+	}
+
+	RevivifyPotion: {
+		DisplayName: Revivify Potion
+		Tooltip: Damage taken restores one fifteenth of the damage as life
+	}
+
+	ShatteringPotion: {
+		DisplayName: Shattering Potion
+		Tooltip:
+			'''
+			8% increased all damage and critical strike chance
+			Attacks shatter enemy armor
+			'''
+	}
+
+	SoaringPotion: {
+		DisplayName: Soaring Potion
+		Tooltip: 10% increased wing time and horizontal flight
+	}
+
+	TitanScalePotion: {
+		DisplayName: Titan Scale Potion
+		Tooltip: Increased knockback resistance, +5 defense, and +5% damage reduction
+	}
+
+	TriumphPotion: {
+		DisplayName: Triumph Potion
+		Tooltip: Reduces contact damage, scaling with the enemy's missing life
+	}
+
+	BloodyMary: {
+		DisplayName: Bloody Mary
+		Tooltip:
+			'''
+			15% increased damage and 5 increased critical strike chance
+			15% increased melee attack speed and movement speed
+			4 reduced defense and damage reduction
+			Greatly reduces life regeneration
+			Increases spawn rate and maximum spawns by ten during a Blood Moon
+			'''
+	}
+
+	CaribbeanRum: {
+		DisplayName: Caribbean Rum
+		Tooltip:
+			'''
+			Increases life regeneration and movement speed
+			Reduces current defense by 10% and grants float
+			'''
+	}
+
+	Moonshine: {
+		DisplayName: Moonshine
+		Tooltip: +10 defense, +3% damage reduction, and reduced life regeneration
+	}
+
+	MoscowMule: {
+		DisplayName: Moscow Mule
+		Tooltip: +9% damage, +3 critical strike chance, +50% knockback, and reduced life regeneration
+	}
+
+	Rum: {
+		DisplayName: Rum
+		Tooltip: Increases life regeneration and movement speed and reduces defense by 8
+	}
+
+	Vodka: {
+		DisplayName: Vodka
+		Tooltip: +6% damage, +2 critical strike chance, -5 defense, and reduced life regeneration
+	}
+
+	GalacticaSingularity: {
+		DisplayName: Galactica Singularity
+		Tooltip: A lategame material condensed from the four lunar fragments
+	}
+
+	BiomeBlade: {
+		DisplayName: Biome Blade
+		Tooltip: Fires a projectile that changes color based on your current biome
+	}
+
+	TrueBiomeBlade: {
+		DisplayName: True Biome Blade
+		Tooltip: Fires enhanced biome orbs that home in on nearby enemies
+	}
+
+	OmegaBiomeBlade: {
+		DisplayName: Omega Biome Blade
+		Tooltip:
+			'''
+			Scatters five short-range homing biome orbs
+			Lunar pillar biomes and moon events alter their effects
+			'''
+	}
+
+	FourSeasonsGalaxia: {
+		DisplayName: Four Seasons Galaxia
+		Tooltip:
+			'''
+			Fires a highly homing Galaxia orb
+			Projectiles inflict different debuffs based on your biome
+			Hits grant buffs based on your biome and moon events
+			'''
+	}
+
+	ArkoftheAncients: {
+		DisplayName: Ark of the Ancients
+		Tooltip: Alternates between Eon Beams and Enchanted Beams while calling down hallowed stars
+	}
+
+	TrueArkoftheAncients: {
+		DisplayName: True Ark of the Ancients
+		Tooltip: Calls down empowered Eon Beams, hallowed stars, and homing terra balls
+	}
+
+	ArkoftheElements: {
+		DisplayName: Ark of the Elements
+		Tooltip: Fires an Eon Beam and four homing elemental orbs that inflict multiple elemental debuffs
+	}
+
+	ArkoftheCosmos: {
+		DisplayName: Ark of the Cosmos
+		Tooltip:
+			'''
+			Fires an Eon Beam alongside four full-damage Galaxia orbs
+			Projectiles inflict different debuffs based on your biome
+			Hits grant buffs based on your biome and moon events
+			'''
+	}
+
+	Ataraxia: {
+		DisplayName: Ataraxia
+		Tooltip:
+			'''
+			Fires a main missile and two side missiles when swung
+			The main missile creates a small explosion on hit
+			Side missiles split into six needle projectiles on hit
+			Melee strikes trigger a large explosion and a petal pattern
+			Hits inflict Shadowflame
+			'''
+	}
+
+	DarkSunRing: {
+		DisplayName: Dark Sun Ring
+		Tooltip:
+			'''
+			12% increased damage, minion knockback, and melee attack speed
+			5% increased critical strike chance
+			+0.5 HP/s life regeneration, 15% increased mining speed, and +2 max minions
+			During the day, grants an additional +1.5 HP/s life regeneration
+			During the night, grants +30 defense
+			Both bonuses are granted during an eclipse
+			"Contains the power of the dark sun"
+			'''
+	}
+
+	RottenBrain: {
+		DisplayName: Rotten Brain
+		Tooltip:
+			'''
+			15% increased damage when below 75% life
+			5% decreased movement speed when below 50% life
+			Shade rains down while invincible after being hit
+			'''
+	}
+
+	AmalgamatedBrain: {
+		DisplayName: Amalgamated Brain
+		Tooltip:
+			'''
+			10% increased all damage and 5% critical strike chance
+			Shade rains down while invincible after being hit
+			Confuses nearby enemies when you are struck
+			10% chance to completely dodge attacks
+			'''
+	}
+
+	CalamityRing: {
+		DisplayName: Calamity Ring
+		Tooltip:
+			'''
+			Cursed?
+			15% increased damage
+			Brimstone fire rains down while invincibility is active
+			'''
+	}
+
+	Gehenna: {
+		DisplayName: Gehenna
+		Tooltip: Drops brimstone fireballs from the sky periodically
+	}
+
+	VoidofExtinction: {
+		DisplayName: Void of Extinction
+		Tooltip:
+			'''
+			No longer cursed
+			Drops brimstone fireballs from the sky periodically
+			15% increased damage
+			Brimstone fire rains down while invincibility is active
+			Temporary immunity to lava and 25% increased damage while in lava
+			'''
+	}
+
+	FungalClump: {
+		DisplayName: Fungal Clump
+		Tooltip:
+			'''
+			Summons a fungal clump to fight for you
+			The clump latches onto enemies and steals their life for you
+			'''
+	}
+
+	LeviathanAmbergris: {
+		DisplayName: Leviathan Ambergris
+		Tooltip:
+			'''
+			Leaves poisonous seawater behind while moving
+			75% increased movement speed, 10% increased damage, and +20 defense while submerged
+			Grants a damaging aura after being hit while submerged
+			+5% damage and damage reduction while outside liquids
+			'''
+	}
+
+	TheAmalgam: {
+		DisplayName: The Amalgam
+		Tooltip:
+			'''
+			20% increased all damage and 10% increased critical strike chance
+			Shade and brimstone fire rain down while invincibility is active
+			Confuses nearby enemies when you are struck
+			Drops brimstone fireballs from the sky periodically
+			25% increased damage while in lava and temporary immunity to lava
+			Summons a powerful fungal clump to fight for you
+			75% increased movement speed, 10% increased damage, and +40 defense while submerged
+			Has a 1/8 chance to completely dodge attacks
+			'''
+	}
+
+	CoreOfTheBloodGod: {
+		DisplayName: Core of the Blood God
+		Tooltip:
+			'''
+			10% increased maximum life
+			10% increased damage reduction
+			12% increased all damage and critical strike chance
+			12% increased melee attack speed
+			15% increased damage while defense is below 100
+			Halves enemy contact damage
+			This effect has a 20 second cooldown after taking contact damage
+			You are surrounded by a damaging life-draining aura
+			'''
+	}
+
+	BloodflareCore: {
+		DisplayName: Bloodflare Core
+		Tooltip:
+			'''
+			You are surrounded by a damaging life-draining aura
+			Below 50% life: 15% increased damage reduction and 10% increased all damage and critical strike chance
+			Below 15% life: 20% increased damage reduction and 20% increased all damage and critical strike chance
+			15% increased damage while defense is below 100
+			'''
+	}
+
+	BloodPact: {
+		DisplayName: Blood Pact
+		Tooltip:
+			'''
+			Doubles your maximum life
+			You have a 25% chance to be critically hit
+			'''
+	}
+
+	FleshTotem: {
+		DisplayName: Flesh Totem
+		Tooltip:
+			'''
+			Halves enemy contact damage
+			This effect has a 20 second cooldown after taking contact damage
+			'''
+	}
+
+	BloodyWormScarf: {
+		DisplayName: Bloody Worm Scarf
+		Tooltip:
+			'''
+			10% increased melee damage
+			10% increased melee attack speed
+			10% increased damage reduction
+			'''
+	}
+
+	BloodyWormTooth: {
+		DisplayName: Bloody Worm Tooth
+		Tooltip:
+			'''
+			5% increased melee damage, melee attack speed, and damage reduction
+			10% increased melee damage, melee attack speed, and damage reduction below 50% life
+			'''
+	}
+
+	CrownJewel: {
+		DisplayName: Crown Jewel
+		Tooltip:
+			'''
+			Increases life regeneration by 1 HP/s
+			While afflicted by any listed combat debuff, regeneration rises to 2.5 HP/s and accumulates much faster
+			'''
+	}
+
+	InfectedJewel: {
+		DisplayName: Infected Jewel
+		Tooltip:
+			'''
+			Increases life regeneration by 1 HP/s
+			While afflicted by any listed combat debuff, regeneration rises to 3 HP/s and accumulates much faster
+			Grants 5 extra defense per additional debuff, starting at 16 for the first, and loses 1 per second after debuffs fall off
+			'''
+	}
+
+	Purity: {
+		DisplayName: Purity
+		Tooltip:
+			'''
+			Increases maximum life by 100
+			Grants immunity to knockback
+			Inherits the ancient Ambrosial Ampoule's honey regeneration and debuff-duration reduction
+			Grants more life regeneration the lower your life is, from 3 HP/s at full to 7 HP/s when empty
+			Grants 8 extra defense per additional debuff, starting at 20 for the first, and loses 1 per second after debuffs fall off
+			Heals while debuffed, but the healing interval lengthens the longer the debuffs persist
+			Greatly reduces damage from persistent combat debuffs
+			'''
+	}
+
+	FrigidBulwark: {
+		DisplayName: Frigid Bulwark
+		Tooltip:
+			'''
+			Absorbs 25% of damage done to players on your team
+			Only active above 25% life
+			Grants immunity to knockback
+			Puts a damage-reducing shell around the owner below 50% life
+			Damage reduction is increased by a further 5% below 15% life
+			'''
+	}
+
+	DeificAmulet: {
+		DisplayName: Deific Amulet
+		Tooltip:
+			'''
+			Taking damage makes you move very fast for a short time
+			Increases armor penetration by 25 and immune time after being struck
+			Provides light underwater and causes three holy stars to fall when damaged
+			Increases pickup range for mana stars and restores mana when damaged
+			'''
+	}
+
+	RampartofDeities: {
+		DisplayName: Rampart of Deities
+		Tooltip:
+			'''
+			Taking damage makes you move very fast for a short time
+			Increases armor penetration by 50 and immune time after being struck
+			Provides light underwater and causes six holy stars to fall when damaged
+			Increases pickup range for mana stars and restores mana when damaged
+			Absorbs 25% of damage done to players on your team
+			Only active above 25% life
+			Grants immunity to knockback
+			Puts a damage-reducing shell around the owner below 50% life
+			Damage reduction is increased by a further 5% below 15% life
+			'''
+	}
+
+	AsgardianAegis: {
+		DisplayName: Asgardian Aegis
+		Tooltip:
+			'''
+			Allows a ram dash empowered by cosmic inferno
+			The dash can slam through enemies without taking damage
+			Increases maximum life by 40 and life regeneration by 2.5 HP/s
+			Grants immunity to knockback, lava and fire
+			Grants immunity to the vast majority of debuffs, including God Slayer Inferno
+			Grants 12% damage reduction while submerged in liquid
+			Grants 10 defense while below 25% life
+			'''
+	}
+
+	AsgardsValor: {
+		DisplayName: Asgard's Valor
+		Tooltip:
+			'''
+			Allows the ability to ram dash
+			The dash can slam through enemies without taking damage
+			Increases maximum life by 50
+			Grants immunity to knockback, lava and fire
+			Grants immunity to most debuffs, including most forms of frost and flame
+			Grants 12% damage reduction while submerged in liquid
+			'''
+	}
+
+	OrnateShield: {
+		DisplayName: Ornate Shield
+		Tooltip:
+			'''
+			Allows a frost ram dash
+			The dash slams through enemies without taking damage
+			Increases life regeneration by 1 HP/s and maximum life by 20
+			Grants 4 defense below 25% life
+			'''
+	}
+
+	ShieldoftheOcean: {
+		DisplayName: Shield of the Ocean
+		Tooltip: Increases defense by 5 while submerged in liquid
+	}
+
+	Abaddon: {
+		DisplayName: Abaddon
+		Tooltip:
+			'''
+			Increases critical strike chance by 8%
+			Projectile critical strikes create a brimstone explosion
+			Grants immunity to Brimstone Flames
+			'''
+	}
+
+	ElysianAegis: {
+		DisplayName: Elysian Aegis
+		Tooltip:
+			'''
+			Allows a holy-flame ram dash
+			The dash slams through enemies without taking damage
+			Increases maximum life by 30 and life regeneration by 1.5 HP/s
+			Grants immunity to knockback, lava and fire
+			Grants immunity to most fire debuffs, including Holy Flames and Daybreak
+			Press [KEY] to toggle the guardian stance
+			The stance drains shield charge into damage, critical strike chance, aggro and defense at the cost of movement speed
+			'''
+	}
+
+	Affliction: {
+		DisplayName: Affliction
+		Tooltip:
+			'''
+			Gives you and all other players on your team powerful buffs and grants immunity to knockback
+			Increases all damage by 15%
+			Increases maximum life by 20%
+			Increases defense by 45
+			Increases damage reduction by 8%
+			Increases life regeneration by 4 HP/s
+			'''
+	}
+
+	AncientFossil: {
+		DisplayName: Ancient Fossil
+		Tooltip: Increases mining speed by 35% while underground or in the cavern layer
+	}
+
+	ArchaicPowder: {
+		DisplayName: Archaic Powder
+		Tooltip:
+			'''
+			Grants 3 defense and 7% damage reduction underground, in caverns, or in the Underworld
+			Greatly increases mining speed in those layers
+			'''
+	}
+
+	CorruptFlask: {
+		DisplayName: Corrupt Flask
+		Tooltip: Grants 3 defense and 7% damage reduction in the Corruption
+	}
+
+	CrimsonFlask: {
+		DisplayName: Crimson Flask
+		Tooltip: Grants 3 defense and 7% damage reduction in the Crimson
+	}
+
+	RadiantOoze: {
+		DisplayName: Radiant Ooze
+		Tooltip: Emits warm light and increases life regeneration at night
+	}
+
+	LivingDew: {
+		DisplayName: Living Dew
+		Tooltip: Increases life regeneration, defense, and damage reduction in the Jungle
+	}
+
+	HoneyDew: {
+		DisplayName: Honey Dew
+		Tooltip:
+			'''
+			Increases life regeneration, defense, and damage reduction in the Jungle
+			Grants immunity to Poison and Venom and provides honey-like regeneration
+			Most bee and hornet projectiles deal only 75% damage
+			'''
+	}
+
+	AmbrosialAmpoule: {
+		DisplayName: Ambrosial Ampoule
+		Tooltip:
+			'''
+			Increases damage reduction by 12% and greatly increases mining speed
+			Emits light and provides honey-like life regeneration
+			Grants immunity to Poison, Venom, Frozen, Chilled, and both Frostburn debuffs
+			Most bee and hornet projectiles deal only 75% damage
+			'''
+	}
+
+	ManaJelly: {
+		DisplayName: Mana Jelly
+		Tooltip: Increases maximum mana by 20 and mana regeneration while standing still
+	}
+
+	LifeJelly: {
+		DisplayName: Life Jelly
+		Tooltip: Increases maximum life by 20 and life regeneration while standing still
+	}
+
+	VitalJelly: {
+		DisplayName: Vital Jelly
+		Tooltip: Increases movement speed by 10% and jump speed by 100%
+	}
+
+	GrandGelatin: {
+		DisplayName: Grand Gelatin
+		Tooltip:
+			'''
+			Increases movement speed by 10% and jump speed by 100%
+			Increases maximum life and mana by 20
+			Boosts life and mana regeneration while standing still
+			'''
+	}
+
+	SeaShell: {
+		DisplayName: Sea Shell
+		Tooltip: Increases defense, damage reduction, and movement speed while submerged
+	}
+
+	CrawCarapace: {
+		DisplayName: Craw Carapace
+		Tooltip: Increases damage reduction by 5% and damages enemies on contact
+	}
+
+	FungalCarapace: {
+		DisplayName: Fungal Carapace
+		Tooltip: Releases a mushroom spore explosion when hit
+	}
+
+	GiantTortoiseShell: {
+		DisplayName: Giant Tortoise Shell
+		Tooltip: Reduces movement speed by 10% and damages enemies on contact
+	}
+
+	AmidiasSpark: {
+		DisplayName: Amidias' Spark
+		Tooltip: Releases a burst of sparks when damaged; stronger in Hardmode
+	}
+
+	GiantShell: {
+		DisplayName: Giant Shell
+		Tooltip: Reduces movement speed by 15% and grants a burst of speed when hit
+	}
+
+	TheAbsorber: {
+		DisplayName: The Absorber
+		Tooltip:
+			'''
+			Increases movement speed by 12% and jump speed by 120%
+			Increases maximum life by 30 and maximum mana by 20
+			Boosts life and mana regeneration while standing still
+			Grants defense, damage reduction, movement speed, and water resistance while submerged
+			Damages enemies on contact and grants a burst of speed when hit
+			Releases sparks and truffle spores when hit
+			Increases damage reduction by 6% and converts part of incoming damage into healing
+			'''
+	}
+
+	Sponge: {
+		DisplayName: Sponge
+		Tooltip:
+			'''
+			Increases mining speed by 50% and emits light
+			Increases damage reduction by 18% and life regeneration
+			Grants immunity to Poison, Venom, Frozen, Chilled, and both Frostburn debuffs
+			Provides honey-like regeneration without its movement penalty
+			Most bee and hornet projectiles deal only 75% damage
+			Increases movement speed by 12% and jump speed by 120%
+			Increases maximum life and mana by 30 and boosts regeneration while standing still
+			Grants defense, damage reduction, movement speed, and water resistance while submerged
+			Damages enemies on contact and grants a burst of speed when hit
+			Releases empowered sparks and truffle spores when hit
+			Converts part of incoming damage into healing
+			'''
+	}
+}
+
+Rarities: {
+	WarriorEXRarity.DisplayName: Warrior EX
+	RangerEXRarity.DisplayName: Ranger EX
+	SorcererEXRarity.DisplayName: Sorcerer EX
+	SummonerEXRarity.DisplayName: Summoner EX
+	RogueEXRarity.DisplayName: Rogue EX
+	BurnishedAuricRarity.DisplayName: Burnished Auric
+	PostMoonLordPurpleRarity.DisplayName: Post-Moon Lord Purple
+	CosmicPurpleRarity.DisplayName: Cosmic Purple
+	TurquoiseRarity.DisplayName: Turquoise
+	PureGreenRarity.DisplayName: Pure Green
+	PostMoonLordBlueRarity.DisplayName: Post-Moon Lord Blue
+}
+
+Projectiles: {
+	BiomeOrb.DisplayName: Biome Orb
+	TrueBiomeOrb.DisplayName: True Biome Orb
+	OmegaBiomeOrb.DisplayName: Omega Biome Orb
+	EonBeam.DisplayName: Eon Beam
+	ElementBall.DisplayName: Element Ball
+	TerraBall.DisplayName: Terra Ball
+	Galaxia.DisplayName: Galaxia Orb
+	AtaraxiaMain.DisplayName: Ataraxia Missile
+	AtaraxiaSide.DisplayName: Ataraxia Blade
+	AtaraxiaSplit.DisplayName: Ataraxia Needle
+	AtaraxiaBoom.DisplayName: Ataraxia Blast
+	CrystalSkullLightning.DisplayName: Crystal Skull Lightning
+	CrystalSkullSpark.DisplayName: Crystal Skull Spark
+	AbyssalMirrorProjectile.DisplayName: Abyssal Mirror Projectile
+	EclipseMirrorBurst.DisplayName: Eclipse Mirror Burst
+	NanotechBlade.DisplayName: Nanotech Blade
+	CosmicDashExplosion.DisplayName: Cosmic Dash Explosion
+	HolyExplosionSupreme.DisplayName: Holy Explosion Supreme
+	AbaddonCrit.DisplayName: Brimstone Blast
+	Spark.DisplayName: Spark
+	FungalHeal.DisplayName: Fungal Heal
+	AuraRain.DisplayName: Aura Rain
+	BrimstoneHellfireballFriendly2.DisplayName: Brimstone Hellfireball Friendly2
+	HellfireExplosionFriendly2.DisplayName: Hellfire Explosion Friendly2
+	FungalClumpMinion.DisplayName: Fungal Clump Minion
+	PoisonousSeawater.DisplayName: Poisonous Seawater
+	StandingFire.DisplayName: Standing Fire
+}
+
+Keybinds.Elysian.DisplayName: Elysian Aegis Guardian Stance

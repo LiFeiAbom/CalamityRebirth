@@ -1,0 +1,8 @@
+# Normalize line endings across development environments.
+* text=auto eol=lf
+
+# Binary game assets must never be line-ending converted.
+*.png binary
+*.ogg binary
+*.wav binary
+*.xnb binary

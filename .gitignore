@@ -1,0 +1,33 @@
+# Visual Studio and IDE state
+.vs/
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# .NET and tModLoader build outputs
+bin/
+obj/
+*.tmod
+*.tmod.pdb
+
+# Test, coverage and diagnostic output
+TestResults/
+coverage/
+*.log
+
+# Repository metadata stored outside the protected .git directory
+.git-data/
+.git-empty-initial/
+.git-pointer-initial
+.git-pointer-repodata
+.repodata/
+repodata/
+tmp-remove-git-*/
+
+# OS-generated files
+Thumbs.db
+Desktop.ini
+.DS_Store

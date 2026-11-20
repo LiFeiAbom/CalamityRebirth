@@ -1,0 +1,82 @@
+灾厄重生 / Calamity Rebirth
+将旧版灾厄中具有代表性的内容重新带回现版本，并针对现代灾厄、经典1.4.2.101与CalRD分别适配配方和功能。
+本模组不是旧版灾厄的完整复刻，而是按已实现内容逐步扩展的个人移植项目。部分属性、价格、稀有度、配方与视觉效果经过重新平衡或兼容调整。
+当前版本：0.1.2.4
+【当前已实现内容】
+· BUFF药剂15种：魔君牌兴奋剂、渊洋秘药、弹跳药水、韵律药水、钙质药水、无尽饥饿药水、崩裂药水、神圣之怒药水、光合作用药水、渎神之怒药水、新生药水、粉碎药水、翱翔药水、泰坦之鳞药水、胜利药水
+· 食物与酒类药水7种：血腥玛丽、加勒比朗姆酒、摩闪酒、莫斯科骡子、朗姆酒、龙舌兰日出、伏特加
+· 永久强化：天界洋葱，使用后永久解锁一个额外饰品槽
+· 五职业EX饰品：战士徽章EX、烈火手套EX、游侠徽章EX、狙击镜EX、法师徽章EX、天界纹章EX、召唤师徽章EX、甲虫莎草纸EX、盗贼徽章EX、晶光头骨
+· 进阶饰品链：元素之握、代达罗斯纹章与元素箭袋、空灵护符链、斯塔提斯召唤链、盗贼镜片潜行链与纳米技术
+· 血神核心系列：血神核心、血炎晶核、血契、血肉图腾、血腥蠕虫围巾、血腥蠕虫牙
+· 近战武器：禅心剑（Ataraxia），包含主弹、侧弹、针叶弹、两级爆炸、花瓣粒子与暗影焰
+· 自定义减益：燃烧III、破晓II、触电II、暗影焰II、酒精中毒
+· 酒类拥有独立酒醉等级，超过三级会触发酒精中毒
+· 神圣之怒、崩裂药水与粉碎药水可将灾厄圣焰或破甲减益附加到命中目标
+· 多种自定义稀有度与统一价格体系：战士EX、游侠EX、法师EX、召唤EX、盗贼EX、灼辉金源、宇宙暗紫、绿松石、纯绿
+· 可选的经典灾厄原版削弱回调配置，用于还原部分旧版数值
+作者是一名新手代码师，本模组纯属个人爱好项目，没有开发团队。
+反馈与建议请联系：2815554038@qq.com
+【依赖与兼容】
+本模组使用软依赖，当前适配以下灾厄分支：
+· CalamityMod（现代版）
+· CalamityModClassicPreTrailer 1.4.2.101
+· CalRD 1.4.5.7
+建议一次只启用一个灾厄分支。至少启用一个受支持分支，才能获得完整配方、职业属性和部分高级兼容功能。
+三个分支均未启用时，基础物品仍可加载，但部分配方与功能不可用。
+【当前限制】
+· 当前只包含已经实现的内容，不是完整旧版灾厄回归。
+· 多人和PvP、酒醉等级、宝藏袋条件、三版本配方以及部分持续伤害效果仍需持续测试。
+· 部分现代灾厄自定义稀有度与高阶材料由本模组独立实现，以保持无灾厄环境下的加载稳定性。
+【制作与致谢】
+本模组参考并适配 Calamity Mod 及其旧版内容世系。
+相关内容版权归原作者及贡献者所有。
+【授权说明】
+未经作者许可，请勿重新上传本模组的完整.tmod文件，也不要将本模组中的原创代码或美术单独用于其他公开发布项目。
+允许在注明本模组创意工坊页面并保留完整署名的前提下，将本模组用于整合包、视频和直播内容。
+本说明不改变 Calamity Mod 及其上游内容的原始授权。
+如权利人认为需要补充署名、调整内容或移除素材，请通过邮箱联系作者。
+【反馈】
+报告问题时请尽量提供：模组版本、启用的灾厄分支及版本、单人/多人/PvP环境、复现步骤和tModLoader客户端日志。
+反馈邮箱：2815554038@qq.com
+【English】
+Calamity Rebirth
+Returns selected legacy Calamity content to current tModLoader versions with separate adaptation for modern Calamity, Classic 1.4.2.101, and CalRD.
+This is not a complete restoration of legacy Calamity. It is a personal project expanded one implemented feature at a time. Some stats, prices, rarities, recipes, and visuals have been rebalanced or adapted for compatibility.
+Current version: 0.1.2.4
+[Currently Implemented Content]
+· 15 buff potions: Yharim's Stimulants, Abyssal Elixir, Bounding Potion, Cadence Potion, Calcium Potion, Ceaseless Hunger Potion, Crumbling Potion, Holy Wrath Potion, Photosynthesis Potion, Profaned Rage Potion, Revivify Potion, Shattering Potion, Soaring Potion, Titan Scale Potion, Triumph Potion
+· 7 food and drink potions: Bloody Mary, Caribbean Rum, Moonshine, Moscow Mule, Rum, Tequila Sunrise, Vodka
+· Permanent upgrade: Celestial Onion, which permanently unlocks an additional accessory slot
+· Five-class emblem EX accessories: Warrior Emblem EX, Fire Gauntlet EX, Ranger Emblem EX, Sniper Scope EX, Sorcerer Emblem EX, Celestial Emblem EX, Summoner Emblem EX, Papyrus Scarab EX, Rogue Emblem EX, Crystal Skull
+· Advanced accessory chains: Elemental Gauntlet, Daedalus Emblem and Elemental Quiver, Ethereal Talisman line, Statis summoner line, rogue mirror stealth chain, and Nanotech
+· Blood God Core series: Core of the Blood God, Bloodflare Core, Blood Pact, Flesh Totem, Bloody Worm Scarf, Bloody Worm Tooth
+· Melee weapon: Ataraxia, including main and side projectiles, needles, two explosion stages, petal particles, and Shadowflame
+· Custom debuffs: Burning III, Daybreak II, Electrified II, Shadowflame II, and Alcohol Poisoning
+· Drinks use an independent alcohol level; exceeding level three triggers Alcohol Poisoning
+· Holy Wrath and the Crumbling/Shattering potions can inflict Calamity holy flames or Armor Crunch on hit
+· Custom rarities and a unified pricing system: Warrior EX, Ranger EX, Sorcerer EX, Summoner EX, Rogue EX, Burnished Auric, Cosmic Purple, Turquoise, and Pure Green
+· Optional vanilla nerf reverts for classic Calamity branches
+The author is a beginner programmer. This is a personal hobby project with no development team.
+Feedback: 2815554038@qq.com
+[Requirements and Compatibility]
+This mod uses soft dependencies and supports:
+· CalamityMod (modern version)
+· CalamityModClassicPreTrailer 1.4.2.101
+· CalRD 1.4.5.7
+Enable only one Calamity branch at a time. At least one supported branch is required for all recipes, class stats, and advanced compatibility features.
+Without a supported branch, base items may still load, but some recipes and features will be unavailable.
+[Current Limitations]
+· This version includes only implemented content and is not a complete legacy restoration.
+· Multiplayer, PvP, alcohol levels, treasure bag conditions, three-branch recipes, and several damage-over-time effects still require ongoing testing.
+· Some modern Calamity rarities and high-tier materials are implemented locally to keep the mod loadable without Calamity installed.
+[Credits]
+This mod references and adapts Calamity Mod and its legacy content lineage. All related content remains the property of its original authors and contributors.
+[Licensing]
+Do not re-upload the complete .tmod file or reuse the mod's original code or artwork in other public releases without permission.
+The mod may be used in modpacks, videos, and livestreams provided that the Workshop page is credited and attribution is preserved.
+This notice does not alter the original licensing terms of Calamity Mod or its upstream content.
+If any rights holder believes that attribution should be added, content adjusted, or material removed, please contact the author by email.
+[Feedback]
+When reporting an issue, include the mod version, enabled Calamity branch and version, single-player/multiplayer/PvP environment, reproduction steps, and tModLoader client logs.
+Feedback email: 2815554038@qq.com
