@@ -19,12 +19,7 @@ coverage/
 *.log
 
 # Repository metadata stored outside the protected .git directory
-.git-data/
-.git-empty-initial/
-.git-pointer-initial
-.git-pointer-repodata
-.repodata/
-repodata/
+.git-old-*/
 tmp-remove-git-*/
 
 # OS-generated files
