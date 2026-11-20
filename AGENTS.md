@@ -1,5 +1,5 @@
 # CalamityRebirth — 工程记忆（新会话先读）
-> 最后整理：2026-11-20
+> 最后整理：2026-11-21
 > 当前目标是按用户点名的内容，从 `CalamityExpansion` 与 `CalamityDemutation` 分步移植；不是一次性全量复制。
 > 当前版本：`0.1.2.4`
 > 当前代码规模：219 个手写 C# 文件，空行数 0
@@ -1032,3 +1032,31 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
     `QuiverofNihility`、`RadiantOoze2`、`RoseStone`、`SeraphTracers`、`StatisNinjaBelt`、
     `WifeinaBottle`、`WifeinaBottlewithBoobs`。
 - 用户已要求中止当前任务并新开任务。新会话只读取本快照后等待新指令，不自行继续补链。
+## 13. 2026-11-21 GitHub 仓库封装
+- 本地目录已经是标准 Git 仓库，Git 元数据位于常规 `.git` 目录。
+- GitHub 远端固定为：
+  - `origin`
+  - `https://github.com/LiFeiAbom/CalamityRebirth.git`
+- 当前发布分支为 `master`，本地、`origin/master` 与 GitHub 远端均已对齐。
+- 已建立的提交：
+  - `5f5834f chore: 初始化 CalamityRebirth 仓库`
+  - `4068f78 docs: 补齐仓库说明与协作规范`
+- 当前版本库跟踪 413 个文件，工作区应保持干净。
+- 仓库维护文件：
+  - `README.md`：项目简介、当前内容、兼容环境、构建方式、仓库结构与反馈入口。
+  - `CONTRIBUTING.md`：修改原则、问题报告格式、代码提交与素材要求。
+  - `LICENSE.md`：使用与再分发条款；本仓库不授予开源许可证。
+  - `.editorconfig`：UTF-8、LF、C# 制表符缩进和配置文件空格缩进。
+  - `.gitattributes`：统一文本行尾并保护 PNG、OGG、WAV、XNB 二进制资源。
+- `.gitignore` 固定排除：
+  - `bin/`、`obj/`、`.vs/`、`.idea/`、`.vscode/`。
+  - `*.tmod`、`*.tmod.pdb`、用户文件、测试结果与日志。
+  - `.git-old-*/`、`tmp-remove-git-*/` 等受限会话产生的临时 Git 清理目录。
+- 后续提交前至少检查：
+  - `git status -sb`，不要提交构建缓存、临时目录或敏感凭据。
+  - 涉及 C# 时执行 `dotnet build`，并继续遵守本文件的无空行、文档注释与兼容分支规则。
+  - 涉及本地化时检查中英文 Hjson 路径一致。
+- 正常发布命令：
+  - `git push origin master`
+- 不得把 GitHub 令牌、代理账号、Cookie、Credential Manager 内容或其他认证信息写入仓库、文档或 `AGENTS.md`。
+- 本快照只记录稳定仓库状态；临时代理端口、登录账号和本次命令行绕过方式不属于工程记忆。
