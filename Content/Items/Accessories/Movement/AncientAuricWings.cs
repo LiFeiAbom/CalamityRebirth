@@ -46,7 +46,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Movement
             Item.width = 22;
             Item.height = 20;
             Item.accessory = true;
-            ModernRarityValueUtil.Apply(
+            RarityUtil.Apply(
                 Item, ModContent.RarityType<BurnishedAuricRarity>(), Item.buyPrice(1, 0, 0, 0));
         }
         /// <summary>

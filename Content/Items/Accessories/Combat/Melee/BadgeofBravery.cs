@@ -30,7 +30,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
             Item.width = 30;
             Item.height = 30;
             Item.accessory = true;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
         }
         /// <summary>
         /// 应用用户指定的勇气勋章面板：

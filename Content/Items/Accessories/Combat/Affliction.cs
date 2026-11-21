@@ -31,7 +31,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
             Item.height = 20;
             Item.accessory = true;
             Item.expert = true;
-            ModernRarityValueUtil.Apply(
+            RarityUtil.Apply(
                 Item, ModContent.RarityType<PureGreenRarity>(), Item.buyPrice(0, 60, 0, 0));
         }
         /// <summary>置位佩戴状态，具体数值与团队光环由玩家结算类处理。</summary>

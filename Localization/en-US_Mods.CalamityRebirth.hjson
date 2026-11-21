@@ -29,6 +29,36 @@ Buffs: {
 		Description: Never extinguished; all things turn to ash
 	}
 
+	HotE: {
+		DisplayName: Heart of the Elements
+		Description: All elementals will protect you
+	}
+
+	BrimstoneWaifu: {
+		DisplayName: Brimstone Elemental
+		Description: The brimstone elemental will protect you
+	}
+
+	CloudyWaifu: {
+		DisplayName: Cloud Elemental
+		Description: The cloud elemental will protect you
+	}
+
+	SirenLure: {
+		DisplayName: Siren
+		Description: The siren will protect you
+	}
+
+	SandyWaifu: {
+		DisplayName: Sand Elemental
+		Description: The sand elemental will protect you
+	}
+
+	DrewsSandyWaifu: {
+		DisplayName: Rare Sand Elemental
+		Description: The sand elemental will heal you
+	}
+
 	YharimPower: {
 		DisplayName: Yharim's Power
 		Description: You feel like you can break the world in two...with your bare hands!
@@ -163,11 +193,12 @@ Configs: {
 		Headers.Gameplay: Gameplay
 
 		RevertVanillaNerfs: {
-			Label: Revert Classic Calamity's Vanilla Nerfs
+			Label: Revert Calamity's Vanilla Nerfs
 			Tooltip:
 				'''
-				Only applies to CalamityModClassicPreTrailer 1.4.2.101 and CalRD 1.4.5.7.
-				Restores reduced vanilla weapon damage, Old One's Army armor stats, the Worm Scarf, Ice Barrier, Nebula buffs, vanilla ranged projectiles, and Revengeance run speed.
+				Applies to CalamityMod 2.2.2, CalamityModClassicPreTrailer 1.4.2.101, and CalRD 1.4.5.7.
+				Restores each version's reductions to vanilla weapons, tools, armor, accessories, wings, buffs, movement speed, and summon projectile damage.
+				Nerfs to Calamity's own content are not changed.
 				Requires a mod reload after changing.
 				Default: Off.
 				'''
@@ -202,6 +233,82 @@ Items: {
 			'''
 	}
 
+	AngelTreads: {
+		DisplayName: Angel Treads
+		Tooltip:
+			'''
+			Extreme speed!
+			12% increased movement speed
+			10% increased flight time
+			Greater mobility on ice
+			Water and lava walking
+			Temporary immunity to lava and immunity to On Fire!
+			'''
+	}
+
+	InfinityBoots: {
+		DisplayName: Infinity Boots
+		TreadsName: Infinity Treads
+		Tooltip:
+			'''
+			Counts as wings
+			Horizontal speed: 9
+			Acceleration multiplier: 2.6
+			Flight time: 160
+			16% increased movement speed and increased run speed
+			Walk on ice, water, and lava
+			Complete immunity to lava, On Fire!, and fall damage
+			Shift+Right Click toggles wing and tread modes
+			'''
+	}
+
+	ElysianTracers: {
+		DisplayName: Elysian Tracers
+		TreadsName: Elysian Treads
+		Tooltip:
+			'''
+			Counts as wings
+			Horizontal speed: 10.5
+			Acceleration multiplier: 2.75
+			Flight time: 200
+			20% increased movement speed and increased run speed
+			Walk on ice, water, and lava
+			Complete immunity to lava, On Fire!, and fall damage
+			Shift+Right Click toggles wing and tread modes
+			'''
+	}
+
+	DrewsWings: {
+		DisplayName: Drew's Wings
+		Tooltip:
+			'''
+			Expert accessory
+			Horizontal speed: 12
+			Acceleration multiplier: 3
+			Flight time: 361
+			Excellent vertical speed
+			Immunity to fall damage
+			'''
+	}
+
+	SeraphTracers: {
+		DisplayName: Seraph Tracers
+		TreadsName: Seraph Treads
+		Tooltip:
+			'''
+			Counts as wings
+			Horizontal speed: 12
+			Acceleration multiplier: 3
+			Flight time: 250
+			24% increased movement speed and increased run speed
+			Walk on ice, water, and lava
+			Complete immunity to lava, On Fire!, and fall damage
+			Immunity to Auric Rejection and harmful walk-on-block effects
+			Taking more than 200 damage in one hit grants 30 extra immunity frames
+			Shift+Right Click toggles wing and tread modes
+			'''
+	}
+
 	BadgeofBravery: {
 		DisplayName: Badge of Bravery
 		Tooltip:
@@ -218,6 +325,104 @@ Items: {
 			Up to 30% increased damage the lower your life is
 			All attacks inflict Venom
 			Revenge
+			'''
+	}
+
+	AeroStone: {
+		DisplayName: Aero Stone
+		Tooltip:
+			'''
+			One of the ancient relics
+			Increases movement speed by 10%, jump speed by 200%, and all damage by 3%
+			'''
+	}
+
+	CryoStone: {
+		DisplayName: Cryo Stone
+		Tooltip:
+			'''
+			One of the ancient relics
+			Increases damage reduction by 5% and all damage by 3%
+			'''
+	}
+
+	ChaosStone: {
+		DisplayName: Chaos Stone
+		Tooltip:
+			'''
+			One of the ancient relics
+			Increases max mana by 50, all damage by 3%, and reduces mana usage by 5%
+			'''
+	}
+
+	BloomStone: {
+		DisplayName: Bloom Stone
+		Tooltip:
+			'''
+			One of the ancient relics
+			Enemies that get near you take damage, all damage and critical chance is increased by 2%
+			You grow flowers on the grass beneath you, chance to grow very random dye plants on grassless dirt
+			'''
+	}
+
+	RoseStone: {
+		DisplayName: Rose Stone
+		Tooltip:
+			'''
+			One of the ancient relics
+			Increases max life by 20, life regen by 1, and all damage by 3%
+			Summons a brimstone elemental to protect you
+			'''
+	}
+
+	EyeoftheStorm: {
+		DisplayName: Eye of the Storm
+		Tooltip: Summons a cloud elemental to fight for you
+	}
+
+	LureofEnthrallment: {
+		DisplayName: Pearl of Enthrallment
+		Tooltip:
+			'''
+			Summons a siren to fight for you
+			The siren stays above you, shooting water spears, ice mist, and treble clefs at nearby enemies
+			'''
+	}
+
+	WifeinaBottle: {
+		DisplayName: Elemental in a Bottle
+		Tooltip: Summons a sand elemental to fight for you
+	}
+
+	WifeinaBottlewithBoobs: {
+		DisplayName: Rare Elemental in a Bottle
+		Tooltip: Summons a sand elemental to heal you
+	}
+
+	HeartoftheElements: {
+		DisplayName: Heart of the Elements
+		Tooltip:
+			'''
+			The heart of the world
+			Increases life regen by 2, mana regen by 2, and critical strike chance by 10%
+			Increases max life by 20 and all damage by 10%
+			Increases movement speed by 10%, jump speed by 200%, and damage reduction by 5%
+			Increases max mana by 50 and reduces mana usage by 5%
+			You grow flowers on the grass beneath you, chance to grow very random dye plants on grassless dirt
+			Summons all elementals to protect you
+			Toggling the visibility of this accessory also toggles the elementals on and off
+			Stat increases are slightly higher if the elementals are turned off
+			'''
+	}
+
+	NebulousCore: {
+		DisplayName: Nebulous Core
+		Tooltip:
+			'''
+			Increases all damage and critical strike chance by 20%
+			Summons floating nebula stars to protect you
+			You have a 10% chance to survive an attack that would have killed you
+			If this effect activates you will be healed by 100 HP
 			'''
 	}
 
@@ -750,11 +955,6 @@ Items: {
 		Tooltip: +6% damage, +2 critical strike chance, -5 defense, and reduced life regeneration
 	}
 
-	GalacticaSingularity: {
-		DisplayName: Galactica Singularity
-		Tooltip: A lategame material condensed from the four lunar fragments
-	}
-
 	BiomeBlade: {
 		DisplayName: Biome Blade
 		Tooltip: Fires a projectile that changes color based on your current biome
@@ -997,6 +1197,47 @@ Items: {
 			Increases life regeneration by 1 HP/s
 			While afflicted by any listed combat debuff, regeneration rises to 3 HP/s and accumulates much faster
 			Grants 5 extra defense per additional debuff, starting at 16 for the first, and loses 1 per second after debuffs fall off
+			'''
+	}
+
+	HoneyDew2: {
+		DisplayName: Honey Dew (Ancient)
+		Tooltip:
+			'''
+			Increases maximum life by 30
+			Grants honey-style life regeneration at all times
+			Regenerates faster while standing still in honey
+			Toxic and sickness debuffs expire twice as fast
+			'''
+	}
+
+	LivingDew2: {
+		DisplayName: Living Dew (Ancient)
+		Tooltip:
+			'''
+			Increases maximum life by 50
+			Inherits all effects of Honey Dew (Ancient)
+			Debuff durations are also halved for fire debuffs
+			'''
+	}
+
+	RadiantOoze2: {
+		DisplayName: Radiant Ooze (Ancient)
+		Tooltip:
+			'''
+			Grants more life regeneration the lower your life is, from 2 HP/s at full to 6 HP/s when empty
+			Emits a warm yellow light
+			'''
+	}
+
+	AmbrosialAmpoule2: {
+		DisplayName: Ambrosial Ampoule (Ancient)
+		Tooltip:
+			'''
+			Increases maximum life by 70
+			Inherits all effects of Living Dew (Ancient)
+			Grants more life regeneration the lower your life is, from 2 HP/s at full to 6 HP/s when empty
+			Regenerates faster while standing still, and emits a warm yellow light
 			'''
 	}
 
@@ -1307,6 +1548,20 @@ Projectiles: {
 	AbyssalMirrorProjectile.DisplayName: Abyssal Mirror Projectile
 	EclipseMirrorBurst.DisplayName: Eclipse Mirror Burst
 	NanotechBlade.DisplayName: Nanotech Blade
+	NebulaStar.DisplayName: Nebula Star
+	NebulaDust.DisplayName: Nebula Dust
+	BigBustyRose.DisplayName: Big Busty Rose
+	CloudyWaifu.DisplayName: Cloudy Waifu
+	DrewsSandyWaifu.DisplayName: Oxy's Waifu
+	FrostMistFriendly.DisplayName: Mist
+	SandyWaifu.DisplayName: Waifu
+	SirenLure.DisplayName: Siren Lure
+	SirenSongFriendly.DisplayName: Song
+	WaterSpearFriendly.DisplayName: Spear
+	SandBolt.DisplayName: Bolt
+	SandMark.DisplayName: Mark
+	SandTornado.DisplayName: Tornado
+	CactusHealOrb.DisplayName: Heal
 	CosmicDashExplosion.DisplayName: Cosmic Dash Explosion
 	HolyExplosionSupreme.DisplayName: Holy Explosion Supreme
 	AbaddonCrit.DisplayName: Brimstone Blast

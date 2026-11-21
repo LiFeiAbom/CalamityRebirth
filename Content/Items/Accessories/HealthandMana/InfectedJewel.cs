@@ -19,7 +19,7 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
             Item.width = 26;
             Item.height = 26;
             Item.defense = 6;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Lime
+            RarityUtil.Apply(Item, ItemRarityID.Lime
                 , Item.buyPrice(0, 48, 0, 0));
             Item.accessory = true;
         }

@@ -2,8 +2,10 @@ using CalamityRebirth.Players;
 using CalamityRebirth.Content.Rarities;
 using CalamityRebirth.Content.Items.Accessories.Combat;
 using CalamityRebirth.Content.Items.Accessories.Combat.Melee;
+using CalamityRebirth.Content.Items.Accessories.Combat.Magic;
 using CalamityRebirth.Content.Items.Accessories.Combat.Summon;
 using CalamityRebirth.Content.Items.Accessories.HealthandMana;
+using CalamityRebirth.Content.Items.Accessories.Movement;
 using CalamityRebirth.Systems;
 using CalamityRebirth.Utilities;
 using System.Linq;
@@ -28,7 +30,7 @@ namespace CalamityRebirth.Content.Items
             CalamityCompatUtil.IsProvidenceDowned)
             .ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied);
         /// <summary>
-        /// 在原版物品默认值建立后撤销经典灾厄直接写入基础伤害的削弱。
+        /// 在原版物品默认值建立后撤销当前灾厄分支直接写入的装备数值削减。
         /// 弱依赖使灾厄先加载，本回调随后把受影响武器恢复为原版数值。
         /// </summary>
         public override void SetDefaults(Item item)
@@ -36,18 +38,34 @@ namespace CalamityRebirth.Content.Items
             VanillaNerfRevertSystem.RestoreItemDefaults(item);
         }
         /// <summary>
-        /// 还原 1.4.2.101 对原版塔防护甲单件造成的召唤、魔法和近战属性扣除。
+        /// 还原当前灾厄分支对原版护甲单件造成的职业属性扣除。
         /// </summary>
         public override void UpdateEquip(Item item, Player player)
         {
             VanillaNerfRevertSystem.RestoreArmorPieceStats(item, player);
         }
         /// <summary>
-        /// 还原经典灾厄对蠕虫围巾减伤与 Precise/Lucky 饰品词缀施加的削弱。
+        /// 还原现代灾厄对原版套装效果施加的攻速、伤害、法力消耗和减伤削减。
+        /// </summary>
+        public override void UpdateArmorSet(Player player, string set)
+        {
+            VanillaNerfRevertSystem.RestoreArmorSetStats(player, set);
+        }
+        /// <summary>
+        /// 还原当前灾厄分支对原版饰品属性与词缀施加的削减。
         /// </summary>
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             VanillaNerfRevertSystem.RestoreAccessoryStats(item, player);
+        }
+        /// <summary>
+        /// 还原现代灾厄对蝴蝶翅膀与幽灵翅膀上升倍率的削减。
+        /// </summary>
+        public override void VerticalWingSpeeds(Item item, Player player
+            , ref float ascentWhenFalling, ref float ascentWhenRising
+            , ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend)
+        {
+            VanillaNerfRevertSystem.RestoreVerticalWingSpeeds(item, ref maxAscentMultiplier);
         }
         /// <summary>
         /// 向三个灾厄分支的血肉宿主与掠夺者宝藏袋追加血神核心系列掉落。
@@ -67,7 +85,89 @@ namespace CalamityRebirth.Content.Items
             AddAfflictionBagDrop("CalamityMod", item, itemLoot);
             AddAfflictionBagDrop("CalamityModClassicPreTrailer", item, itemLoot);
             AddAfflictionBagDrop("CalRD", item, itemLoot);
+			AddNebulousCoreBagDrop("CalamityMod", item, itemLoot);
+			AddNebulousCoreBagDrop("CalamityModClassicPreTrailer", item, itemLoot);
+			AddNebulousCoreBagDrop("CalRD", item, itemLoot);
+			AddElementalChainBagDrops("CalamityMod", item, itemLoot);
+			AddElementalChainBagDrops("CalamityModClassicPreTrailer", item, itemLoot);
+			AddElementalChainBagDrops("CalRD", item, itemLoot);
+			AddDrewsWingsBagDrop("CalamityMod", item, itemLoot);
+			AddDrewsWingsBagDrop("CalamityModClassicPreTrailer", item, itemLoot);
+			AddDrewsWingsBagDrop("CalRD", item, itemLoot);
         }
+		/// <summary>把三版本犽戎宝藏袋中的 Drew之翼替换为本工程版本。</summary>
+		private static void AddDrewsWingsBagDrop(string modName, Item item, ItemLoot itemLoot)
+		{
+			if (!ModLoader.TryGetMod(modName, out Mod mod)
+				|| !mod.TryFind<ModItem>("YharonBag", out ModItem bag)
+				|| item.type != bag.Type)
+				return;
+			int nativeType = mod.TryFind<ModItem>("DrewsWings", out ModItem nativeItem)
+				? nativeItem.Type : -1;
+			ReplaceOrAddItemDrop(itemLoot, nativeType, ModContent.ItemType<DrewsWings>());
+		}
+		/// <summary>
+		/// 处理三版本元素石与元素召唤饰品的宝藏袋掉落。
+		/// 原生同名饰品存在时先移除其规则，再按原概率加入本工程版本。
+		/// </summary>
+		private static void AddElementalChainBagDrops(string modName, Item item, ItemLoot itemLoot)
+		{
+			if (!ModLoader.TryGetMod(modName, out Mod calamity))
+				return;
+			string chaosBag = modName == "CalamityMod" ? "CalamitasCloneBag" : "CalamitasBag";
+			string brimstoneBag = modName == "CalamityMod"
+				? "BrimstoneElementalBag" : "BrimstoneWaifuBag";
+			ReplaceBagDrop(calamity, item, itemLoot, brimstoneBag, "RoseStone"
+				, ModContent.ItemType<RoseStone>(), 10);
+			ReplaceBagDrop(calamity, item, itemLoot, "DesertScourgeBag", "AeroStone"
+				, ModContent.ItemType<AeroStone>(), 10);
+			ReplaceBagDrop(calamity, item, itemLoot, "AquaticScourgeBag", "AeroStone"
+				, ModContent.ItemType<AeroStone>(), 10);
+			ReplaceBagDrop(calamity, item, itemLoot, "CryogenBag", "CryoStone"
+				, ModContent.ItemType<CryoStone>(), 10);
+			ReplaceBagDrop(calamity, item, itemLoot, chaosBag, "ChaosStone"
+				, ModContent.ItemType<ChaosStone>(), 10);
+			ReplaceBagDrop(calamity, item, itemLoot, "PlaguebringerGoliathBag", "BloomStone"
+				, ModContent.ItemType<BloomStone>(), 10);
+			if (!calamity.TryFind<ModItem>("LeviathanBag", out ModItem leviathanBag)
+				|| item.type != leviathanBag.Type)
+				return;
+			RemoveNativeDrop(calamity, itemLoot, "LureofEnthrallment");
+			RemoveNativeDrop(calamity, itemLoot, "PearlofEnthrallment");
+			itemLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode()
+				, ModContent.ItemType<LureofEnthrallment>(), 3));
+		}
+		/// <summary>按指定宝藏袋与原生物品名称替换一条固定概率掉落。</summary>
+		private static void ReplaceBagDrop(Mod mod, Item item, ItemLoot itemLoot, string bagName
+			, string nativeName, int replacementType, int chanceDenominator)
+		{
+			if (!mod.TryFind<ModItem>(bagName, out ModItem bag) || item.type != bag.Type)
+				return;
+			int nativeType = mod.TryFind<ModItem>(nativeName, out ModItem nativeItem)
+				? nativeItem.Type : -1;
+			ReplaceOrAddItemDrop(itemLoot, nativeType, replacementType, chanceDenominator);
+		}
+		/// <summary>从宝藏袋移除指定原生物品的顶层规则，不存在时安全跳过。</summary>
+		private static void RemoveNativeDrop(Mod mod, ItemLoot itemLoot, string nativeName)
+		{
+			if (!mod.TryFind<ModItem>(nativeName, out ModItem nativeItem))
+				return;
+			RemoveItemDrop(itemLoot, nativeItem.Type);
+		}
+		/// <summary>
+		/// 将指定灾厄分支神之使徒宝藏袋中的原生星云核心替换为本工程版本。
+		/// 三个分支都保留固定掉落，因此直接替换同名规则而不追加重复物品。
+		/// </summary>
+		private static void AddNebulousCoreBagDrop(string modName, Item item, ItemLoot itemLoot)
+		{
+			if (!ModLoader.TryGetMod(modName, out Mod calamity)
+				|| !calamity.TryFind<ModItem>("DevourerofGodsBag", out ModItem bag)
+				|| item.type != bag.Type)
+				return;
+			int nativeItemType = calamity.TryFind<ModItem>("NebulousCore", out ModItem nativeItem)
+				? nativeItem.Type : -1;
+			ReplaceOrAddItemDrop(itemLoot, nativeItemType, ModContent.ItemType<NebulousCore>());
+		}
         /// <summary>将指定分支噬魂幽花宝藏袋中的原生同名饰品替换为本工程版本。</summary>
         private static void AddAfflictionBagDrop(string modName, Item item, ItemLoot itemLoot)
         {
@@ -142,13 +242,27 @@ namespace CalamityRebirth.Content.Items
         /// </summary>
         private static void ReplaceOrAddItemDrop(ItemLoot itemLoot, int nativeItemType, int replacementItemType)
         {
-            foreach (IItemDropRule rule in itemLoot.Get().ToArray())
-            {
-                if (nativeItemType >= 0 && ContainsItemDrop(rule, nativeItemType))
-                    itemLoot.Remove(rule);
-            }
+			RemoveItemDrop(itemLoot, nativeItemType);
             itemLoot.Add(ItemDropRule.Common(replacementItemType));
         }
+		/// <summary>按指定概率替换原生物品，用于保留宝藏袋原本的抽取权重。</summary>
+		private static void ReplaceOrAddItemDrop(ItemLoot itemLoot, int nativeItemType
+			, int replacementItemType, int chanceDenominator)
+		{
+			RemoveItemDrop(itemLoot, nativeItemType);
+			itemLoot.Add(ItemDropRule.Common(replacementItemType, chanceDenominator));
+		}
+		/// <summary>移除所有顶层及链式规则中包含指定物品的规则。</summary>
+		private static void RemoveItemDrop(ItemLoot itemLoot, int itemType)
+		{
+			if (itemType < 0)
+				return;
+			foreach (IItemDropRule rule in itemLoot.Get().ToArray())
+			{
+				if (ContainsItemDrop(rule, itemType))
+					itemLoot.Remove(rule);
+			}
+		}
         /// <summary>递归检查一条掉落规则及其后继规则是否包含指定物品。</summary>
         private static bool ContainsItemDrop(IItemDropRule rule, int itemType)
         {

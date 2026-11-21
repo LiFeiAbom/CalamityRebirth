@@ -17,7 +17,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
         {
             Item.width = 26;
             Item.height = 26;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Yellow);
+            RarityUtil.Apply(Item, ItemRarityID.Yellow);
             Item.accessory = true;
         }
         /// <summary>点亮本帧的血肉图腾状态；血神核心也会直接点亮同一个标记。</summary>

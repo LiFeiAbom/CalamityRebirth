@@ -42,7 +42,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
         {
             Item.width = 34;
             Item.height = 34;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
             Item.expert = true;
             Item.accessory = true;
         }

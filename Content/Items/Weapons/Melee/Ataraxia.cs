@@ -41,7 +41,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.useStyle = ItemUseStyleID.Swing;
             Item.UseSound = SoundID.Item1;
             Item.knockBack = 2.5f;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<BurnishedAuricRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<BurnishedAuricRarity>());
             Item.shoot = ModContent.ProjectileType<AtaraxiaMain>();
             Item.shootSpeed = 10f;
         }

@@ -5,24 +5,24 @@ using Terraria.ModLoader;
 namespace CalamityRebirth.Utilities
 {
     /// <summary>
-    /// 现代灾厄稀有度价格表的通用入口。
-    /// 同一个方法同时设置稀有度和购买价，避免每个物品重复书写同档价格。
+    /// 稀有度与购买价的通用入口。
+    /// 同一个方法同时设置稀有度和价格，避免物品重复书写标准价格表。
     /// </summary>
-    internal static class ModernRarityValueUtil
+    internal static class RarityUtil
     {
         /// <summary>
-        /// 将指定稀有度应用到物品，并按现代灾厄对应档位写入购买价。
+        /// 将指定稀有度应用到物品，并按对应档位写入购买价。
         /// </summary>
         /// <param name="item">正在建立默认值的物品。</param>
         /// <param name="rarity">原版或本工程使用的稀有度类型。</param>
-        /// <param name="explicitValue">启用现代版特殊价格时传入的精确价值；未传入时使用稀有度标准价。</param>
+        /// <param name="explicitValue">需要覆盖标准价时传入的精确价值；未传入时使用稀有度标准价。</param>
         internal static void Apply(Item item, int rarity, int? explicitValue = null)
         {
             item.rare = rarity;
             item.value = explicitValue ?? GetBuyPrice(rarity);
         }
         /// <summary>
-        /// 返回现代 2.2.2 对应稀有度的标准购买价。
+        /// 返回对应稀有度的标准购买价。
         /// 未列入表的颜色返回 0，避免猜测不属于当前价格档的数值。
         /// </summary>
         private static int GetBuyPrice(int rarity)

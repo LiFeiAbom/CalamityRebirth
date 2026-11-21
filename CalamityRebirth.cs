@@ -1,6 +1,7 @@
 using CalamityRebirth.Players;
 using CalamityRebirth.Enums;
 using CalamityRebirth.Content.Items.Potions.PermanentPowerUps;
+using CalamityRebirth.Systems;
 using CalamityRebirth.Utilities;
 using System.IO;
 using Terraria;
@@ -27,13 +28,22 @@ namespace CalamityRebirth
 			Instance = this;
 		}
 		/// <summary>
+		/// 在全部模组内容注册完成后应用现代灾厄翅膀静态属性回调。
+		/// 此时翅膀属性表已固定，重新写入的飞行时间和悬浮参数不会被后续注册覆盖。
+		/// </summary>
+		public override void PostSetupContent()
+		{
+			VanillaNerfRevertSystem.ApplyWingStatOverrides();
+		}
+		/// <summary>
 		/// 模组卸载入口，清除模组实例，保证后续热重载安全。
 		/// </summary>
 		public override void Unload()
 		{
 			Instance = null;
-			JewelDebuffUtil.Unload();
+			BuffUtil.Unload();
 			CalamityCompatUtil.ClearBuffTypeCache();
+			CalamityCompatUtil.ClearPlayerBoolBindings();
 		}
 		/// <summary>
 		/// 处理天界洋葱永久解锁状态的多人同步。

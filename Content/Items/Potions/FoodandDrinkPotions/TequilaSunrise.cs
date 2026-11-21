@@ -54,7 +54,7 @@ namespace CalamityRebirth.Content.Items.Potions.FoodandDrinkPotions
             Item.height = 18;
             Item.useTurn = true;
             Item.maxStack = 30;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.LightRed, Item.sellPrice(silver: 2));
+            RarityUtil.Apply(Item, ItemRarityID.LightRed, Item.sellPrice(silver: 2));
             Item.useAnimation = 17;
             Item.useTime = 17;
             Item.useStyle = ItemUseStyleID.DrinkLiquid;

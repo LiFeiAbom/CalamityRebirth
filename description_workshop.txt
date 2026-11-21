@@ -1,13 +1,13 @@
 灾厄重生 / Calamity Rebirth
 将旧版灾厄中具有代表性的内容重新带回现版本，并针对现代灾厄、经典1.4.2.101与CalRD分别适配配方和功能。
 本模组不是旧版灾厄的完整复刻，而是按已实现内容逐步扩展的个人移植项目。部分属性、价格、稀有度、配方与视觉效果经过重新平衡或兼容调整。
-当前版本：0.1.2.4
+当前版本：0.1.2.5
 【当前已实现内容】
 · BUFF药剂15种：魔君牌兴奋剂、渊洋秘药、弹跳药水、韵律药水、钙质药水、无尽饥饿药水、崩裂药水、神圣之怒药水、光合作用药水、渎神之怒药水、新生药水、粉碎药水、翱翔药水、泰坦之鳞药水、胜利药水
 · 食物与酒类药水7种：血腥玛丽、加勒比朗姆酒、摩闪酒、莫斯科骡子、朗姆酒、龙舌兰日出、伏特加
 · 永久强化：天界洋葱，使用后永久解锁一个额外饰品槽
 · 五职业EX饰品：战士徽章EX、烈火手套EX、游侠徽章EX、狙击镜EX、法师徽章EX、天界纹章EX、召唤师徽章EX、甲虫莎草纸EX、盗贼徽章EX、晶光头骨
-· 进阶饰品链：元素之握、代达罗斯纹章与元素箭袋、空灵护符链、斯塔提斯召唤链、盗贼镜片潜行链与纳米技术
+· 进阶饰品链：元素之握、代达罗斯纹章与元素箭袋、空灵护符链、斯塔提斯召唤链、盗贼镜片潜行链、纳米技术、星云核心、元灵之心及其四枚元素石与五件元素召唤饰品、天使之靴至炽天使翼靴完整链
 · 血神核心系列：血神核心、血炎晶核、血契、血肉图腾、血腥蠕虫围巾、血腥蠕虫牙
 · 近战武器：禅心剑（Ataraxia），包含主弹、侧弹、针叶弹、两级爆炸、花瓣粒子与暗影焰
 · 自定义减益：燃烧III、破晓II、触电II、暗影焰II、酒精中毒
@@ -43,13 +43,13 @@
 Calamity Rebirth
 Returns selected legacy Calamity content to current tModLoader versions with separate adaptation for modern Calamity, Classic 1.4.2.101, and CalRD.
 This is not a complete restoration of legacy Calamity. It is a personal project expanded one implemented feature at a time. Some stats, prices, rarities, recipes, and visuals have been rebalanced or adapted for compatibility.
-Current version: 0.1.2.4
+Current version: 0.1.2.5
 [Currently Implemented Content]
 · 15 buff potions: Yharim's Stimulants, Abyssal Elixir, Bounding Potion, Cadence Potion, Calcium Potion, Ceaseless Hunger Potion, Crumbling Potion, Holy Wrath Potion, Photosynthesis Potion, Profaned Rage Potion, Revivify Potion, Shattering Potion, Soaring Potion, Titan Scale Potion, Triumph Potion
 · 7 food and drink potions: Bloody Mary, Caribbean Rum, Moonshine, Moscow Mule, Rum, Tequila Sunrise, Vodka
 · Permanent upgrade: Celestial Onion, which permanently unlocks an additional accessory slot
 · Five-class emblem EX accessories: Warrior Emblem EX, Fire Gauntlet EX, Ranger Emblem EX, Sniper Scope EX, Sorcerer Emblem EX, Celestial Emblem EX, Summoner Emblem EX, Papyrus Scarab EX, Rogue Emblem EX, Crystal Skull
-· Advanced accessory chains: Elemental Gauntlet, Daedalus Emblem and Elemental Quiver, Ethereal Talisman line, Statis summoner line, rogue mirror stealth chain, and Nanotech
+· Advanced accessory chains: Elemental Gauntlet, Daedalus Emblem and Elemental Quiver, Ethereal Talisman line, Statis summoner line, rogue mirror stealth chain, Nanotech, Nebulous Core, the complete Heart of the Elements chain, and the full Angel Treads to Seraph Tracers boot chain
 · Blood God Core series: Core of the Blood God, Bloodflare Core, Blood Pact, Flesh Totem, Bloody Worm Scarf, Bloody Worm Tooth
 · Melee weapon: Ataraxia, including main and side projectiles, needles, two explosion stages, petal particles, and Shadowflame
 · Custom debuffs: Burning III, Daybreak II, Electrified II, Shadowflame II, and Alcohol Poisoning

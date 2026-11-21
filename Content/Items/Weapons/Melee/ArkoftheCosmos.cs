@@ -36,7 +36,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.knockBack = 9.5f;
             Item.UseSound = SoundID.Item60;
             Item.autoReuse = true;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<BurnishedAuricRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<BurnishedAuricRarity>());
             Item.shoot = ModContent.ProjectileType<EonBeam>();
             Item.shootSpeed = 14f;
         }
@@ -82,12 +82,12 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
         /// <summary>近战命中 NPC 时按环境给予玩家增益，南瓜月使用三级饱食。</summary>
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            GalaxiaEnvironmentBuffUtil.Apply(player, BuffID.WellFed3);
+            BuffUtil.ApplyEnvironmentBuffs(player, BuffID.WellFed3);
         }
         /// <summary>PvP 本体命中沿用相同的环境增益。</summary>
         public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo)
         {
-            GalaxiaEnvironmentBuffUtil.Apply(player, BuffID.WellFed3);
+            BuffUtil.ApplyEnvironmentBuffs(player, BuffID.WellFed3);
         }
         /// <summary>鸿蒙方舟额外提供十六点近战暴击。</summary>
         public override void ModifyWeaponCrit(Player player, ref float crit)

@@ -34,7 +34,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.knockBack = 9f;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
             Item.shoot = ModContent.ProjectileType<Galaxia>();
             Item.shootSpeed = 24f;
         }
@@ -59,12 +59,12 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
         /// <summary>近战本体命中 NPC 时按环境给予玩家增益。</summary>
         public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone)
         {
-            GalaxiaEnvironmentBuffUtil.Apply(player, BuffID.WellFed);
+            BuffUtil.ApplyEnvironmentBuffs(player, BuffID.WellFed);
         }
         /// <summary>PvP 本体命中沿用相同的环境增益。</summary>
         public override void OnHitPvp(Player player, Player target, Player.HurtInfo hurtInfo)
         {
-            GalaxiaEnvironmentBuffUtil.Apply(player, BuffID.WellFed);
+            BuffUtil.ApplyEnvironmentBuffs(player, BuffID.WellFed);
         }
         /// <summary>分别注册现代、经典 1.4.2.101 和 CalRD 配方。</summary>
         public override void AddRecipes()

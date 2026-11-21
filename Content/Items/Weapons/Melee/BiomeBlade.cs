@@ -33,7 +33,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.knockBack = 5f;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Orange);
+            RarityUtil.Apply(Item, ItemRarityID.Orange);
             Item.shoot = ModContent.ProjectileType<BiomeOrb>();
             Item.shootSpeed = 12f;
         }

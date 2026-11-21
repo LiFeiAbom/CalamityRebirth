@@ -31,7 +31,7 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
             Item.width = 18;
             Item.height = 44;
             Item.defense = 12;
-            ModernRarityValueUtil.Apply(
+            RarityUtil.Apply(
                 Item, ModContent.RarityType<PostMoonLordPurpleRarity>());
             Item.accessory = true;
         }
@@ -47,6 +47,7 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
             modPlayer.purity = true;
             modPlayer.alwaysHoneyRegen = true;
             modPlayer.honeyDewHalveDebuffs = true;
+            modPlayer.livingDewHalveDebuffs = true;
             if (!hideVisual)
                 Lighting.AddLight(player.Center, new Vector3(1.32f, 1.32f, 1.82f));
         }
@@ -57,13 +58,12 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
         public override void AddRecipes()
         {
             if (ModLoader.TryGetMod("CalamityMod", out Mod calamity)
-                && calamity.TryFind<ModItem>("AmbrosialAmpoule", out ModItem ambrosial)
                 && calamity.TryFind<ModItem>("AuricBar", out ModItem auricBar)
                 && calamity.TryFind<ModItem>("AscendantSpiritEssence", out ModItem spiritEssence)
                 && calamity.TryFind<ModTile>("CosmicAnvil", out ModTile cosmicAnvil))
             {
                 Recipe recipe = CreateRecipe();
-                recipe.AddIngredient(ambrosial.Type);
+                recipe.AddIngredient<AmbrosialAmpoule2>();
                 recipe.AddIngredient<InfectedJewel>();
                 recipe.AddIngredient(auricBar.Type, 5);
                 recipe.AddIngredient(spiritEssence.Type, 4);
@@ -71,11 +71,10 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
                 recipe.Register();
             }
             if (ModLoader.TryGetMod("CalamityModClassicPreTrailer", out Mod classic)
-                && classic.TryFind<ModItem>("AmbrosialAmpoule", out ModItem classicAmbrosial)
                 && classic.TryFind<ModTile>("DraedonsForge", out ModTile classicForge))
             {
                 Recipe recipeClassic = CreateRecipe();
-                recipeClassic.AddIngredient(classicAmbrosial.Type);
+                recipeClassic.AddIngredient<AmbrosialAmpoule2>();
                 recipeClassic.AddIngredient<InfectedJewel>();
                 if (!CRUtil.TryAddClassicAuricBar(recipeClassic, 5)
                     || !CRUtil.TryAddClassicAscendantSpiritEssence(recipeClassic, 4))
@@ -84,13 +83,12 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
                 recipeClassic.Register();
             }
             if (ModLoader.TryGetMod("CalRD", out Mod calRD)
-                && calRD.TryFind<ModItem>("AmbrosialAmpoule", out ModItem calRDAmbrosial)
                 && calRD.TryFind<ModItem>("AuricBar", out ModItem calRDAuricBar)
                 && calRD.TryFind<ModItem>("AscendantSpiritEssence", out ModItem calRDSpiritEssence)
                 && calRD.TryFind<ModTile>("DraedonsForge", out ModTile calRDForge))
             {
                 Recipe recipeCalRD = CreateRecipe();
-                recipeCalRD.AddIngredient(calRDAmbrosial.Type);
+                recipeCalRD.AddIngredient<AmbrosialAmpoule2>();
                 recipeCalRD.AddIngredient<InfectedJewel>();
                 recipeCalRD.AddIngredient(calRDAuricBar.Type, 5);
                 recipeCalRD.AddIngredient(calRDSpiritEssence.Type, 4);

@@ -29,6 +29,36 @@ Buffs: {
 		Description: 永不熄灭，万物成灰
 	}
 
+	HotE: {
+		DisplayName: 元素之心
+		Description: 所有元素都会保护你
+	}
+
+	BrimstoneWaifu: {
+		DisplayName: 硫磺元素
+		Description: 硫磺元素会保护你
+	}
+
+	CloudyWaifu: {
+		DisplayName: 云元素
+		Description: 云元素会保护你
+	}
+
+	SirenLure: {
+		DisplayName: 塞壬
+		Description: 塞壬会保护你
+	}
+
+	SandyWaifu: {
+		DisplayName: 沙元素
+		Description: 沙元素会保护你
+	}
+
+	DrewsSandyWaifu: {
+		DisplayName: 稀有沙元素
+		Description: 沙元素会为你治疗
+	}
+
 	YharimPower: {
 		DisplayName: 亚利姆之力
 		Description: 你感觉自己能徒手把世界撕成两半！
@@ -163,11 +193,12 @@ Configs: {
 		Headers.Gameplay: 玩法
 
 		RevertVanillaNerfs: {
-			Label: 还原经典灾厄对原版的削弱
+			Label: 还原灾厄对原版的削弱
 			Tooltip:
 				'''
-				仅对 CalamityModClassicPreTrailer 1.4.2.101 与 CalRD 1.4.5.7 生效。
-				还原被削减的原版武器伤害、塔防护甲属性、蠕虫围巾、冰障、星云增益、原版远程弹幕与复仇模式跑速。
+				适用于现代 CalamityMod 2.2.2、CalamityModClassicPreTrailer 1.4.2.101 与 CalRD 1.4.5.7。
+				还原各版本实际削弱的原版武器、工具、护甲、饰品、翅膀、增益、移动速度与召唤弹幕伤害。
+				不会修改灾厄自身内容的削弱。
 				开启或关闭后需要重载模组。
 				默认：关闭。
 				'''
@@ -202,6 +233,82 @@ Items: {
 			'''
 	}
 
+	AngelTreads: {
+		DisplayName: 天使之靴
+		Tooltip:
+			'''
+			极速！
+			移动速度提高 12%
+			飞行时间提高 10%
+			冰面机动性提高
+			可在水面与岩浆表面行走
+			暂时免疫岩浆，并免疫着火了！
+			'''
+	}
+
+	InfinityBoots: {
+		DisplayName: 天界翼靴
+		TreadsName: 天界履带
+		Tooltip:
+			'''
+			可作为翅膀使用
+			水平速度：9
+			水平加速度倍率：2.6
+			飞行时间：160
+			移动速度提高 16%，跑速上限提高
+			可在冰面、水面与岩浆表面行走
+			完全免疫岩浆、着火了！与摔落伤害
+			Shift+右键切换翅膀与鞋履模式
+			'''
+	}
+
+	ElysianTracers: {
+		DisplayName: 极乐翼靴
+		TreadsName: 极乐履带
+		Tooltip:
+			'''
+			可作为翅膀使用
+			水平速度：10.5
+			水平加速度倍率：2.75
+			飞行时间：200
+			移动速度提高 20%，跑速上限提高
+			可在冰面、水面与岩浆表面行走
+			完全免疫岩浆、着火了！与摔落伤害
+			Shift+右键切换翅膀与鞋履模式
+			'''
+	}
+
+	DrewsWings: {
+		DisplayName: Drew之翼
+		Tooltip:
+			'''
+			专家饰品
+			水平速度：12
+			水平加速度倍率：3
+			飞行时间：361
+			极佳的垂直速度
+			免疫摔落伤害
+			'''
+	}
+
+	SeraphTracers: {
+		DisplayName: 炽天使翼靴
+		TreadsName: 炽天使履带
+		Tooltip:
+			'''
+			可作为翅膀使用
+			水平速度：12
+			水平加速度倍率：3
+			飞行时间：250
+			移动速度提高 24%，跑速上限提高
+			可在冰面、水面与岩浆表面行走
+			完全免疫岩浆、着火了！与摔落伤害
+			免疫金源矿石排斥与危险砖块接触伤害
+			单次受到超过 200 点伤害时额外获得 30 帧无敌
+			Shift+右键切换翅膀与鞋履模式
+			'''
+	}
+
 	BadgeofBravery: {
 		DisplayName: 勇气勋章
 		Tooltip:
@@ -218,6 +325,104 @@ Items: {
 			生命越低，伤害最多提高 30%
 			所有攻击附加毒液
 			复仇
+			'''
+	}
+
+	AeroStone: {
+		DisplayName: 疾风石
+		Tooltip:
+			'''
+			远古遗物之一
+			移动速度提高 10%，跳跃速度提高 200%，所有伤害提高 3%
+			'''
+	}
+
+	CryoStone: {
+		DisplayName: 冰晶石
+		Tooltip:
+			'''
+			远古遗物之一
+			伤害减免提高 5%，所有伤害提高 3%
+			'''
+	}
+
+	ChaosStone: {
+		DisplayName: 混沌石
+		Tooltip:
+			'''
+			远古遗物之一
+			最大法力提高 50，所有伤害提高 3%，法力消耗降低 5%
+			'''
+	}
+
+	BloomStone: {
+		DisplayName: 繁花石
+		Tooltip:
+			'''
+			远古遗物之一
+			靠近你的敌怪会受到伤害，所有伤害与暴击率提高 2%
+			你脚下的草地上会长出花朵，无草泥土上有几率长出随机的染料植物
+			'''
+	}
+
+	RoseStone: {
+		DisplayName: 玫瑰石
+		Tooltip:
+			'''
+			远古遗物之一
+			最大生命提高 20，生命再生提高 1，所有伤害提高 3%
+			召唤一个硫磺元素保护你
+			'''
+	}
+
+	EyeoftheStorm: {
+		DisplayName: 风暴之眼
+		Tooltip: 召唤一个云元素为你作战
+	}
+
+	LureofEnthrallment: {
+		DisplayName: 魅惑之珠
+		Tooltip:
+			'''
+			召唤一个塞壬为你作战
+			塞壬停留在你上方，向附近的敌怪射出水流长矛、冰雾与高音谱号
+			'''
+	}
+
+	WifeinaBottle: {
+		DisplayName: 瓶装沙元素
+		Tooltip: 召唤一个沙元素为你作战
+	}
+
+	WifeinaBottlewithBoobs: {
+		DisplayName: 稀有瓶装沙元素
+		Tooltip: 召唤一个沙元素为你治疗
+	}
+
+	HeartoftheElements: {
+		DisplayName: 元灵之心
+		Tooltip:
+			'''
+			世界之心
+			生命再生提高 2，魔力再生提高 2，暴击率提高 10%
+			最大生命提高 20，所有伤害提高 10%
+			移动速度提高 10%，跳跃速度提高 200%，伤害减免提高 5%
+			最大法力提高 50，法力消耗降低 5%
+			你脚下的草地上会长出花朵，无草泥土上有几率长出随机的染料植物
+			召唤所有元素保护你
+			切换该饰品的可见性可同时开关这些元素
+			关闭元素时，基础属性会略微提高
+			'''
+	}
+
+	NebulousCore: {
+		DisplayName: 星云核心
+		Tooltip:
+			'''
+			所有伤害提高 20%，暴击率提高 20%
+			召唤漂浮的星云之星保护你
+			有 10% 的概率在致命攻击下存活
+			该效果触发时会为你回复 100 点生命
 			'''
 	}
 
@@ -752,11 +957,6 @@ Items: {
 		Tooltip: 伤害 +6%，暴击率 +2，防御 -5，生命再生降低
 	}
 
-	GalacticaSingularity: {
-		DisplayName: 银河奇点
-		Tooltip: 四种月亮碎片凝聚成的终局材料
-	}
-
 	BiomeBlade: {
 		DisplayName: 环境之刃
 		Tooltip: 根据你所处的环境发射不同颜色的弹幕
@@ -999,6 +1199,47 @@ Items: {
 			生命再生提高 1 HP/s
 			身上带有表中的任意战斗减益时，再生提高到 3 HP/s，并大幅加快再生累积速度
 			每多一种减益额外获得 5 点防御，首个减益提供 16 点；减益消退后每秒回落 1 点
+			'''
+	}
+
+	HoneyDew2: {
+		DisplayName: 蜜露（古）
+		Tooltip:
+			'''
+			最大生命值提高 30
+			永远享有蜂蜜式生命再生
+			泡在蜂蜜中静止不动时再生更快
+			中毒与病症类减益的持续时间减半
+			'''
+	}
+
+	LivingDew2: {
+		DisplayName: 生命露（古）
+		Tooltip:
+			'''
+			最大生命值提高 50
+			继承蜜露（古）的全部效果
+			减益时长减半额外覆盖火系减益
+			'''
+	}
+
+	RadiantOoze2: {
+		DisplayName: 光辉软泥（古）
+		Tooltip:
+			'''
+			生命值越低，生命再生越高：满血时 2 HP/s，空血时 6 HP/s
+			发出暖黄色的光
+			'''
+	}
+
+	AmbrosialAmpoule2: {
+		DisplayName: 甘露安瓿（古）
+		Tooltip:
+			'''
+			最大生命值提高 70
+			继承生命露（古）的全部效果
+			生命值越低，生命再生越高：满血时 2 HP/s，空血时 6 HP/s
+			静止不动时再生更快，并发出暖黄色的光
 			'''
 	}
 
@@ -1309,17 +1550,31 @@ Projectiles: {
 	AbyssalMirrorProjectile.DisplayName: 深渊魔镜弹幕
 	EclipseMirrorBurst.DisplayName: 蚀日魔镜闪光
 	NanotechBlade.DisplayName: 纳米刀刃
+	NebulaStar.DisplayName: 星云之星
+	NebulaDust.DisplayName: 星云尘埃
+	BigBustyRose.DisplayName: 硕大玫瑰
+	CloudyWaifu.DisplayName: 云元素
+	DrewsSandyWaifu.DisplayName: 稀有沙元素
+	FrostMistFriendly.DisplayName: 冰雾
+	SandyWaifu.DisplayName: 沙元素
+	SirenLure.DisplayName: 塞壬诱惑
+	SirenSongFriendly.DisplayName: 塞壬之歌
+	WaterSpearFriendly.DisplayName: 水流长矛
+	SandBolt.DisplayName: 沙弹
+	SandMark.DisplayName: 沙之印记
+	SandTornado.DisplayName: 沙尘暴
+	CactusHealOrb.DisplayName: 治疗
 	CosmicDashExplosion.DisplayName: 宇宙冲刺爆炸
 	HolyExplosionSupreme.DisplayName: 至圣神圣爆炸
 	AbaddonCrit.DisplayName: 硫磺爆裂
 	Spark.DisplayName: 火花
-	// FungalHeal.DisplayName: Fungal Heal
-	// AuraRain.DisplayName: Aura Rain
-	// BrimstoneHellfireballFriendly2.DisplayName: Brimstone Hellfireball Friendly2
-	// HellfireExplosionFriendly2.DisplayName: Hellfire Explosion Friendly2
-	// FungalClumpMinion.DisplayName: Fungal Clump Minion
-	// PoisonousSeawater.DisplayName: Poisonous Seawater
-	// StandingFire.DisplayName: Standing Fire
+	FungalHeal.DisplayName: 真菌治疗
+	AuraRain.DisplayName: 灵光雨
+	BrimstoneHellfireballFriendly2.DisplayName: 硫磺火球
+	HellfireExplosionFriendly2.DisplayName: 硫磺火爆炸
+	FungalClumpMinion.DisplayName: 真菌团块
+	PoisonousSeawater.DisplayName: 有毒海水
+	StandingFire.DisplayName: 站火
 }
 
 Keybinds.Elysian.DisplayName: 极乐之庇护守护状态

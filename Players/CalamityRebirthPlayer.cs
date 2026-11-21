@@ -208,6 +208,14 @@ namespace CalamityRebirth.Players
         public bool alwaysHoneyRegen;
         /// <summary>是否将病症、火系及其他目标战斗减益的持续时间减半。</summary>
         public bool honeyDewHalveDebuffs;
+        /// <summary>Whether honey-turbo regeneration is active.</summary>
+        public bool honeyTurboRegen;
+        /// <summary>Whether fire debuffs are also halved.</summary>
+        public bool livingDewHalveDebuffs;
+        /// <summary>Whether Radiant Ooze (Ancient) is equipped.</summary>
+        public bool rOoze;
+        /// <summary>Whether Ambrosial Ampoule (Ancient) is equipped.</summary>
+        public bool aAmpoule;
         /// <summary>
         /// 无暇粹魂晶带减益直接回血的节拍惩罚累计帧数。
         /// 该值跨帧保存，只在减益清空时逐帧回落，并在死亡时归零。
@@ -318,9 +326,16 @@ namespace CalamityRebirth.Players
             rampartOfDeities = false;
             alwaysHoneyRegen = false;
             honeyDewHalveDebuffs = false;
+            honeyTurboRegen = false;
+            livingDewHalveDebuffs = false;
+            rOoze = false;
+            aAmpoule = false;
             ResetShieldSlamEffects();
             ResetAfflictionEffects();
             ResetSpongeChainEffects();
+			ResetNebulousCoreEffects();
+			ResetElementalChainEffects();
+			ResetWingChainEffects();
         }
         /// <summary>物品直接攻击 NPC 时应用召唤物无视防御。</summary>
         /// <summary>
@@ -337,17 +352,17 @@ namespace CalamityRebirth.Players
             ApplySummonDefenseIgnore(item.DamageType, ref modifiers);
             ApplyCrystalSkullStealthModifiers(item.DamageType, ref modifiers);
         }
-        /// <summary>弹幕攻击 NPC 时应用召唤物无视防御。</summary>
+        /// <summary>弹幕攻击 NPC 时应用召唤物无视防御与版本专属原版伤害回调。</summary>
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
             ApplySummonDefenseIgnore(proj.DamageType, ref modifiers);
             ApplyCrystalSkullStealthModifiers(proj.DamageType, ref modifiers);
             ApplyRogueMirrorHitModifiers(proj, ref modifiers);
             ApplyElementalQuiverProjectileBonus(proj, ref modifiers);
-            VanillaNerfRevertSystem.RestoreProjectileDamage(proj, ref modifiers);
+            VanillaNerfRevertSystem.RestoreProjectileDamage(Player, proj, ref modifiers);
         }
         /// <summary>
-        /// 在灾厄完成跑速倍率结算后，撤销经典灾厄复仇模式对原版持续奔跑速度的额外 1/3 削弱。
+        /// 在灾厄完成跑速倍率结算后，撤销当前版本对原版移动属性的削减。
         /// </summary>
         public override void PostUpdateRunSpeeds()
         {
@@ -753,19 +768,37 @@ namespace CalamityRebirth.Players
                         Player.lifeRegen = 0;
                 }
             }
-            if (honeyDewHalveDebuffs)
+            if (honeyDewHalveDebuffs || livingDewHalveDebuffs || purity)
             {
                 for (int i = 0; i < Player.MaxBuffs; i++)
                 {
-                    if (Player.buffTime[i] > 2 && JewelDebuffUtil.Contains(Player.buffType[i]))
+                    if (Player.buffTime[i] <= 2)
+                        continue;
+                    int buffType = Player.buffType[i];
+                    bool halve = purity
+                        || (honeyDewHalveDebuffs && BuffUtil.IsSicknessDebuff(buffType))
+                        || (livingDewHalveDebuffs && BuffUtil.IsFireDebuff(buffType));
+                    if (halve)
                         Player.buffTime[i]--;
                 }
             }
-            if (purity)
+            bool stationary = Math.Abs(Player.velocity.X) < 0.05f
+                && Math.Abs(Player.velocity.Y) < 0.05f && Player.itemAnimation == 0;
+            if (honeyTurboRegen && Player.honeyWet && stationary)
+                ApplyHoneyStationaryRegen(3, 90);
+            if (aAmpoule && stationary)
+                ApplyHoneyStationaryRegen(3, 90);
+            if (purity && stationary)
+                ApplyHoneyStationaryRegen(4, 60);
+            if ((rOoze || aAmpoule || purity) && Player.statLifeMax2 > 0)
             {
                 float missingLifeRatio = (Player.statLifeMax2 - Player.statLife)
                     / (float)Player.statLifeMax2;
-                Player.lifeRegen += (int)MathHelper.Lerp(6f, 14f, missingLifeRatio);
+                Player.lifeRegen += (int)MathHelper.Lerp(
+                    purity ? 6f : 4f, purity ? 14f : 12f, missingLifeRatio);
+            }
+            if (purity)
+            {
                 int intendedDefense = 0;
                 if (debuffCount > 0)
                 {
@@ -827,12 +860,25 @@ namespace CalamityRebirth.Players
         /// 统计当前玩家身上的目标有害减益数量。
         /// 只统计配表中明确列出的战斗减益，酒类、药水病等持续型状态不会误触发宝石强化。
         /// </summary>
+        /// <summary>
+        /// 应用古代蜂蜜链的站桩再生档位：先削弱负再生，再提高再生时间与点数。
+        /// threshold 越大代表需要站立越久才进入该档位。
+        /// </summary>
+        private void ApplyHoneyStationaryRegen(int regen, int threshold)
+        {
+            if (Player.lifeRegen < 0)
+                Player.lifeRegen /= 2;
+            if (Player.lifeRegenTime > threshold && Player.lifeRegenTime < 1800)
+                Player.lifeRegenTime = 1800;
+            Player.lifeRegen += regen;
+            Player.lifeRegenTime += regen;
+        }
         private int CountJewelDebuffs()
         {
             int count = 0;
             for (int i = 0; i < Player.MaxBuffs; i++)
             {
-                if (Player.buffTime[i] > 0 && JewelDebuffUtil.Contains(Player.buffType[i]))
+                if (Player.buffTime[i] > 0 && BuffUtil.Contains(Player.buffType[i]))
                     count++;
             }
             return count;
@@ -1074,6 +1120,7 @@ namespace CalamityRebirth.Players
             if (Player.whoAmI != Main.myPlayer)
                 return;
             ApplySpongeChainPostHurt(info);
+            ApplyWingChainPostHurt(info);
             if (rampartOfDeities)
             {
                 Player.immuneTime += info.Damage == 1 ? 15 : 30;
@@ -1298,6 +1345,9 @@ namespace CalamityRebirth.Players
             ApplyRogueAccessoryStats();
             ApplyGenericStealthStrikeCost();
             ApplyStatisSummonEffects();
+			ApplyNebulousCoreEffects();
+			ApplyElementalChainEffects();
+			ApplyWingChainEffects();
             ApplyBloodGodAccessoryEffects();
             ApplyDarkSunRingEffects();
             ApplyBrainAccessoryEffects();

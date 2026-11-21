@@ -46,7 +46,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
             Item.height = 26;
             Item.defense = 10;
             Item.lifeRegen = 1;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
             Item.accessory = true;
         }
         /// <summary>

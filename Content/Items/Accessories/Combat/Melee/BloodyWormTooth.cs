@@ -20,7 +20,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
         {
             Item.width = 12;
             Item.height = 15;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Orange);
+            RarityUtil.Apply(Item, ItemRarityID.Orange);
             Item.expert = true;
             Item.accessory = true;
         }

@@ -27,7 +27,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
             Item.width = 26;
             Item.height = 34;
             Item.accessory = true;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Lime);
+            RarityUtil.Apply(Item, ItemRarityID.Lime);
         }
         /// <summary>
         /// 点亮本帧烦恼项链状态。

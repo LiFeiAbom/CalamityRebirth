@@ -28,7 +28,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
         {
             Item.width = 34;
             Item.height = 34;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.LightRed);
+            RarityUtil.Apply(Item, ItemRarityID.LightRed);
             Item.expert = true;
             Item.accessory = true;
         }

@@ -36,7 +36,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
         {
             Item.width = 26;
             Item.height = 26;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<TurquoiseRarity>());
             Item.accessory = true;
         }
         /// <summary>点亮本帧的血炎晶核状态。</summary>

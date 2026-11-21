@@ -1,4 +1,3 @@
-using CalamityRebirth.Content.Items.Materials;
 using CalamityRebirth.Content.Projectiles.Melee;
 using CalamityRebirth.Utilities;
 using Microsoft.Xna.Framework;
@@ -34,7 +33,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.knockBack = 8f;
             Item.UseSound = SoundID.Item1;
             Item.autoReuse = true;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Cyan);
+            RarityUtil.Apply(Item, ItemRarityID.Cyan);
             Item.shoot = ModContent.ProjectileType<OmegaBiomeOrb>();
             Item.shootSpeed = 15f;
         }
@@ -70,7 +69,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             AddCalRDRecipe();
         }
         /// <summary>
-        /// 现代配方：真·环境之刃、灾厄核心、生命合金、本工程银河奇点和夜明锭，在远古操纵机合成。
+        /// 现代配方：真·环境之刃、灾厄核心、生命合金、四色月亮碎片和夜明锭，在远古操纵机合成。
         /// </summary>
         private void AddModernRecipe()
         {
@@ -82,7 +81,10 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
                 .AddIngredient<TrueBiomeBlade>()
                 .AddIngredient(core.Type, 3)
                 .AddIngredient(lifeAlloy.Type, 3)
-                .AddIngredient<GalacticaSingularity>(3)
+                .AddIngredient(ItemID.FragmentSolar, 3)
+                .AddIngredient(ItemID.FragmentVortex, 3)
+                .AddIngredient(ItemID.FragmentNebula, 3)
+                .AddIngredient(ItemID.FragmentStardust, 3)
                 .AddIngredient(ItemID.LunarBar, 5)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();

@@ -4,9 +4,9 @@ using Terraria.ModLoader.Config;
 namespace CalamityRebirth.Systems
 {
     /// <summary>
-    /// 经典灾厄原版削弱回调配置。
-    /// 该选项只处理 1.4.2.101 与 CalRD 1.4.5.7 中明确存在的原版内容削弱，
-    /// 不影响现代灾厄已经完成的本体回调实现。
+    /// 灾厄原版削弱回调配置。
+    /// 该选项按当前加载版本处理现代 2.2.2、经典 1.4.2.101 与 CalRD 1.4.5.7
+    /// 中明确存在的原版内容削弱，不修改灾厄自身内容。
     /// </summary>
     internal sealed class VanillaNerfRevertConfig : ModConfig
     {
@@ -19,7 +19,7 @@ namespace CalamityRebirth.Systems
         /// </summary>
         public override ConfigScope Mode => ConfigScope.ServerSide;
         /// <summary>
-        /// 是否还原经典灾厄对原版内容施加的削弱。
+        /// 是否还原当前灾厄分支对原版内容施加的削弱。
         /// 物品默认数值在加载期写入，启用或关闭后必须重载模组才能完整生效。
         /// </summary>
         [Header("Gameplay")]

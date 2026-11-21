@@ -1,4 +1,3 @@
-using CalamityRebirth.Content.Items.Materials;
 using CalamityRebirth.Content.Projectiles.Melee;
 using CalamityRebirth.Utilities;
 using Microsoft.Xna.Framework;
@@ -34,7 +33,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             Item.knockBack = 8.5f;
             Item.UseSound = SoundID.Item60;
             Item.autoReuse = true;
-            ModernRarityValueUtil.Apply(Item, ItemRarityID.Purple);
+            RarityUtil.Apply(Item, ItemRarityID.Purple);
             Item.shoot = ModContent.ProjectileType<EonBeam>();
             Item.shootSpeed = 10f;
         }
@@ -103,7 +102,7 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
             AddCalRDRecipe();
         }
         /// <summary>
-        /// 现代配方：真·远古方舟、本工程银河奇点五、灾厄核心五、生命合金五和夜明锭五，
+        /// 现代配方：真·远古方舟、四色月亮碎片各五、灾厄核心五、生命合金五和夜明锭五，
         /// 在远古操纵机合成。
         /// </summary>
         private void AddModernRecipe()
@@ -114,7 +113,10 @@ namespace CalamityRebirth.Content.Items.Weapons.Melee
                 return;
             CreateRecipe()
                 .AddIngredient<TrueArkoftheAncients>()
-                .AddIngredient<GalacticaSingularity>(5)
+                .AddIngredient(ItemID.FragmentSolar, 5)
+                .AddIngredient(ItemID.FragmentVortex, 5)
+                .AddIngredient(ItemID.FragmentNebula, 5)
+                .AddIngredient(ItemID.FragmentStardust, 5)
                 .AddIngredient(core.Type, 5)
                 .AddIngredient(lifeAlloy.Type, 5)
                 .AddIngredient(ItemID.LunarBar, 5)

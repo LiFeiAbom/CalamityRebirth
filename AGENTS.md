@@ -1,8 +1,8 @@
 # CalamityRebirth — 工程记忆（新会话先读）
 > 最后整理：2026-11-21
 > 当前目标是按用户点名的内容，从 `CalamityExpansion` 与 `CalamityDemutation` 分步移植；不是一次性全量复制。
-> 当前版本：`0.1.2.4`
-> 当前代码规模：219 个手写 C# 文件，空行数 0
+> 当前版本：`0.1.2.5`
+> 当前代码规模：261 个手写 C# 文件，空行数 0
 > 最近审计（2026-11-19）：编译 0 警告、0 错误；直接隐式贴图 93 个全部命中，4 个抽象类按规则跳过；
 > Hjson 严格解析通过，中英文均为 374 条路径；已知审计问题已完成代码修正，详见第 9 节。
 > 最近目录整理（2026-11-19）：饰品已按主用途分类，现有 `Combat 44`、`Movement 1`、
@@ -24,6 +24,14 @@
 - 用户要求 C# 文件不留空行；新增或移植文件完成后应清理空行。
 - 全部代码开发必须补充详细注释：类型与成员使用 `///` 文档注释，非直观流程、兼容分支、联网/绘制约束和数值公式使用就地注释。
 - C# 注释只描述功能、数值和实现方式，不记录内容出处、移植来源、参照工程或原件归属。
+- Utilities 通用化原则：
+  - 初始的 `WeaponUtil`、`MaterialUtil`、`ProjectileUtil`、`RogueUtil`、`CollisionUtil`
+    是稳定拆分的基础工具，不得为了“整合”而合并、改名或迁移，除非用户明确点名。
+  - 只整理职责过窄、绑定具体物品链或带版本前缀的工具。
+  - 稀有度与价格使用 `RarityUtil`，不再使用 `ModernRarityValueUtil`。
+  - 减益查询、环境增益等通用 Buff 逻辑统一放 `BuffUtil`。
+  - `CalamityCompatUtil`、`PerPlayerDropRule` 等已有清晰通用职责的类型保持独立。
+  - 工具重命名或整合后必须同步全部调用点、清除旧名称并重新编译。
 - 配方优先使用对应灾厄版本的原生物品，并通过弱依赖查找；只有该版本确实删除了某个中间物时，
   才把该中间物自身的配方原料直接展开到最终物品配方中，不得在本工程新增同名材料类物品补位。
 - `build.txt` 只保存构建字段。当前弱依赖：
@@ -85,7 +93,7 @@
 - 行为类药水已接入原 Hook：Ceaseless Hunger 吸附掉落物、Cadence 商店/磁铁/生命、
   Photosynthesis 静止再生与红心额外治疗、Revivify 受击回复、Triumph 接触减伤、
   Bloody Mary 血月刷怪、Calcium 防摔、Bounding/Soaring/Draconic 飞行或跳跃属性。
-- 为高阶配方补移植 `GalacticaSingularity` 材料与 `PureGreenRarity`。
+- 现代高阶配方直接使用四色月亮碎片各一份替代银河奇点；经典两版继续使用原生银河奇点。
 - `天界洋葱 / Celestial Onion`
   - 专家/大师世界月亮领主掉落
   - 使用后永久解锁一个额外饰品槽，不可逆
@@ -284,9 +292,20 @@
     现代灾厄对 NPC 原版暗影焰的强化仍由灾厄本体负责，本工程不重复覆盖。
   - 配方分别适配现代 2.2.2、经典 1.4.2.101 与 `CalRD 1.4.5.7`
   - 特效使用 `AtaraxiaParticleSystem`，不依赖 DRKLoader
-### 3.8 经典灾厄原版削弱回调
+### 3.8 灾厄原版削弱回调
 - 配置项：`VanillaNerfRevertConfig.RevertVanillaNerfs`，默认关闭，`ServerSide`，修改后重载。
-- 仅处理 `CalamityModClassicPreTrailer 1.4.2.101` 与 `CalRD 1.4.5.7`；现代 2.2.2 已由 `CalamityDemutation` 实现，不在本项目重复。
+- 同时处理现代 `CalamityMod 2.2.2`、`CalamityModClassicPreTrailer 1.4.2.101` 与 `CalRD 1.4.5.7`；
+  仅恢复各版本实际存在的原版内容削弱，不处理灾厄自身内容。
+- 现代 2.2.2：恢复原版武器、弹药、工具、护甲和物品价值字段，包括伤害、使用时间、弹速、防御、
+  斧力、镐力、锤力与售价；覆盖魔法帽、丛林套、法袍、武道服、蘑菇矿胸甲、塔防单件、日耀与星旋头等职业属性。
+- 现代 2.2.2：恢复侦察镜、狙击镜、野性爪、日月石与天界石/壳，以及 WizardHat、Adamantite、Cobalt、
+  Jungle、Molten、SolarFlare 等套装效果。
+- 现代 2.2.2：恢复箭术、魔法力量、糖冲刺、挖矿、迅捷、微醺、饱食/熟食、狼人、狂犬病、星云与甲虫增益；
+  甲虫耐力按原版每球 15% 乘算关系还原，避免加算超补。
+- 现代 2.2.2：恢复蝴蝶翅膀与幽灵翅膀上升倍率，并在 `PostSetupContent` 中恢复火焰、蝙蝠、女皇、
+  悬浮类翅膀和天界星盘的静态飞行、水平、悬浮与加速度参数。
+- 现代 2.2.2：恢复暗影护甲与腾飞徽章移动属性，包括腾飞徽章跳跃提速和无限飞行时间；
+  同时抵消手持其他职业武器时召唤弹幕承受的 0.75 倍惩罚。
 - 1.4.2.101：还原 Daedalus Stormbow、Phoenix Blaster、Venus Magnum、Blizzard Staff 的统一 25% 伤害削弱，
   以及 Razorpine、Last Prism 的单独伤害削弱。
 - `CalRD 1.4.5.7`：还原 Phantasm、Daedalus Stormbow、Phoenix Blaster、Aerial Bane、Influx Waver、Xenopopper、
@@ -295,8 +314,9 @@
 - 两版共通：还原蠕虫围巾 7% 减伤、冰障 10% 减伤、星云伤害与生命回复、三类原版远程弹幕伤害、复仇模式跑鞋速度惩罚；
   CalRD 还额外还原复仇模式对滑冰鞋加速度的 1/3 削弱。
 - 两版共通：还原 Precise/Lucky 饰品词缀从近战、远程、魔法职业挪出的 1%/2% 暴击。
-- 统一实现位于 `Systems/VanillaNerfRevertSystem.cs`；物品入口为现有 `CalamityRebirthGlobalItem`，
-  增益入口为 `CalamityRebirthGlobalBuff`，弹幕与跑速入口位于 `CalamityRebirthPlayer`。
+- 统一实现位于 `Systems/VanillaNerfRevertSystem.cs`；物品、护甲与翅膀入口为 `CalamityRebirthGlobalItem`，
+  增益入口为 `CalamityRebirthGlobalBuff`，弹幕与跑速入口位于 `CalamityRebirthPlayer`，
+  翅膀静态表入口位于主类 `CalamityRebirth.PostSetupContent`。
 ### 3.9 血神核心系列
 - 六件饰品：血神核心、血炎晶核、血契、血肉图腾、血腥蠕虫围巾、血腥蠕虫牙。
 - 血神核心：最大生命 +10%、通用伤害/暴击 +12%、近战攻速 +12%、减伤 +10%、防御 <100 时通用伤害再 +15%，
@@ -308,7 +328,7 @@
 - 价格与稀有度采用现代 2.2.2：血神核心 2 铂金/CosmicPurple；血炎晶核 1 铂金 50 金/Turquoise；
   血契与血肉图腾 60 金/黄色；围巾 10 金/浅红；牙齿 5 金/橙色。
 - `CosmicPurple` 与 `Turquoise` 已移植为本工程的 `CosmicPurpleRarity`、`TurquoiseRarity`，
-  不再借用外部稀有度类型；现代稀有度价格统一由 `ModernRarityValueUtil.Apply` 设置。
+  不再借用外部稀有度类型；现代稀有度价格统一由 `RarityUtil.Apply` 设置。
 - 2.2.2 将血腥蠕虫牙设为血肉宿主的专家门槛物品：专家/大师固定从 `PerforatorBag` 获得，
   普通模式本体直掉代码在 2.2.2 中处于注释状态，因此普通模式不掉。
 - 血契固定、血肉图腾 1/2、血炎晶核在击败亵渎天神后固定进入掠夺者宝藏袋；覆盖现代、1.4.2.101 与 CalRD。
@@ -375,6 +395,17 @@
   - 经典 1.4.2.101：原版烈火手套 + 魔君之证章 + 幻影质×20 + 梦魇燃料×20 + 吸热能量×20 @ 嘉登熔炉。
   - CalRD 1.4.5.7：原版烈火手套 + 魔君之证章 + 化神魂精×4 @ 嘉登熔炉。
 ### 3.12 生命与减益宝石链
+- 古老蜂蜜生命链已完整移植：
+  - `蜜露（古）/ HoneyDew2`：20×20、绿色、2 金；最大生命 +30，常驻蜂蜜再生、
+    蜂蜜内静止加速再生，并使病症/中毒类减益时长减半。
+  - `生命露（古）/ LivingDew2`：34×22、黄绿色、48 金；最大生命 +50，继承蜜露（古），
+    并把时长减半扩展到火系/燃烧类减益。
+  - `光辉软泥（古）/ RadiantOoze2`：20×20、浅红、12 金；按已损失生命提供约 2～6 HP/s 再生，
+    且上位件不在场时发出暖黄光。
+  - `甘露安瓿（古）/ AmbrosialAmpoule2`：20×20、青色、80 金；最大生命 +70，
+    继承整条古老蜂蜜链，并在静止时提供额外再生。
+  - 现代版缺失的 `MurkyPaste` / `TrapperBulb` 不新增同名材料，
+    `HoneyDew2` 与 `LivingDew2` 的现代配方分别展开为丛林孢子和藤蔓；经典版继续使用原生材料。
 - `王冠宝石 / CrownJewel`
   - 26×26、防御 +4、蓝色稀有度、标准 1 金价格；无配方。
   - 史莱姆王普通与专家均按 10% 掉落。
@@ -387,17 +418,18 @@
   - 经典 1.4.2.101 与 `CalRD`：王冠宝石 + `AstralJelly`×10 + `Stardust`×25 @ 秘银砧。
 - `无暇粹魂晶 / Purity`
   - 18×44、防御 +12、`PostMoonLordPurpleRarity`、标准 1 铂金 50 金。
-  - 最大生命 +100、免疫击退；继承甘露安瓿的常驻蜂蜜再生与目标战斗减益时长减半。
+  - 最大生命 +100、免疫击退；继承甘露安瓿（古）的常驻蜂蜜再生、站桩再生与目标战斗减益时长减半。
   - 按已损失生命从 3 HP/s 线性提高到 7 HP/s。
   - 有目标战斗减益时抵消最多 12 HP/s 的减益掉血；首个减益提供 20 防御，
     每多一个再 +8，减益消失后按每秒 1 点回落。
   - 有目标战斗减益时每 12 帧直接回复 1 HP；持续 300 帧后治疗间隔逐步延长，
     上限 180 帧。多人客户端不直接改写生命，由服务器验证并广播生命值。
-  - 现代配方：甘露安瓿 + 感染宝石 + 圣金源锭×5 + 化神魂精×4 @ 星宇砧。
-  - 经典 1.4.2.101 使用 `CRUtil` 等价材料，经典两版均使用嘉登熔炉。
+  - 现代配方：甘露安瓿（古）+ 感染宝石 + 圣金源锭×5 + 化神魂精×4 @ 星宇砧。
+  - 经典 1.4.2.101 使用 `CRUtil` 等价材料；1.4.2.101 与 CalRD 均使用嘉登熔炉，
+    且两版都消耗本工程甘露安瓿（古），不再回引灾厄同名基础件。
 - `PostMoonLordPurpleRarity` 已移植为月后 15 级紫色稀有度，颜色 `(108, 45, 199)`；
   现代价格表映射为 1 铂金 50 金。
-- `JewelDebuffUtil` 固定包含参照工程 2.0.3.9 的原版减益清单、本工程四种战斗减益，
+- `BuffUtil` 固定包含参照工程 2.0.3.9 的原版减益清单、本工程四种战斗减益，
   并按已加载灾厄版本弱依赖查找同名灾厄减益；酒精、药水病等长期状态不触发宝石强化。
 - 三件宝石按 `无暇粹魂晶 > 感染宝石 > 王冠宝石` 的 `else-if` 优先级结算；
   动态防御与治疗节拍跨帧保存，死亡时归零，避免复活后继承旧惩罚。
@@ -473,7 +505,7 @@
   - 基础防御 +10、生命再生 +1（约 +0.5 HP/s）。
   - 通用伤害 +12%、近战攻速 +12%、通用暴击 +5、召唤击退 +1.2、最大仆从 +2、挖掘速度 +15%。
   - 白昼额外 `lifeRegen += 3`，约 +1.5 HP/s；夜晚额外防御 +30；日食期间两项同时生效。
-  - 稀有度按现代 2.2.2 统一为 `CosmicPurpleRarity`，购买价由 `ModernRarityValueUtil` 设为 2 铂金。
+  - 稀有度按现代 2.2.2 统一为 `CosmicPurpleRarity`，购买价由 `RarityUtil` 设为 2 铂金。
   - 现代 2.2.2：UelibloomBar×10 + DarksunFragment×20 @ 星宇砧。
   - 经典 1.4.2.101：UeliaceBar×10 + DarksunFragment×100 @ 秘银砧。
   - CalRD 1.4.5.7：UeliaceBar×10 + DarksunFragment×100 @ 嘉登熔炉。
@@ -639,6 +671,53 @@
 - 凝胶、甲壳、海螺壳和火花前置均接入普通/专家掉落；新增现代、经典与 CalRD 配方分支。
 - 稀有度按现代同名物品适配：辉光软泥浅红、生命之露黄绿、蜜露橙色、活力凝胶蓝色、
   绚彩凝胶粉色、巨型陆龟壳浅红；现代已删除的组件保留 Demutation/对应经典档位。
+### 3.21 星云核心
+- `星云核心 / NebulousCore`
+  - 16×14 判定尺寸、32×32 贴图、专家物品；稀有度与价格采用现代 `CosmicPurpleRarity` 档位。
+  - 通用伤害 +20%、通用暴击 +20；该面板沿用 Demutation 本体口径，不采用现代 2.2.2 的仅 +12% 伤害。
+  - 可见时约每 15 帧尝试生成一枚星云之星；已有星星越多成功率越低，上限 20 枚。
+  - 每枚星星基础伤害 300，按玩家通用伤害加成结算；隐藏外观时停止生成，并让已有星星立即消散。
+  - `NebulaStar` 为 34×34 单穿透追踪弹幕，600 像素索敌，使用六种身份方向呼吸漂移；
+    命中 NPC 或 PvP 玩家后，由主人端散射 `NebulaDust`。
+  - `NebulaDust` 为 32×32 隐身无限穿透区域，本地 NPC 命中冷却 3 帧，生成后先淡入再淡出。
+  - 致命伤时按 1/10 概率阻止死亡并回复 100 生命，播放暗束尘与 `Item67`；
+    该保命沿用 Demutation/两个经典版本的无冷却口径，不采用现代 90 秒冷却和 300 治疗。
+  - 没有合成配方；现代、经典 1.4.2.101 与 CalRD 的神之使徒宝藏袋均将原生同名物品替换为本工程版本。
+  - 物品贴图 32×32、星星与发光层均 34×34、尘埃贴图 26×32；四张资源均与 Demutation 原件逐字节一致。
+### 3.22 元灵之心链
+- 完整链共 10 件本地饰品：4 枚元素石 + 5 件元素召唤饰品 + 元灵之心顶点。
+- 元素石：
+  - `疾风石 / AeroStone`：移动速度 +10%、跳跃速度 +2、通用伤害 +3%，青色照明。
+  - `冰晶石 / CryoStone`：6 防御、减伤 +5%、通用伤害 +3%，蓝色照明。
+  - `混沌石 / ChaosStone`：最大魔力 +50、魔力消耗 -5%、通用伤害 +3%，红色照明。
+  - `繁花石 / BloomStone`：通用伤害 +2%、通用暴击 +2，绿色照明；周期性诅咒附近敌怪并造成 10 点伤害，脚边可生长花草。
+- 元素召唤饰品：
+  - `玫瑰石 / RoseStone`：最大生命 +20、生命再生 +1 HP/s、通用伤害 +3%，召唤硫火元素。
+  - `风暴之眼 / EyeoftheStorm`：召唤云元素，近距离会高速冲锋撞击。
+  - `魅惑之珠 / LureofEnthrallment`：召唤固定在玩家上方的塞壬，轮流水矛、霜雾与歌声。
+  - `瓶装沙元素 / WifeinaBottle`：召唤沙元素，沙之箭落点生成沙之印记与竖直沙暴。
+  - `稀有瓶装沙元素 / WifeinaBottlewithBoobs`：召唤治疗型沙元素，周期性生成回复 15 HP 的治疗珠。
+- `元灵之心 / HeartoftheElements`
+  - 20×20 判定、9 防御、现代红色稀有度、显式 80 金价格。
+  - 两档共同提供约 2 HP/s 再生、2 魔力再生、魔力消耗 -5%、通用暴击 +10。
+  - 可见档：最大生命 +20、最大魔力 +50、移速 +10%、跳跃 +2、减伤 +5%、通用伤害 +10%。
+  - 隐藏档：最大生命 +25、最大魔力 +60、移速 +12%、跳跃 +2.2、减伤 +6%、通用伤害 +12%。
+  - 可见时维持五种元素仆从各一只；隐藏时关闭全部元素但保留隐藏档属性。
+  - 玩家站立时会在草地、神圣草地、丛林草地或无水泥土空位生长花草；与花绽石共用同类诅咒光环。
+  - 元素仆从基础伤害为月前 100、月后 300；击败神明吞噬者后 ×2.5。
+  - 九件合成配方统一在远古操纵机注册。
+- 元素仆从与辅助弹幕：
+  - `BigBustyRose`、`CloudyWaifu`、`SirenLure`、`SandyWaifu`、`DrewsSandyWaifu` 五个常驻仆从。
+  - `WaterSpearFriendly`、`FrostMistFriendly`、`SirenSongFriendly`、`SandBolt`、`SandMark`、
+    `SandTornado`、`CactusHealOrb` 七个辅助弹幕。
+  - 六种召唤增益 `HotE`、`BrimstoneWaifu`、`CloudyWaifu`、`SirenLure`、`SandyWaifu`、`DrewsSandyWaifu`
+    均无时间条、不存档，并按佩戴物或仆从在场状态自动移除。
+- 掉落：
+  - 元素石保留非专家约 1/10 Boss 掉落，并在现代、1.4.2.101、CalRD 对应宝藏袋中按原生概率替换。
+  - 魅惑之珠与风暴之眼为普通/专家 1/7、1/5 掉落。
+  - 瓶装沙元素来自沙元素普通/专家 1/7、1/5；稀有版本仅专家 1/20。
+  - 五个可叠加元素召唤饰品和元灵之心双向互斥，避免重复仆从。
+  - 十件物品、九张仆从/攻击弹幕贴图和六张增益图标均与 Demutation 原件 SHA-256 一致。
 ## 4. 三版本盗贼软依赖
 实现入口：`Utilities/RogueUtil.cs`，内部类型为分部类 `CRUtil`
 ### 4.1 现代 2.2.2
@@ -680,6 +759,31 @@
 - `Content/Items/CalamityRebirthGlobalItem.cs`
   - 物品 PvP 命中入口。
   - 血神核心系列宝藏袋掉落与亵渎天神进度条件。
+  - 星云核心的三版本神之使徒宝藏袋替换入口。
+- `Content/Items/Accessories/Combat/NebulousCore.cs`
+  - 星云核心面板、星星生成与专家标记。
+- `Content/Projectiles/Typeless/NebulaStar.cs`
+- `Content/Projectiles/Typeless/NebulaDust.cs`
+  - 星云之星追踪、S 形漂移、发光叠加、命中尘埃与伤害区域。
+- `Players/CalamityRebirthPlayer.NebulousCore.cs`
+  - 通用伤害/暴击、外观标记与无冷却致命伤保护。
+- `Content/Items/Accessories/Combat/HeartoftheElements.cs`
+  - 元灵之心九件配方、五元素召唤、隐藏档属性开关与互斥。
+- `Content/Items/Accessories/Combat/AeroStone.cs`
+- `Content/Items/Accessories/Combat/CryoStone.cs`
+- `Content/Items/Accessories/Combat/BloomStone.cs`
+- `Content/Items/Accessories/Combat/Magic/ChaosStone.cs`
+  - 四枚元素石入口。
+- `Content/Items/Accessories/Combat/Summon/RoseStone.cs`
+- `Content/Items/Accessories/Combat/Summon/EyeoftheStorm.cs`
+- `Content/Items/Accessories/Combat/Summon/LureofEnthrallment.cs`
+- `Content/Items/Accessories/Combat/Summon/WifeinaBottle.cs`
+- `Content/Items/Accessories/Combat/Summon/WifeinaBottlewithBoobs.cs`
+  - 五件独立元素召唤饰品与单仆从维持逻辑。
+- `Content/Projectiles/Summon/ElementalMinionUtil.cs`
+  - 元素仆从共用索敌、悬停、动画与进度命中冷却。
+- `Players/CalamityRebirthPlayer.ElementalChain.cs`
+  - 元素石面板、元灵之心两档属性、诅咒光环与植物生长。
 - `Content/Items/Accessories/Combat/CoreOfTheBloodGod.cs`
   - 血神核心及三版本高级配方。
 - `Content/Items/Accessories/Combat/BloodflareCore.cs`
@@ -690,8 +794,8 @@
   - 减益启动强化再生与动态防御，三版本升级配方。
 - `Content/Items/Accessories/HealthandMana/Purity.cs`
   - 宝石链顶点、甘露安瓿继承、动态再生/防御/治疗与三版本配方。
-- `Utilities/JewelDebuffUtil.cs`
-  - 跨三版本灾厄减益弱依赖清单与热重载清理。
+- `Utilities/BuffUtil.cs`
+  - 通用战斗减益查询、环境/月亮事件增益、星陨环境补充增益与热重载清理。
 - `Content/Rarities/PostMoonLordPurpleRarity.cs`
   - 月后紫色稀有度及现代价格映射。
 - `Content/Items/Accessories/Combat/FleshTotem.cs`
@@ -699,6 +803,14 @@
 - `Content/Items/Accessories/Combat/Melee/BloodyWormTooth.cs`
 - `Content/Items/Accessories/Movement/AncientAuricWings.cs`
   - 灼辉金源之翼本体、三版本配方与翅膀机动性。
+- `Content/Items/Accessories/Movement/AngelTreads.cs`
+- `Content/Items/Accessories/Movement/InfinityBoots.cs`
+- `Content/Items/Accessories/Movement/ElysianTracers.cs`
+- `Content/Items/Accessories/Movement/DrewsWings.cs`
+- `Content/Items/Accessories/Movement/SeraphTracers.cs`
+  - 完整翼靴链、可切换飞行模式、配方与装备贴图入口。
+- `Players/CalamityRebirthPlayer.WingChain.cs`
+  - 飞行时间、重伤额外无敌与现代灾厄兼容字段镜像。
 - `Content/Items/Accessories/Combat/Melee/BadgeofBravery.cs`
   - 元素之握前置勇气勋章；用户指定的近战三属性。
 - `Content/Items/Accessories/Combat/Melee/NecklaceofVexation.cs`
@@ -715,8 +827,8 @@
   - 通用客户端粒子池、加法混合绘制与世界卸载清理。
 - `Utilities/CalamityCompatUtil.cs`
   - 三版本亵渎天神进度与外部静态成员反射查询。
-- `Utilities/ModernRarityValueUtil.cs`
-  - 现代灾厄稀有度到标准购买价的统一映射；灼辉金源固定映射 RarityViolet 的 2 铂金 40 金，
+- `Utilities/RarityUtil.cs`
+  - 稀有度到标准购买价的统一映射；灼辉金源固定映射 RarityViolet 的 2 铂金 40 金，
     并支持药水等物品传入显式价格覆盖。
 - `Content/Items/Potions/FoodandDrinkPotions/TequilaSunrise.cs`
   - 龙舌兰日出本体、昼夜属性与三版本双配方。
@@ -724,8 +836,6 @@
   - 15 件 Agentia 药水的公共面板和三版本血珠兜底。
 - `Content/Items/Potions/FoodandDrinkPotions/AlcoholPotionItem.cs`
   - 酒类药水公共现代价格、食用面板与持久酒类入口。
-- `Content/Items/Materials/GalacticaSingularity.cs`
-  - 无尽饥渴、神圣之怒与渎神之怒高阶配方所需材料。
 - `Content/ModBuffs/Debuffs/TequilaSunriseBuff.cs`
   - 龙舌兰日出增益与酒醉等级累计。
 - `Content/ModBuffs/Debuffs/AlcoholPoisoning.cs`
@@ -744,9 +854,9 @@
 - `Utilities/RogueUtil.cs`
   - 2.2.2 / 1.4.2.101 / 1.4.5.7 盗贼软依赖桥。
 - `Systems/VanillaNerfRevertConfig.cs`
-  - 经典灾厄原版削弱回调开关；服务器端配置，修改后重载生效。
+  - 灾厄原版削弱回调开关；服务器端配置，修改后重载生效。
 - `Systems/VanillaNerfRevertSystem.cs`
-  - 1.4.2.101 与 `CalRD` 的精确原版数值、护甲、饰品、增益、弹幕与跑速回调数据。
+  - 现代 2.2.2、1.4.2.101 与 `CalRD` 的精确原版数值、护甲、饰品、翅膀、增益、弹幕与跑速回调数据。
 - `Content/Items/Weapons/Melee/Ataraxia.cs`
   - 禅心剑本体、三版本配方与命中特效入口。
 - `Content/Projectiles/Melee/Ataraxia*.cs`
@@ -778,8 +888,6 @@
   - 银河弹、全部环境二次弹幕、PvP 路径与彩虹残影。
 - `Utilities/ProjectileUtil.cs`
   - 原生残影模式、追踪和方舟落点生成工具。
-- `Utilities/GalaxiaEnvironmentBuffUtil.cs`
-  - 银河与鸿蒙方舟本体命中的环境/月亮事件玩家增益表。
 - `Utilities/CalamityCompatUtil.cs`
   - 三版本 `ZoneAstral` 反射缓存与外部减益入口。
 ## 6. 1.4.5.7 配方口径
@@ -819,8 +927,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 本工程已独立移植 `CosmicPurpleRarity` 与 `TurquoiseRarity`，独立加载时也保持对应颜色和名称效果。
 - `PureGreenRarity` 已补移植，Turquoise 的正向重铸现在按现代版进入 PureGreen。
 - 龙魂秘药已按用户要求彻底删除，不恢复其物品、增益、配方、贴图或玩家结算。
-- 三种高阶 Agentia 药水使用本工程的 `GalacticaSingularity`；若外部灾厄有同名材料，
-  Ceaseless Hunger 会优先使用外部材料，缺席时使用本工程材料。
+- 三种高阶 Agentia 药水的现代配方使用四色月亮碎片各一；
+  1.4.2.101 与 CalRD 继续使用各自原生银河奇点。
 - 血神核心系列已完成编译与贴图检查，仍需进游戏回归测试三版本配方、宝藏袋条件、光环生成和多人表现。
 - 2026-11-12 全量审计修复：晶光头骨、新生药水、光合作用红心治疗改为服务器验证请求；
   天界洋葱改为服务器验证解锁、每玩家独立掉落；禅心剑改用最近点圆形碰撞；
@@ -837,7 +945,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   `DaybreakII.fx/.fxc` 与 `Neurons.png`；该路径会造成命中后背景黑屏和严重卡顿，不要恢复。
   破晓II现使用 NPC 绘制颜色橙红染色与安全火花粒子。
 - 2026-11-10 已移植禅心剑（`Ataraxia`）：伤害 3651、使用 14 帧；2026-11-12 已把稀有度和价格接入
-  `ModernRarityValueUtil`，灼辉金源按现代 RarityViolet 标准改为 2 铂金 40 金。普通近战爆炸伤害为
+  `RarityUtil`，灼辉金源按现代 RarityViolet 标准改为 2 铂金 40 金。普通近战爆炸伤害为
   物品伤害的 70%，爆炸每额外命中一个目标伤害 ×0.80（最低 1）。完整包含主弹、侧弹、针叶弹、
   爆炸区与增强版暗影焰，并为现代 2.2.2、经典 1.4.2.101 和 `CalRD 1.4.5.7` 分别注册配方。
 - 禅心剑稀有度完整移植 `BurnishedAuricRarity`，由现有 `CalamityRebirthGlobalItem` 接管物品名绘制。
@@ -1060,3 +1168,139 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   - `git push origin master`
 - 不得把 GitHub 令牌、代理账号、Cookie、Credential Manager 内容或其他认证信息写入仓库、文档或 `AGENTS.md`。
 - 本快照只记录稳定仓库状态；临时代理端口、登录账号和本次命令行绕过方式不属于工程记忆。
+## 14. 2026-11-21 星云核心移植快照
+- 本轮完成 `NebulousCore / 星云核心` 全链：
+  - 物品、`NebulaStar`、`NebulaDust`、玩家保命结算和三版本神之使徒宝藏袋替换掉落。
+  - 四张贴图均从 Demutation 原件复制并通过 SHA-256 核对。
+  - 中英文本地化新增物品名、说明、星云之星与星云尘埃显示名。
+- 当前验证：
+  - `dotnet build -t:Compile -v q -nologo`：0 警告、0 错误。
+  - 223 个手写 C# 文件，空行数 0。
+  - 132 个直接隐式贴图与 4 个抽象类检查通过，没有缺失。
+  - 资源路径 44/44 存在。
+  - 中英文 Hjson 均可严格解析，新增路径类型一致。
+- 当前饰品数量：
+  - `Combat`：61 个物品类。
+  - `Movement`：8 个物品类。
+  - `Construction`：3 个物品类。
+  - `HealthandMana`：9 个物品类。
+  - 全部饰品 C# 文件共 81 个。
+- 当前 Demutation 饰品对照：95 个源物品类中已对应 70 个，剩余 25 个；
+  `NebulousCore` 已从剩余清单完成。
+- 仍需进游戏回归：
+  - 三版本神之使徒宝藏袋是否只掉本工程星云核心。
+  - 隐藏外观后已有星星是否立即消散。
+  - 星星生成上限、600 像素追踪、命中尘埃和 PvP 路径。
+  - 1/10 致命伤保护、100 点治疗和多人同步表现。
+## 15. 2026-11-21 元灵之心链移植快照
+- 本轮完成 `HeartoftheElements / 元灵之心` 全链：
+  - 4 枚元素石、5 件元素召唤饰品、元灵之心本体。
+  - 5 个元素仆从、7 个辅助攻击/沙暴/治疗弹幕和 6 个常驻召唤增益。
+  - 三版本普通 Boss、专家宝藏袋和沙元素掉落路径全部接入。
+  - 10 张物品贴图、9 张仆从/攻击弹幕贴图和 6 张增益图标逐字节复制并核对 SHA-256。
+- 当前验证：
+  - `dotnet build -t:Compile -v q -nologo`：0 警告、0 错误。
+  - 255 个手写 C# 文件，空行数 0。
+  - 160 个直接隐式贴图与 4 个抽象类检查通过，没有缺失。
+  - 资源路径 44/44 存在。
+  - 中英文 Hjson 严格解析通过，双方均为 549 条对象路径，缺失 0、多余 0、类型差异 0。
+  - 同时修复了中文原有 7 条被注释掉的弹幕显示名。
+- 当前饰品数量：
+  - `Combat`：71 个物品类。
+  - `Movement`：8 个物品类。
+  - `Construction`：3 个物品类。
+  - `HealthandMana`：9 个物品类。
+  - 全部饰品 C# 文件共 91 个。
+- 当前 Demutation 饰品对照：95 个源物品类中已对应 84 个，剩余 11 个：
+  `FrostBarrier`、`LeadCore`、`ManaPolarizer`、`PsychoticAmulet`、`QuiverofNihility`、
+  `AngelTreads`、`StatisNinjaBelt`、`DrewsWings`、`ElysianTracers`、`InfinityBoots`、`SeraphTracers`。
+- 仍需进游戏回归：
+  - 三版本元素石普通掉落与宝藏袋替换是否各只生成一次。
+  - 元灵之心可见/隐藏切换是否立即关闭或重建五种元素。
+  - 五种元素仆从的索敌、远程攻击、沙暴、治疗珠和多人同步。
+  - 花绽石与元灵之心的诅咒光环伤害、植物生长方块同步。
+## 17. 2026-11-21 无暇粹魂晶古老生命链补齐
+- 新增 `HoneyDew2`、`LivingDew2`、`RadiantOoze2`、`AmbrosialAmpoule2` 四件本地饰品。
+- 玩家结算新增：
+  - `honeyTurboRegen`：蜂蜜内静止再生。
+  - `aAmpoule`：甘露安瓿（古）静止再生与按缺失生命动态再生。
+  - `rOoze`：光辉软泥（古）按缺失生命动态再生。
+  - `livingDewHalveDebuffs`：把时长减半从病症类扩展到火系类。
+- `BuffUtil` 新增独立的病症/中毒与火系/燃烧分类查询；无暇粹魂晶仍使用完整战斗减益清单。
+- `Purity` 三版本配方全部改为消耗本工程 `AmbrosialAmpoule2`。
+- 当前验证：
+  - 编译 0 警告、0 错误。
+  - 255 个手写 C# 文件，空行数 0。
+  - 163 个直接隐式贴图与 4 个抽象类检查通过。
+  - 资源路径 44/44 存在。
+  - 中英文 Hjson 均为 558 条路径，缺失、多余、类型差异均为 0。
+- 当前 Demutation 对照：已对应 84 件，剩余 11 件。
+## 18. 2026-11-21 删除银河奇点材料
+- 已彻底删除本工程 `GalacticaSingularity / 银河奇点`：
+  - 删除物品类、贴图、中英文本地化键及空的 `Content/Items/Materials` 目录。
+  - 不恢复同名材料或替身物品。
+- 仅现代 `CalamityMod` 配方按等价关系替换：
+  - 旧现代配方消耗银河奇点 ×N 时，改为太阳碎片、星旋碎片、星云碎片、星尘碎片各 ×N。
+  - 涉及元素方舟、欧米茄环境之刃、神之壁垒、神圣之怒、渎神之怒与无尽饥渴。
+  - 1.4.2.101 与 CalRD 1.4.5.7 继续使用各版本原生 `GalacticaSingularity`。
+- 当前验证：
+  - 编译 0 警告、0 错误。
+  - 255 个手写 C# 文件，空行数 0。
+  - 163 个直接隐式贴图全部命中。
+  - 资源路径 44/44 存在。
+  - 中英文 Hjson 均为 558/558，缺失、多余与类型差异均为 0。
+  - 本工程不再持有银河奇点物品；经典配方只通过弱依赖引用外部原生件。
+## 19. 2026-11-21 炽天使翼靴链移植快照
+- 已完成五件链：
+  - `AngelTreads / 天使之靴`
+  - `InfinityBoots / 天界翼靴`
+  - `ElysianTracers / 极乐翼靴`
+  - `DrewsWings / Drew之翼`
+  - `SeraphTracers / 炽天使翼靴`
+- 天界、极乐、炽天使三件均支持 Shift+右键切换翅膀/履带模式：
+  - 状态保存在物品实例上，写入 `SaveData/LoadData`。
+  - 通过 `NetSend/NetReceive` 与 `Item.NetStateChanged()` 同步。
+  - 履带模式分别提供火箭靴 4/1/2 级，并继承天使之靴 +10% 飞行时间。
+- 炽天使翼靴：
+  - 单次伤害超过 200 时追加 30 帧无敌，仅本地玩家写入，PvP 同样适用。
+  - 现代灾厄通过反射镜像 `seraphTracers`，获得金源排斥与危险砖块免疫。
+  - 反射绑定缓存在卸载阶段清空，避免热重载后保留旧字段。
+- 配方已覆盖现代、1.4.2.101 与 CalRD；Drew之翼从三版本犽戎宝藏袋固定替换掉落。
+- 当前验证：
+  - 编译 0 警告、0 错误。
+  - 261 个手写 C# 文件，空行数 0。
+  - 168 个直接隐式贴图与 4 个抽象类检查通过。
+  - 资源路径 44/44 存在。
+  - 中英文 Hjson 均为 576/576，缺失、多余与类型差异均为 0。
+- 当前饰品数量：
+  - `Movement`：13 个物品类。
+  - 全部饰品 C# 文件共 100 个。
+- 当前 Demutation 对照：95 个源物品类中已对应 89 个，剩余 6 个：
+  `FrostBarrier`、`LeadCore`、`ManaPolarizer`、`PsychoticAmulet`、
+  `QuiverofNihility`、`StatisNinjaBelt`。
+- `TornadoProj.png` 固定放在 `Content/Projectiles` 根目录，与 `InvisibleProj.png` 同级；
+  `SandTornado` 的显式贴图路径必须为 `CalamityRebirth/Content/Projectiles/TornadoProj`。
+## 16. 2026-11-21 Utilities 通用化整理
+- 保留原有 `WeaponUtil`、`MaterialUtil`、`ProjectileUtil`、`RogueUtil`、`CollisionUtil`
+  五个 `CRUtil` 分部和 `CalamityCompatUtil` 不变。
+- `ModernRarityValueUtil` 已重命名为 `RarityUtil`，所有调用同步更新为 `RarityUtil.Apply`。
+- `JewelDebuffUtil` 与 `GalaxiaEnvironmentBuffUtil` 已合并为 `BuffUtil`：
+  - `BuffUtil.Contains`：战斗减益查询。
+  - `BuffUtil.Unload`：热重载清理。
+  - `BuffUtil.ApplyEnvironmentBuffs`：月亮事件、群系与星陨环境增益。
+- `Utilities` 当前文件：
+  - `BuffUtil.cs`
+  - `CalamityCompatUtil.cs`
+  - `CollisionUtil.cs`
+  - `MaterialUtil.cs`
+  - `PerPlayerDropRule.cs`
+  - `ProjectileUtil.cs`
+  - `RarityUtil.cs`
+  - `RogueUtil.cs`
+  - `WeaponUtil.cs`
+- 当前版本已提升为 `0.1.2.5`，并同步更新：
+  - `build.txt`
+  - `description.txt`
+  - `description_workshop.txt`
+  - `README.md`
+- 描述文件已补充 `NebulousCore / 星云核心` 与 `HeartoftheElements / 元灵之心` 全链。

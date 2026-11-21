@@ -152,6 +152,10 @@ namespace CalamityRebirth.NPCs
         /// </summary>
         public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
         {
+			if (ModLoader.HasMod("CalamityMod")
+				|| ModLoader.HasMod("CalamityModClassicPreTrailer")
+				|| ModLoader.HasMod("CalRD"))
+				AddElementalChainVanillaDrops(npc, npcLoot);
             if (npc.type == NPCID.KingSlime)
             {
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<CrownJewel>(), 10, 10));
@@ -171,6 +175,18 @@ namespace CalamityRebirth.NPCs
             AddBossLootForMod(npc, npcLoot, "CalRD");
             AddSpongeChainDrops(npc, npcLoot);
         }
+		/// <summary>
+		/// 沙元素在普通和专家模式分别掉落瓶装沙元素，专家模式另有二十分之一概率掉落稀有版本。
+		/// </summary>
+		private static void AddElementalChainVanillaDrops(NPC npc, NPCLoot npcLoot)
+		{
+			if (npc.type != NPCID.SandElemental)
+				return;
+			npcLoot.Add(ItemDropRule.NormalvsExpert(
+				ModContent.ItemType<WifeinaBottle>(), 7, 5));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert()
+				, ModContent.ItemType<WifeinaBottlewithBoobs>(), 20));
+		}
         /// <summary>为涡流虹吸石链的凝胶、甲壳、海贝与火花前置添加普通/专家掉落。</summary>
         private static void AddSpongeChainDrops(NPC npc, NPCLoot npcLoot)
         {
@@ -234,6 +250,7 @@ namespace CalamityRebirth.NPCs
         {
             if (!ModLoader.TryGetMod(modName, out Mod mod))
                 return;
+			AddElementalChainBossDrops(npc, npcLoot, mod);
             if (mod.TryFind("BrimstoneElemental", out ModNPC brimstoneElemental)
                 && npc.type == brimstoneElemental.Type)
                 npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Abaddon>(), 12, 7));
@@ -241,5 +258,61 @@ namespace CalamityRebirth.NPCs
                 && npc.type == providence.Type)
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElysianAegis>()));
         }
+		/// <summary>
+		/// 为指定灾厄分支的塞壬、云元素和五类元素来源 Boss 添加普通模式掉落。
+		/// Lure 与风暴之眼使用普通/专家七分之一和五分之一，元素石只在非专家模式以十分之一掉落。
+		/// </summary>
+		private static void AddElementalChainBossDrops(NPC npc, NPCLoot npcLoot, Mod mod)
+		{
+			string lureName = mod.Name == "CalamityMod" ? "Anahita" : "Siren";
+			string eyeName = mod.Name == "CalamityMod" ? "CloudElemental" : "ThiccWaifu";
+			string chaosName = mod.Name == "CalamityMod" ? "CalamitasClone"
+				: mod.Name == "CalRD" ? "CalamitasRun3" : "Calamitas";
+			if (NpcMatchesAny(mod, npc, lureName))
+			{
+				npcLoot.Add(ItemDropRule.NormalvsExpert(
+					ModContent.ItemType<LureofEnthrallment>(), 7, 5));
+				return;
+			}
+			if (NpcMatchesAny(mod, npc, eyeName))
+			{
+				npcLoot.Add(ItemDropRule.NormalvsExpert(
+					ModContent.ItemType<EyeoftheStorm>(), 7, 5));
+				return;
+			}
+			if (NpcMatchesAny(mod, npc, "BrimstoneElemental"))
+			{
+				AddElementStoneDrop(npcLoot, ModContent.ItemType<RoseStone>());
+				return;
+			}
+			if (NpcMatchesAny(mod, npc, "DesertScourgeHead", "AquaticScourgeHead"))
+			{
+				AddElementStoneDrop(npcLoot, ModContent.ItemType<AeroStone>());
+				return;
+			}
+			if (NpcMatchesAny(mod, npc, "Cryogen"))
+				AddElementStoneDrop(npcLoot, ModContent.ItemType<CryoStone>());
+			else if (NpcMatchesAny(mod, npc, chaosName))
+				AddElementStoneDrop(npcLoot, ModContent.ItemType<ChaosStone>());
+			else if (NpcMatchesAny(mod, npc, "PlaguebringerGoliath"))
+				AddElementStoneDrop(npcLoot, ModContent.ItemType<BloomStone>());
+		}
+		/// <summary>判断当前 Boss 是否匹配指定模组中的任一候选内部类名。</summary>
+		private static bool NpcMatchesAny(Mod mod, NPC npc, params string[] names)
+		{
+			foreach (string name in names)
+			{
+				if (mod.TryFind(name, out ModNPC modNpc) && npc.type == modNpc.Type)
+					return true;
+			}
+			return false;
+		}
+		/// <summary>以非专家十分之一概率加入一枚元素石。</summary>
+		private static void AddElementStoneDrop(NPCLoot npcLoot, int itemType)
+		{
+			LeadingConditionRule notExpert = new(new Conditions.NotExpert());
+			notExpert.OnSuccess(new CommonDrop(itemType, 10));
+			npcLoot.Add(notExpert);
+		}
     }
 }

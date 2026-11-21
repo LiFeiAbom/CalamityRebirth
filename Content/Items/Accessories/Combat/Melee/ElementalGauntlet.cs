@@ -32,7 +32,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
             Item.width = 22;
             Item.height = 38;
             Item.accessory = true;
-            ModernRarityValueUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>());
         }
         /// <summary>
         /// 仅点亮本帧装备状态；完整面板和命中减益由玩家结算入口统一处理。

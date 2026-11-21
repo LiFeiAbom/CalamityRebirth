@@ -28,7 +28,7 @@ namespace CalamityRebirth.Content.Items.Potions.BuffPotions
             Item.height = 18;
             Item.useTurn = true;
             Item.maxStack = maxStack;
-            ModernRarityValueUtil.Apply(Item, rarity, explicitValue);
+            RarityUtil.Apply(Item, rarity, explicitValue);
             Item.useAnimation = 17;
             Item.useTime = 17;
             Item.useStyle = ItemUseStyleID.EatFood;

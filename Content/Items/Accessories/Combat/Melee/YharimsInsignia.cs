@@ -42,7 +42,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
             Item.width = 22;
             Item.height = 38;
             Item.accessory = true;
-            ModernRarityValueUtil.Apply(
+            RarityUtil.Apply(
                 Item,
                 ModContent.RarityType<TurquoiseRarity>(),
                 Item.buyPrice(0, 30, 0, 0));
