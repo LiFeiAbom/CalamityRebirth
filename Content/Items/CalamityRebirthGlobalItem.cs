@@ -1,5 +1,7 @@
 using CalamityRebirth.Players;
 using CalamityRebirth.Content.Rarities;
+using CalamityRebirth.Content.Projectiles.Magic;
+using CalamityRebirth.Content.Projectiles.Typeless;
 using CalamityRebirth.Content.Items.Accessories.Combat;
 using CalamityRebirth.Content.Items.Accessories.Combat.Melee;
 using CalamityRebirth.Content.Items.Accessories.Combat.Magic;
@@ -8,8 +10,10 @@ using CalamityRebirth.Content.Items.Accessories.HealthandMana;
 using CalamityRebirth.Content.Items.Accessories.Movement;
 using CalamityRebirth.Systems;
 using CalamityRebirth.Utilities;
+using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -57,6 +61,48 @@ namespace CalamityRebirth.Content.Items
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
             VanillaNerfRevertSystem.RestoreAccessoryStats(item, player);
+        }
+        /// <summary>
+        /// 龙蒿法师套装在累计 5 次魔法暴击后，让下一次魔法射击额外发射 9～11 枚树叶。
+        /// 计数只由本机拥有者消耗，避免多人环境重复生成。
+        /// </summary>
+        public override bool Shoot(Item item, Player player, EntitySource_ItemUse_WithAmmo source
+            , Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            CalamityRebirthPlayer modPlayer = player.GetModPlayer<CalamityRebirthPlayer>();
+            if (modPlayer.tarraMage && modPlayer.tarraCrits >= 5
+                && item.CountsAsClass(DamageClass.Magic)
+                && player.whoAmI == Main.myPlayer)
+            {
+                modPlayer.tarraCrits = 0;
+                int leafCount = 9 + Main.rand.Next(3);
+                for (int i = 0; i < leafCount; i++)
+                {
+                    float spreadMultiplier = 0.025f * i;
+                    Vector2 leafVelocity = velocity + new Vector2(
+                        Main.rand.Next(-25, 26) * spreadMultiplier,
+                        Main.rand.Next(-25, 26) * spreadMultiplier);
+                    float speed = leafVelocity.Length();
+                    if (speed > 0f)
+                        leafVelocity *= item.shootSpeed / speed;
+                    Projectile.NewProjectile(source, position, leafVelocity
+                        , ProjectileID.Leaf, (int)(damage * 0.20f), knockback, player.whoAmI);
+                }
+            }
+            modPlayer.TryShootGodSlayerRound(item, position, velocity, damage);
+            if (modPlayer.bloodflareRanged && item.CountsAsClass(DamageClass.Ranged)
+                && player.whoAmI == Main.myPlayer && Main.rand.Next(100) < 2)
+                Projectile.NewProjectile(source, position, velocity
+                    , ModContent.ProjectileType<BloodBomb>()
+                    , (int)(damage * (modPlayer.auricSet ? 2.2f : 1.6f))
+                    , 2f, player.whoAmI);
+            if (modPlayer.bloodflareMage && item.CountsAsClass(DamageClass.Magic)
+                && player.whoAmI == Main.myPlayer && Main.rand.Next(100) < 5)
+                Projectile.NewProjectile(source, position, velocity
+                    , ModContent.ProjectileType<GhostlyBolt>()
+                    , (int)(damage * (modPlayer.auricSet ? 4.2f : 2.6f))
+                    , 1f, player.whoAmI);
+            return true;
         }
         /// <summary>
         /// 还原现代灾厄对蝴蝶翅膀与幽灵翅膀上升倍率的削减。
@@ -307,6 +353,16 @@ namespace CalamityRebirth.Content.Items
             CalamityRebirthPlayer.TryApplyPotionHitDebuffsOnPvP(player, target);
             CalamityRebirthPlayer.TryApplyCrystalSkullLightningOnPvP(player, target, item.DamageType
                 , hurtInfo.Damage);
+        }
+        /// <summary>PvP 真近战命中复用始源林海近战 25% 五倍伤害判定。</summary>
+        public override void ModifyHitPvp(Item item, Player player, Player target
+            , ref Player.HurtModifiers modifiers)
+        {
+            CalamityRebirthPlayer modPlayer = player.GetModPlayer<CalamityRebirthPlayer>();
+            if (!modPlayer.silvaMelee || !Main.rand.NextBool(4))
+                return;
+            if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.MeleeNoSpeed))
+                modifiers.FinalDamage *= 5f;
         }
         /// <summary>
         /// 烦恼项链使任意武器直接命中 NPC 时附加毒液。

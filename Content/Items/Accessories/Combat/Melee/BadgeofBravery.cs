@@ -35,7 +35,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
         /// <summary>
         /// 应用用户指定的勇气勋章面板：
         /// 近战伤害 +10%、近战暴击率 +10、近战护甲穿透 +10。
-        /// 本实现不附加参考工程旧版的龙蒿套装条件攻速，保持属性与点名规格一致。
+        /// 本实现不附加旧版龙蒿套装条件攻速，保持属性与点名规格一致。
         /// </summary>
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -45,7 +45,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
         }
         /// <summary>
         /// 分别注册现代、经典 1.4.2.101 与 CalRD 的配方。
-        /// 三个分支均严格采用 ReferenceMod 中对应灾厄版本的原始配方，不混用旧工程口径。
+        /// 三个分支分别采用对应兼容版本的配方，不复用其他分支的配方。
         /// </summary>
         public override void AddRecipes()
         {

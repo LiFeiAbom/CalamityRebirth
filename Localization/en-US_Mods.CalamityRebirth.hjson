@@ -1,4 +1,34 @@
 Buffs: {
+	GodSlayerCooldown: {
+		DisplayName: God Slayer Cooldown
+		Description: All damage increased; God Slayer revival is recharging
+	}
+
+	GodSlayerDashCooldown: {
+		DisplayName: God Slayer Dash Cooldown
+		Description: The God Slayer's power is gathering
+	}
+
+	Mechworm: {
+		DisplayName: Mechworm
+		Description: The Mechworm will protect you
+	}
+
+	SilvaCrystal: {
+		DisplayName: Silva Crystal
+		Description: The crystal will protect you
+	}
+
+	SilvaHysteresis: {
+		DisplayName: Silva Hysteresis
+		Description: Heavy yet crumbling
+	}
+
+	SilvaRevival: {
+		DisplayName: Silva Revival
+		Description: You are invulnerable
+	}
+
 	Afflicted: {
 		DisplayName: Afflicted
 		Description: Empowered by otherworldly spirits
@@ -37,6 +67,11 @@ Buffs: {
 	BrimstoneWaifu: {
 		DisplayName: Brimstone Elemental
 		Description: The brimstone elemental will protect you
+	}
+
+	TarraLifeRegen: {
+		DisplayName: Tarragon Life Regeneration
+		Description: Rapid life regeneration granted by the Tarragon melee set
 	}
 
 	CloudyWaifu: {
@@ -501,6 +536,15 @@ Items: {
 			10% increased ranged critical strike chance
 			20% chance not to consume ammo
 			Increases life regeneration, minion knockback, defense, and mining speed
+			'''
+	}
+
+	PsychoticAmulet: {
+		DisplayName: Psychotic Amulet
+		Tooltip:
+			'''
+			Boosts ranged damage and critical strike chance by 5%
+			Grants a massive boost to these stats if you aren't moving
 			'''
 	}
 
@@ -1267,6 +1311,15 @@ Items: {
 			'''
 	}
 
+	FrostBarrier: {
+		DisplayName: Frost Barrier
+		Tooltip:
+			'''
+			You will freeze enemies near you when you are struck
+			You are immune to the chilled debuff
+			'''
+	}
+
 	DeificAmulet: {
 		DisplayName: Deific Amulet
 		Tooltip:
@@ -1515,6 +1568,617 @@ Items: {
 			Converts part of incoming damage into healing
 			'''
 	}
+
+	TarragonBreastplate: {
+		DisplayName: Tarragon Breastplate
+		Tooltip:
+			'''
+			10% increased all damage and critical strike chance
+			+40 maximum life
+			+1 HP/s life regeneration
+			'''
+	}
+
+	TarragonHelm: {
+		DisplayName: Tarragon Helm
+		Tooltip:
+			'''
+			10% increased melee damage and critical strike chance
+			15% increased melee attack speed
+			Grants temporary lava immunity and immunity to Cursed Inferno, On Fire, Cursed, and Chilled
+			Allows free movement through liquids
+			5% increased damage reduction
+			'''
+		SetBonus:
+			'''
+			Increases heart pickup range
+			Enemies have a chance to drop extra hearts
+			25% chance to gain life regeneration when struck
+			Press [{0}] to gain 10 seconds of 50% contact damage reduction
+			This effect has a 30-second cooldown
+			'''
+	}
+
+	TarragonHelmet: {
+		DisplayName: Tarragon Helmet
+		Tooltip:
+			'''
+			10% increased rogue damage and critical strike chance
+			Grants temporary lava immunity and immunity to Cursed Inferno, On Fire, Cursed, and Chilled
+			Allows free movement through liquids
+			5% increased damage reduction
+			'''
+		SetBonus:
+			'''
+			Reduces enemy spawn rates
+			Increases heart pickup range
+			Enemies have a chance to drop extra hearts
+			Every 25 rogue critical hits grants 5 seconds of immunity
+			This effect has a 30-second cooldown
+			Each active debuff grants 10% increased rogue damage
+			Maximum rogue stealth increased by 130
+			'''
+	}
+
+	TarragonHornedHelm: {
+		DisplayName: Tarragon Horned Helm
+		Tooltip:
+			'''
+			+3 maximum minions
+			12% increased summon damage, whip range, and whip attack speed
+			Grants temporary lava immunity and immunity to Cursed Inferno, On Fire, Cursed, and Chilled
+			Allows free movement through liquids
+			5% increased damage reduction
+			'''
+		SetBonus:
+			'''
+			50% increased summon damage
+			Reduces enemy spawn rates
+			Increases heart pickup range
+			Enemies have a chance to drop extra hearts
+			While at full life, gain +2 minion slots and 10% more summon damage
+			Creates a life aura that periodically damages nearby enemies
+			'''
+	}
+
+	TarragonLeggings: {
+		DisplayName: Tarragon Leggings
+		Tooltip:
+			'''
+			20% increased movement speed, with an extra 15% below half life
+			10% increased all damage and critical strike chance
+			'''
+	}
+
+	TarragonMask: {
+		DisplayName: Tarragon Mask
+		Tooltip:
+			'''
+			10% increased magic damage and critical strike chance
+			+100 maximum mana and 15% reduced mana cost
+			Grants temporary lava immunity and immunity to Cursed Inferno, On Fire, Cursed, and Chilled
+			Allows free movement through liquids
+			5% increased damage reduction
+			'''
+		SetBonus:
+			'''
+			Reduces enemy spawn rates
+			Increases heart pickup range
+			Enemies have a chance to drop extra hearts
+			Every 5 magic critical hits empowers your next magic shot with a leaf storm
+			Magic projectile hits restore life based on projectile damage
+			'''
+	}
+
+	TarragonVisage: {
+		DisplayName: Tarragon Visage
+		Tooltip:
+			'''
+			10% increased ranged damage and critical strike chance
+			Grants temporary lava immunity and immunity to Cursed Inferno, On Fire, Cursed, and Chilled
+			Allows free movement through liquids
+			5% increased damage reduction
+			'''
+		SetBonus:
+			'''
+			Reduces enemy spawn rates
+			Increases heart pickup range
+			Enemies have a chance to drop extra hearts
+			Ranged critical hits create a burst of leaves
+			12% chance for ranged projectiles to release life energy when they disappear
+			'''
+	}
+
+	BloodflareBodyArmor: {
+		DisplayName: Bloodflare Body Armor
+		Tooltip:
+			'''
+			+40 maximum life
+			14% increased all damage and critical strike chance
+			Immersion in lava grants 30 defense and greatly increased life regeneration
+			'''
+	}
+
+	BloodflareCuisses: {
+		DisplayName: Bloodflare Cuisses
+		Tooltip:
+			'''
+			30% increased movement speed
+			10% increased all damage and critical strike chance
+			'''
+	}
+
+	BloodflareMask: {
+		DisplayName: Bloodflare Ram Mask
+		Tooltip:
+			'''
+			10% increased melee damage and critical strike chance
+			18% increased melee attack speed
+			Grants temporary lava immunity and free movement through liquids
+			'''
+		SetBonus:
+			'''
+			Greatly increases life regeneration and increases enemy aggro
+			Damaged enemies may drop hearts or mana stars
+			Enemies killed during a Blood Moon may drop Blood Orbs
+			True melee hits heal you
+			After 15 true melee hits, enter Blood Frenzy for 5 seconds
+			Blood Frenzy grants 25% melee damage and critical strike chance and halves contact damage
+			This effect has a 30-second cooldown
+			'''
+	}
+
+	BloodflareHornedHelm: {
+		DisplayName: Bloodflare Demon Helm
+		Tooltip:
+			'''
+			10% increased ranged damage and critical strike chance
+			Grants temporary lava immunity and free movement through liquids
+			'''
+		SetBonus:
+			'''
+			Greatly increases life regeneration
+			Damaged enemies may drop hearts or mana stars
+			Enemies killed during a Blood Moon may drop Blood Orbs
+			2% chance for ranged attacks to fire a Blood Bomb
+			Press [{0}] to release 16 tracking Bloodflare Souls
+			This effect has a 30-second cooldown
+			'''
+	}
+
+	BloodflareHornedMask: {
+		DisplayName: Bloodflare Hydra Hood
+		Tooltip:
+			'''
+			10% increased magic damage and critical strike chance
+			+100 maximum mana and 17% reduced mana cost
+			Grants temporary lava immunity and free movement through liquids
+			'''
+		SetBonus:
+			'''
+			Greatly increases life regeneration
+			Damaged enemies may drop hearts or mana stars
+			Enemies killed during a Blood Moon may drop Blood Orbs
+			5% chance for magic attacks to fire a Ghostly Bolt
+			Magic critical hits periodically release three homing fireballs
+			'''
+	}
+
+	BloodflareHelmet: {
+		DisplayName: Bloodflare Wyrm Helm
+		Tooltip:
+			'''
+			+3 maximum minions
+			12% increased summon damage, whip range, and whip attack speed
+			Grants temporary lava immunity and free movement through liquids
+			'''
+		SetBonus:
+			'''
+			55% increased summon damage
+			Greatly increases life regeneration
+			Damaged enemies may drop hearts or mana stars
+			Enemies killed during a Blood Moon may drop Blood Orbs
+			Periodically summons three orbiting ghostly mines
+			While above 90% life, gain 10% increased summon damage
+			While below 50% life, gain 20 defense and increased life regeneration
+			'''
+	}
+
+	BloodflareHelm: {
+		DisplayName: Bloodflare Imp Mask
+		Tooltip:
+			'''
+			10% increased rogue damage and critical strike chance
+			Grants temporary lava immunity and free movement through liquids
+			'''
+		SetBonus:
+			'''
+			Greatly increases life regeneration
+			Damaged enemies may drop hearts or mana stars
+			Enemies killed during a Blood Moon may drop Blood Orbs
+			Above 80% life: +30 defense and 5% increased rogue critical strike chance
+			At or below 80% life: 10% increased rogue damage
+			Rogue critical strikes have a 50% chance to heal you
+			Maximum rogue stealth increased by 135
+			'''
+	}
+
+	LeadCore: {
+		DisplayName: Lead Core
+		Tooltip: Grants immunity to Irradiated
+	}
+
+	SilvaArmor: {
+		DisplayName: Silva Armor
+		Tooltip:
+			'''
+			+80 maximum life
+			20% increased movement speed
+			18% increased all damage and critical strike chance
+			'''
+	}
+
+	SilvaLeggings: {
+		DisplayName: Silva Leggings
+		Tooltip:
+			'''
+			45% increased movement speed
+			12% increased all damage and critical strike chance
+			'''
+	}
+
+	SilvaHelm: {
+		DisplayName: Silva Helm
+		Tooltip:
+			'''
+			13% increased melee damage and critical strike chance
+			19% increased melee attack speed
+			'''
+		SetBonus:
+			'''
+			You are immune to almost all debuffs
+			All projectiles spawn healing leaf orbs on enemy hits
+			Maximum run speed and acceleration increased by 5%
+			At 1 life you cannot die from further damage for 10 seconds
+			Lethal damage during this window costs 100 maximum life
+			The effect stops when maximum life reaches 400 and maximum life returns on death
+			True melee strikes have a 25% chance to deal five times damage
+			After the Silva invincibility ends you take 20% less contact damage
+			Melee projectiles have a 25% chance to inflict Silva Hysteresis
+			'''
+	}
+
+	SilvaHornedHelm: {
+		DisplayName: Silva Horned Helm
+		Tooltip: 13% increased ranged damage and critical strike chance
+		SetBonus:
+			'''
+			You are immune to almost all debuffs
+			All projectiles spawn healing leaf orbs on enemy hits
+			Maximum run speed and acceleration increased by 5%
+			At 1 life you cannot die from further damage for 10 seconds
+			Lethal damage during this window costs 100 maximum life
+			The effect stops when maximum life reaches 400 and maximum life returns on death
+			Ranged weapons fire 10% faster
+			During the Silva invincibility your ranged damage is increased by 40%
+			'''
+	}
+
+	SilvaMaskedCap: {
+		DisplayName: Silva Masked Cap
+		Tooltip:
+			'''
+			13% increased magic damage and critical strike chance
+			+100 maximum mana
+			19% reduced mana cost
+			'''
+		SetBonus:
+			'''
+			You are immune to almost all debuffs
+			All projectiles spawn healing leaf orbs on enemy hits
+			Maximum run speed and acceleration increased by 5%
+			At 1 life you cannot die from further damage for 10 seconds
+			Lethal damage during this window costs 100 maximum life
+			The effect stops when maximum life reaches 400 and maximum life returns on death
+			Magic projectiles explode when they expire or hit only one enemy
+			During the Silva invincibility your magic damage is increased by 60%
+			'''
+	}
+
+	SilvaHelmet: {
+		DisplayName: Silva Helmet
+		Tooltip:
+			'''
+			+5 maximum minions
+			12% increased summon damage
+			12% increased whip range
+			12% increased whip attack speed
+			'''
+		SetBonus:
+			'''
+			75% increased summon damage
+			You are immune to almost all debuffs
+			All projectiles spawn healing leaf orbs on enemy hits
+			Maximum run speed and acceleration increased by 5%
+			At 1 life you cannot die from further damage for 10 seconds
+			Lethal damage during this window costs 100 maximum life
+			The effect stops when maximum life reaches 400 and maximum life returns on death
+			Summons an ancient leaf prism that blasts enemies with life energy
+			After the Silva invincibility your minions deal 10% more damage and you gain +2 maximum minions
+			'''
+	}
+
+	SilvaMask: {
+		DisplayName: Silva Mask
+		Tooltip:
+			'''
+			13% increased rogue damage and critical strike chance
+			20% increased movement speed
+			'''
+		SetBonus:
+			'''
+			You are immune to almost all debuffs
+			All projectiles spawn healing leaf orbs on enemy hits
+			Maximum run speed and acceleration increased by 5%
+			At 1 life you cannot die from further damage for 10 seconds
+			Lethal damage during this window costs 100 maximum life
+			The effect stops when maximum life reaches 400 and maximum life returns on death
+			Rogue weapons throw 10% faster above 50% life
+			During the Silva invincibility your rogue damage is increased by 40%
+			Maximum rogue stealth increased by 150
+			'''
+	}
+
+	AuricTeslaBodyArmor: {
+		DisplayName: Auric Tesla Body Armor
+		Tooltip:
+			'''
+			+100 maximum life
+			25% increased movement speed
+			Attacks have a 2% chance to deal no damage to you
+			22% increased all damage and critical strike chance
+			You freeze nearby enemies when struck
+			'''
+	}
+
+	AuricTeslaCuisses: {
+		DisplayName: Auric Tesla Cuisses
+		Tooltip:
+			'''
+			50% increased movement speed
+			14% increased all damage and critical strike chance
+			Grants the magic carpet effect
+			'''
+	}
+
+	AuricTeslaHelm: {
+		DisplayName: Auric Tesla Royal Helm
+		Tooltip:
+			'''
+			20% increased melee damage and critical strike chance
+			28% increased melee attack speed
+			Standing still increases all damage and critical strike chance
+			'''
+		SetBonus:
+			'''
+			Grants melee Tarragon, Bloodflare, God Slayer, and Silva armor effects
+			All projectile hits spawn healing auric orbs
+			Maximum run speed and acceleration increased by 10%
+			Melee damage scales with current life and reaches its maximum at full life
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			This effect has a 45-second cooldown
+			'''
+	}
+
+	AuricTeslaHoodedFacemask: {
+		DisplayName: Auric Tesla Hooded Facemask
+		Tooltip:
+			'''
+			30% increased ranged damage and critical strike chance
+			Standing still increases all damage and critical strike chance
+			'''
+		SetBonus:
+			'''
+			Grants ranged Tarragon, Bloodflare, God Slayer, and Silva armor effects
+			All projectile hits spawn healing auric orbs
+			Maximum run speed and acceleration increased by 10%
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			This effect has a 45-second cooldown
+			'''
+	}
+
+	AuricTeslaPlumedHelm: {
+		DisplayName: Auric Tesla Plumed Helm
+		Tooltip:
+			'''
+			20% increased rogue damage and critical strike chance
+			25% increased movement speed
+			Standing still increases all damage and critical strike chance
+			'''
+		SetBonus:
+			'''
+			Grants rogue Tarragon, Bloodflare, God Slayer, and Silva armor effects
+			All projectile hits spawn healing auric orbs
+			Maximum run speed and acceleration increased by 10%
+			Rogue critical strikes deal 1.25 times damage while above 50% life
+			Maximum rogue stealth is increased to 160
+			Rogue stealth builds while not attacking and not moving
+			The higher your rogue stealth, the higher your rogue damage, critical chance, and movement speed
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			This effect has a 45-second cooldown
+			'''
+	}
+
+	AuricTeslaSpaceHelmet: {
+		DisplayName: Auric Tesla Space Helmet
+		Tooltip:
+			'''
+			+7 maximum minions
+			12% increased summon damage
+			12% increased whip range
+			12% increased whip attack speed
+			Standing still increases all damage and critical strike chance
+			'''
+		SetBonus:
+			'''
+			Grants summon Tarragon, Bloodflare, God Slayer, and Silva armor effects
+			All projectile hits spawn healing auric orbs
+			Maximum run speed and acceleration increased by 10%
+			+1 maximum minion
+			120% increased minion damage
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			This effect has a 45-second cooldown
+			'''
+	}
+
+	AuricTeslaWireHemmedVisage: {
+		DisplayName: Auric Tesla Wire-Hemmed Visage
+		Tooltip:
+			'''
+			30% increased magic damage and critical strike chance
+			+100 maximum mana and 20% reduced mana cost
+			Standing still increases all damage and critical strike chance
+			'''
+		SetBonus:
+			'''
+			Grants magic Tarragon, Bloodflare, God Slayer, and Silva armor effects
+			All projectile hits spawn healing auric orbs
+			Maximum run speed and acceleration increased by 10%
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			This effect has a 45-second cooldown
+			'''
+	}
+
+	GodSlayerChestplate: {
+		DisplayName: God Slayer Chestplate
+		Tooltip:
+			'''
+			+60 maximum life
+			15% increased movement speed
+			15% increased all damage and critical strike chance
+			Attacks have a 2% chance to deal no damage to you
+			'''
+	}
+
+	GodSlayerHelm: {
+		DisplayName: God Slayer Helm
+		Tooltip:
+			'''
+			14% increased melee damage and critical strike chance
+			20% increased melee attack speed
+			'''
+		SetBonus:
+			'''
+			Fatal damage heals you for {1} HP instead of killing you
+			This effect has a 45-second cooldown
+			While the cooldown is active you gain 10% increased all damage
+			Taking over 80 damage in one hit releases a swarm of high-damage God Slayer darts
+			Melee hits periodically release high-damage God Slayer darts
+			Enemies take heavy damage when they hit you
+			Attacks dealing 80 damage or less are reduced to 1 damage
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			The dash has a 45-second cooldown
+			'''
+	}
+
+	GodSlayerHelmet: {
+		DisplayName: God Slayer Helmet
+		Tooltip: 14% increased ranged damage and critical strike chance
+		SetBonus:
+			'''
+			Fatal damage heals you for {1} HP instead of killing you
+			This effect has a 45-second cooldown
+			While the cooldown is active you gain 10% increased all damage
+			Ranged critical chance above 100% grants that excess as a chance to critically strike again for 4 times damage
+			Otherwise ranged critical hits have a 5% chance to deal 4 times damage
+			Fire a God Slayer shrapnel round every 2.5 seconds while firing ranged weapons
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			The dash has a 45-second cooldown
+			'''
+	}
+
+	GodSlayerHornedHelm: {
+		DisplayName: God Slayer Horned Helm
+		Tooltip:
+			'''
+			+3 maximum minions
+			12% increased summon damage
+			12% increased whip range
+			12% increased whip attack speed
+			'''
+		SetBonus:
+			'''
+			65% increased summon damage
+			Fatal damage heals you for {1} HP instead of killing you
+			This effect has a 45-second cooldown
+			While the cooldown is active you gain 10% increased all damage
+			Minion hits summon God Slayer phantoms
+			Summons a God-eating Mechworm to fight for you
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			The dash has a 45-second cooldown
+			'''
+	}
+
+	GodSlayerLeggings: {
+		DisplayName: God Slayer Leggings
+		Tooltip:
+			'''
+			35% increased movement speed
+			11% increased all damage and critical strike chance
+			'''
+	}
+
+	GodSlayerMask: {
+		DisplayName: God Slayer Mask
+		Tooltip:
+			'''
+			14% increased rogue damage and critical strike chance
+			18% increased movement speed
+			'''
+		SetBonus:
+			'''
+			Fatal damage heals you for {1} HP instead of killing you
+			This effect has a 45-second cooldown
+			While the cooldown is active you gain 10% increased all damage
+			At full life all rogue stats are increased by 10%
+			Taking over 80 damage in one hit grants extra immunity frames
+			Maximum rogue stealth is increased to 160
+			Rogue stealth builds while not attacking and not moving
+			The higher your rogue stealth, the higher your rogue damage, critical chance, and movement speed
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			The dash has a 45-second cooldown
+			'''
+	}
+
+	GodSlayerVisage: {
+		DisplayName: God Slayer Visage
+		Tooltip:
+			'''
+			14% increased magic damage and critical strike chance
+			+100 maximum mana
+			17% reduced mana cost
+			'''
+		SetBonus:
+			'''
+			Fatal damage heals you for {1} HP instead of killing you
+			This effect has a 45-second cooldown
+			While the cooldown is active you gain 10% increased all damage
+			Magic hits release God Slayer flames and healing flames
+			Taking damage releases a magical God Slayer explosion
+			Press [{0}] to dash in any of eight directions
+			The dash deals great damage and inflicts God Slayer Inferno
+			The dash has a 45-second cooldown
+			'''
+	}
 }
 
 Rarities: {
@@ -1573,6 +2237,31 @@ Projectiles: {
 	FungalClumpMinion.DisplayName: Fungal Clump Minion
 	PoisonousSeawater.DisplayName: Poisonous Seawater
 	StandingFire.DisplayName: Standing Fire
+	TarraEnergy.DisplayName: Tarragon Energy
+	BloodBomb.DisplayName: Blood Bomb
+	BloodBombExplosion.DisplayName: Blood Bomb Explosion
+	GhostlyBolt.DisplayName: Ghostly Bolt
+	GhostlyMine.DisplayName: Ghostly Mine
+	BloodflareSoul.DisplayName: Bloodflare Soul
+	SilvaCrystal.DisplayName: Silva Crystal
+	SilvaCrystalExplosion.DisplayName: Silva Crystal Explosion
+	SilvaOrb.DisplayName: Silva Orb
+	SilvaBurst.DisplayName: Silva Burst
+	GodSlayerBlaze.DisplayName: God Slayer Blaze
+	GodSlayerDart.DisplayName: God Slayer Dart
+	GodSlayerHealOrb.DisplayName: God Slayer Heal Orb
+	GodSlayerOrb.DisplayName: God Slayer Orb
+	GodSlayerPhantom.DisplayName: God Slayer Phantom
+	GodSlayerShrapnelRound.DisplayName: God Slayer Shrapnel Round
+	GodSlayerShrapnel.DisplayName: God Slayer Shrapnel
+	MechwormHead.DisplayName: Mechworm
+	MechwormBody.DisplayName: Mechworm Body
+	MechwormBody2.DisplayName: Mechworm Body 2
+	MechwormTail.DisplayName: Mechworm Tail
 }
 
-Keybinds.Elysian.DisplayName: Elysian Aegis Guardian Stance
+Keybinds: {
+	Elysian.DisplayName: Elysian Aegis Guardian Stance
+	Tarragon.DisplayName: Tarragon Life Cloak
+	GodslayerDash.DisplayName: God Slayer Dash
+}

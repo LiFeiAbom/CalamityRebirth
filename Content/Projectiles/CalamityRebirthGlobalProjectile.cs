@@ -3,6 +3,7 @@ using CalamityRebirth.Content.Items.Accessories.Combat.Melee;
 using CalamityRebirth.Content.Items.Accessories.Combat.Ranged;
 using CalamityRebirth.Content.Items.Accessories.Combat.Rogue;
 using CalamityRebirth.Content.Projectiles.Rogue;
+using CalamityRebirth.Content.Projectiles.Typeless;
 using CalamityRebirth.Utilities;
 using Microsoft.Xna.Framework;
 using System;
@@ -30,6 +31,26 @@ namespace CalamityRebirth.Content.Projectiles
         {
             TryElementalQuiverSplit(projectile);
             TryNanotechBlade(projectile);
+        }
+        /// <summary>远程弹幕消失时，龙蒿射手套有 12% 概率分裂出 2～3 枚生命能量。</summary>
+        public override void OnKill(Projectile projectile, int timeLeft)
+        {
+            if (projectile.owner < 0 || projectile.owner >= Main.maxPlayers
+                || projectile.owner != Main.myPlayer || !projectile.friendly
+                || !projectile.DamageType.CountsAsClass(DamageClass.Ranged)
+                || projectile.type == ModContent.ProjectileType<TarraEnergy>())
+                return;
+            Player owner = Main.player[projectile.owner];
+            if (!owner.GetModPlayer<CalamityRebirthPlayer>().tarraRanged || Main.rand.Next(100) >= 12)
+                return;
+            int count = Main.rand.Next(2, 4);
+            int damage = Math.Min((int)(projectile.damage * 0.33f), 65);
+            for (int i = 0; i < count; i++)
+            {
+                Vector2 velocity = Main.rand.NextVector2Unit() * Main.rand.NextFloat(7f, 10f);
+                Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velocity
+                    , ModContent.ProjectileType<TarraEnergy>(), damage, 0f, projectile.owner);
+            }
         }
         /// <summary>执行元素箭袋的分裂判定。</summary>
         private void TryElementalQuiverSplit(Projectile projectile)
@@ -103,11 +124,18 @@ namespace CalamityRebirth.Content.Projectiles
         public override void ModifyHitPlayer(Projectile projectile, Player target, ref Player.HurtModifiers modifiers)
         {
             if (!modifiers.PvP || projectile.owner < 0 || projectile.owner >= Main.maxPlayers
-                || !projectile.friendly || projectile.hostile || projectile.arrow
-                || !projectile.DamageType.CountsAsClass(DamageClass.Ranged))
+                || !projectile.friendly || projectile.hostile)
                 return;
             Player owner = Main.player[projectile.owner];
-            if (owner.GetModPlayer<CalamityRebirthPlayer>().elementalQuiver)
+            CalamityRebirthPlayer modPlayer = owner.GetModPlayer<CalamityRebirthPlayer>();
+            if (modPlayer.silvaRanged && modPlayer.silvaCountdown > 0 && modPlayer.hasSilvaEffect
+                && projectile.DamageType.CountsAsClass(DamageClass.Ranged))
+                modifiers.FinalDamage *= 1.40f;
+            if (modPlayer.silvaSummon && modPlayer.silvaCountdown <= 0 && modPlayer.hasSilvaEffect
+                && projectile.DamageType.CountsAsClass(DamageClass.Summon))
+                modifiers.FinalDamage *= 1.10f;
+            if (!projectile.arrow && projectile.DamageType.CountsAsClass(DamageClass.Ranged)
+                && modPlayer.elementalQuiver)
                 modifiers.FinalDamage *= ElementalQuiver.NonArrowDamageMultiplier;
         }
         /// <summary>

@@ -44,6 +44,10 @@ namespace CalamityRebirth
 			BuffUtil.Unload();
 			CalamityCompatUtil.ClearBuffTypeCache();
 			CalamityCompatUtil.ClearPlayerBoolBindings();
+			CalamityCompatUtil.ClearAstralBindings();
+			CalamityRebirthPlayer.ResetSilvaStaticCache();
+			CalamityRebirthPlayer.ResetTarragonStaticCache();
+			CRUtil.UnloadRogueBindings();
 		}
 		/// <summary>
 		/// 处理天界洋葱永久解锁状态的多人同步。
@@ -65,6 +69,15 @@ namespace CalamityRebirth
 					break;
 				case CalamityRebirthPlayer.MsgShieldSlamDashHit:
 					HandleShieldSlamDashHitPacket(reader, whoAmI);
+					break;
+				case CalamityRebirthPlayer.MsgSilvaRevivalState:
+					CalamityRebirthPlayer.HandleSilvaRevivalState(reader, whoAmI);
+					break;
+				case CalamityRebirthPlayer.MsgGodSlayerDash:
+					CalamityRebirthPlayer.HandleGodSlayerDashPacket(reader, whoAmI);
+					break;
+				case CalamityRebirthPlayer.MsgGodSlayerDashHit:
+					CalamityRebirthPlayer.HandleGodSlayerDashHitPacket(reader, whoAmI);
 					break;
 			}
 		}

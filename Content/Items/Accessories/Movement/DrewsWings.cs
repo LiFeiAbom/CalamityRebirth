@@ -27,7 +27,8 @@ namespace CalamityRebirth.Content.Items.Accessories.Movement
 		/// <summary>飞行时生成钻石色尘，并免疫摔落伤害。</summary>
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			if (player.controlJump && player.wingTime > 0f && player.jump == 0
+			if (player.controlJump && player.wingTime > 0f
+				&& !VanillaExtraJump.CloudInABottle.CanStart(player) && player.jump == 0
 				&& player.velocity.Y != 0f && !hideVisual)
 			{
 				int offset = player.direction == 1 ? -40 : 4;

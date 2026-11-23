@@ -39,7 +39,7 @@ namespace CalamityRebirth.Content.Particles
         }
         /// <summary>每帧速度，粒子系统在调用 Update 前先积分到 Position。</summary>
         public Vector2 Velocity;
-        // 与原版 GlowSparkParticle.Update 一致：缩小、按寿命三次方淡出、减速并朝向速度方向。
+        // 缩小、按寿命三次方淡出、减速并朝向速度方向。
         public void Update()
         {
             Scale *= 0.95f;

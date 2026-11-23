@@ -151,6 +151,37 @@ namespace CalamityRebirth.Utilities
                 AddFloat(classic142StealthField, modPlayer, stealthBonus);
             }
         }
+        /// <summary>
+        /// 按当前最大潜行的指定比例继续增加上限，用于叠乘式盗贼潜行加成。
+        /// 三版本分别读取已写入的实时上限，再把增量交给统一潜行接口。
+        /// </summary>
+        public static void AddRogueStealthRatio(Player player, float ratio)
+        {
+            Initialize();
+            if (ratio <= 0f)
+                return;
+            if (modernRogueClass != null && modernPlayerGetter != null)
+            {
+                object modPlayer = InvokePlayerGetter(modernPlayerGetter, player);
+                float current = GetFloat(modernStealthMaxField, modPlayer);
+                if (current > 0f && modernMod != null)
+                    modernMod.Call("AddMaxStealth", player, current * ratio);
+                return;
+            }
+            if (classic1457PlayerGetter != null)
+            {
+                object modPlayer = classic1457PlayerGetter.Invoke(player, null);
+                float current = GetFloat(classic1457StealthField, modPlayer);
+                AddFloat(classic1457StealthField, modPlayer, current * ratio);
+                return;
+            }
+            if (classic142PlayerGetter != null)
+            {
+                object modPlayer = classic142PlayerGetter.Invoke(player, null);
+                float current = GetFloat(classic142StealthField, modPlayer);
+                AddFloat(classic142StealthField, modPlayer, current * ratio);
+            }
+        }
         /// <summary>75% 潜行消耗通用档位。</summary>
         public const float StealthStrikeCost75 = 0.75f;
         /// <summary>50% 潜行消耗通用档位。</summary>
@@ -416,6 +447,25 @@ namespace CalamityRebirth.Utilities
                     classic142StealthCurrentField = FindField(classic142PlayerType, "rogueStealth");
                     classic142PlayerGetter = CreatePlayerGetter(classic142PlayerType);
                 }
+            }
+        }
+        /// <summary>
+        /// 热重载或卸载时清空外部模组引用与反射成员，避免下次加载继续使用失效类型。
+        /// 仅清空可写静态引用字段，不触碰其他分部中的值类型缓存。
+        /// </summary>
+        internal static void UnloadRogueBindings()
+        {
+            initialized = false;
+            foreach (FieldInfo field in typeof(CRUtil).GetFields(
+                BindingFlags.Static | BindingFlags.NonPublic))
+            {
+                if (field.IsInitOnly || field.IsLiteral)
+                    continue;
+                Type type = field.FieldType;
+                if (type == typeof(Mod) || type == typeof(Type)
+                    || type == typeof(FieldInfo) || type == typeof(MethodInfo)
+                    || type == typeof(DamageClass))
+                    field.SetValue(null, null);
             }
         }
         /// <summary>

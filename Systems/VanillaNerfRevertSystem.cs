@@ -810,7 +810,7 @@ namespace CalamityRebirth.Systems
         /// <summary>
         /// 读取当前经典灾厄的复仇模式开关。
         /// 1.4.2.101 使用 CalamityWorldPreTrailer.revenge；CalRD 使用 CalamityWorld.revenge。
-        /// 两个参考分支都将该值暴露为 public static bool 字段。
+        /// 两个经典兼容分支都提供可读取的静态布尔字段。
         /// </summary>
         private static bool IsRevengeanceActive()
         {

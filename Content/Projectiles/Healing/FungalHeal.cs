@@ -33,13 +33,14 @@ namespace CalamityRebirth.Content.Projectiles.Healing
             float distance = Vector2.Distance(center, target.Center);
             if (distance < 50f && Projectile.Hitbox.Intersects(target.Hitbox))
             {
-                if (Projectile.owner == Main.myPlayer && !target.moonLeech)
+                if (Main.netMode != NetmodeID.MultiplayerClient && !target.moonLeech)
                 {
                     int heal = (int)Projectile.ai[1];
-                    target.HealEffect(heal, false);
-                    target.statLife = (int)MathHelper.Min(target.statLife + heal, target.statLifeMax2);
-                    NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null
-                        , playerIndex, heal, 0f, 0f);
+                    target.Heal(heal);
+                    target.HealEffect(heal, true);
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                        NetMessage.SendData(MessageID.PlayerLifeMana, -1, -1, null
+                            , playerIndex, target.statLife, target.statMana);
                 }
                 Projectile.Kill();
                 return;

@@ -57,7 +57,13 @@ namespace CalamityRebirth.Content.Particles
         public static void SpawnRing(Vector2 position, Vector2 squish, float rotation
             , float startScale, float finalScale, int lifetime)
         {
-            Spawn(new ShieldSlamParticle(position, Color.Aqua, squish, rotation, startScale
+            SpawnRing(position, squish, rotation, startScale, finalScale, lifetime, Color.Aqua);
+        }
+        /// <summary>生成可指定颜色的定向扩散圆环，供其他冲刺效果复用同一套绘制批次。</summary>
+        public static void SpawnRing(Vector2 position, Vector2 squish, float rotation
+            , float startScale, float finalScale, int lifetime, Color color)
+        {
+            Spawn(new ShieldSlamParticle(position, color, squish, rotation, startScale
                 , finalScale, lifetime, true));
         }
         /// <summary>生成彩色细节爆炸。</summary>

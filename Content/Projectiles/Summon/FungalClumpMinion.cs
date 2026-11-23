@@ -83,7 +83,7 @@ namespace CalamityRebirth.Content.Projectiles.Summon
         /// <summary>扣除主人剩余吸血额度并生成追踪治疗珠。</summary>
         private void SpawnHeal(float amount, Vector2 position)
         {
-            if ((int)amount == 0)
+            if (Projectile.owner != Main.myPlayer || (int)amount == 0)
                 return;
             Player owner = Main.player[Projectile.owner];
             if (owner.lifeSteal <= 0f)

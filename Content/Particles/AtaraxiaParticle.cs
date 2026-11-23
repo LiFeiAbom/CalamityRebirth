@@ -111,6 +111,12 @@ namespace CalamityRebirth.Content.Particles
                     , Color.Lerp(Color.White, Color.Transparent, fade), Rotation, texture.Size() * 0.5f
                     , scale * new Vector2(0.45f, 1f), SpriteEffects.None, 0f);
             }
+            else
+            {
+                spriteBatch.Draw(texture, Position - Main.screenPosition, null, Color, Rotation
+                    , texture.Size() * 0.5f, scale * new Vector2(0.45f, 1f)
+                    , SpriteEffects.None, 0f);
+            }
         }
     }
     /// <summary>
@@ -162,6 +168,100 @@ namespace CalamityRebirth.Content.Particles
         {
             spriteBatch.Draw(texture, Position - Main.screenPosition, null, Color * opacity, Rotation
                 , texture.Size() * 0.5f, Scale * squish, SpriteEffects.None, 0f);
+        }
+    }
+    /// <summary>沿速度方向拉伸的龙颚光片，按四次方缓动改变缩放并按正弦曲线淡出。</summary>
+    internal sealed class AtaraxiaJawsParticle : AtaraxiaParticle
+    {
+        /// <summary>粒子生成时的保留颜色。</summary>
+        private readonly Color initialColor;
+        /// <summary>起始缩放。</summary>
+        private readonly float originalScale;
+        /// <summary>结束缩放。</summary>
+        private readonly float finalScale;
+        /// <summary>横向与纵向压扁比例。</summary>
+        private readonly Vector2 squish;
+        /// <summary>当前绘制缩放。</summary>
+        private float scale;
+        /// <summary>构造龙颚光片并设置位置、速度、颜色、朝向和生命周期。</summary>
+        public AtaraxiaJawsParticle(Vector2 position, Vector2 velocity, Color color, Vector2 squish
+            , float rotation, float originalScale, float finalScale, int lifetime)
+        {
+            Position = position;
+            Velocity = velocity;
+            initialColor = color;
+            Color = color;
+            this.squish = squish;
+            Rotation = rotation;
+            this.originalScale = originalScale;
+            this.finalScale = finalScale;
+            scale = originalScale;
+            Lifetime = lifetime;
+        }
+        /// <summary>逐帧放大、衰减速度并按正弦曲线降低亮度。</summary>
+        public override void Update()
+        {
+            float progress = Lifetime > 0 ? MathHelper.Clamp(Time / (float)Lifetime, 0f, 1f) : 1f;
+            float eased = 1f - MathF.Pow(1f - progress, 4f);
+            scale = MathHelper.Lerp(originalScale, finalScale, eased);
+            float opacity = MathF.Sin(MathHelper.PiOver2 + progress * MathHelper.PiOver2);
+            Color = initialColor * opacity;
+            Lighting.AddLight(Position, Color.R / 255f, Color.G / 255f, Color.B / 255f);
+            Velocity *= 0.95f;
+        }
+        /// <summary>按朝向和椭圆压扁比例绘制龙颚光片。</summary>
+        public override void Draw(SpriteBatch spriteBatch, Texture2D texture)
+        {
+            spriteBatch.Draw(texture, Position - Main.screenPosition, null, Color, Rotation
+                , texture.Size() * 0.5f, scale * squish, SpriteEffects.None, 0f);
+        }
+    }
+    /// <summary>带自身速度的定向脉冲环，用于冲刺起步与中段推进。</summary>
+    internal sealed class AtaraxiaDirectionalPulseParticle : AtaraxiaParticle
+    {
+        /// <summary>粒子生成时的保留颜色。</summary>
+        private readonly Color initialColor;
+        /// <summary>起始缩放。</summary>
+        private readonly float originalScale;
+        /// <summary>结束缩放。</summary>
+        private readonly float finalScale;
+        /// <summary>横向与纵向压扁比例。</summary>
+        private readonly Vector2 squish;
+        /// <summary>当前绘制缩放。</summary>
+        private float scale;
+        /// <summary>当前透明度。</summary>
+        private float opacity;
+        /// <summary>构造带速度的定向脉冲环。</summary>
+        public AtaraxiaDirectionalPulseParticle(Vector2 position, Vector2 velocity, Color color
+            , Vector2 squish, float rotation, float originalScale, float finalScale, int lifetime)
+        {
+            Position = position;
+            Velocity = velocity;
+            initialColor = color;
+            Color = color;
+            this.squish = squish;
+            Rotation = rotation;
+            this.originalScale = originalScale;
+            this.finalScale = finalScale;
+            scale = originalScale;
+            Lifetime = lifetime;
+        }
+        /// <summary>按四次方缓动改变缩放，并按正弦曲线淡出和衰减速度。</summary>
+        public override void Update()
+        {
+            float progress = Lifetime > 0 ? MathHelper.Clamp(Time / (float)Lifetime, 0f, 1f) : 1f;
+            float eased = 1f - MathF.Pow(1f - progress, 4f);
+            scale = MathHelper.Lerp(originalScale, finalScale, eased);
+            opacity = MathF.Sin(MathHelper.PiOver2 + progress * MathHelper.PiOver2);
+            Color = initialColor * opacity;
+            Lighting.AddLight(Position, Color.R / 255f, Color.G / 255f, Color.B / 255f);
+            Velocity *= 0.95f;
+        }
+        /// <summary>绘制空心定向脉冲环；透明度按参照表现叠加两层。</summary>
+        public override void Draw(SpriteBatch spriteBatch, Texture2D texture)
+        {
+            spriteBatch.Draw(texture, Position - Main.screenPosition, null, Color * opacity, Rotation
+                , texture.Size() * 0.5f, scale * squish, SpriteEffects.None, 0f);
         }
     }
 }

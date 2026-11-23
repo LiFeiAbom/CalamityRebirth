@@ -102,6 +102,15 @@ namespace CalamityRebirth.Utilities
                     , "CalamityModClassicPreTrailer.CalamityWorldPreTrailer", "downedYharon")
                 || TryGetStaticBool(CalRDModName, "CalRD.World.CalamityWorld", "downedYharon");
         }
+        /// <summary>
+        /// 判断当前经典分支世界是否启用了 Defiled 模式。现代 2.2.2 已移除该模式，因此只查询两款经典版。
+        /// </summary>
+        internal static bool IsDefiled()
+        {
+            return TryGetStaticBool(ClassicModName
+                , "CalamityModClassicPreTrailer.CalamityWorldPreTrailer", "defiled")
+                || TryGetStaticBool(CalRDModName, "CalRD.World.CalamityWorld", "defiled");
+        }
         /// <summary>尝试给 NPC 施加指定外部模组的 buff，缺失时安全返回 false。</summary>
         internal static bool TryAddBuff(NPC target, string modName, string buffName, int duration)
         {
@@ -132,6 +141,8 @@ namespace CalamityRebirth.Utilities
         internal static void ClearBuffTypeCache() => BuffTypeCache.Clear();
         /// <summary>清空外部 ModPlayer 布尔字段绑定缓存。</summary>
         internal static void ClearPlayerBoolBindings() => PlayerBoolBindings.Clear();
+        /// <summary>清空星辉环境反射绑定，避免热重载后引用失效类型。</summary>
+        internal static void ClearAstralBindings() => AstralBindings.Clear();
         /// <summary>在外部模组中按名称查找 ModBuff。</summary>
         private static bool TryFindBuff(string modName, string buffName, out ModBuff buff)
         {

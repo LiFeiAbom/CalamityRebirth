@@ -40,7 +40,7 @@ namespace CalamityRebirth.Content.Particles
         {
             if (Main.dedServ || particles == null)
                 return;
-            // 与原版 GeneralParticleHandler 相同：先叠加速度、累计寿命，再执行粒子自身更新。
+            // 先叠加速度、累计寿命，再执行粒子自身更新。
             foreach (DaybreakSparkParticle particle in particles)
             {
                 particle.Position += particle.Velocity;

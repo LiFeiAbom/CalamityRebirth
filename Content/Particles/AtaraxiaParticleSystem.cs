@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace CalamityRebirth.Content.Particles
 {
     /// <summary>
-    /// 禅心剑粒子系统：分别管理星形火花、GlowSparkCal 爆发火花和 FlameExplosion 脉冲。
+    /// 通用高级粒子系统：管理星形火花、爆发火花、火焰脉冲、龙颚光片和定向脉冲环。
     /// </summary>
     [Autoload(Side = ModSide.Client)]
     internal sealed class AtaraxiaParticleSystem : ModSystem
@@ -23,6 +23,10 @@ namespace CalamityRebirth.Content.Particles
         private static Asset<Texture2D> glowSparkTexture;
         /// <summary>主弹死亡脉冲使用的火焰爆炸纹理。</summary>
         private static Asset<Texture2D> flameTexture;
+        /// <summary>弑神者冲刺使用的龙颚光片纹理。</summary>
+        private static Asset<Texture2D> jawsTexture;
+        /// <summary>定向脉冲环使用的空心圆纹理。</summary>
+        private static Asset<Texture2D> directionalRingTexture;
         /// <summary>初始化纹理，并在世界绘制结束后注册统一粒子绘制。</summary>
         public override void Load()
         {
@@ -30,6 +34,9 @@ namespace CalamityRebirth.Content.Particles
             starTexture = ModContent.Request<Texture2D>("CalamityRebirth/Assets/Particles/StarProj");
             glowSparkTexture = ModContent.Request<Texture2D>("CalamityRebirth/Content/Particles/GlowSparkCal");
             flameTexture = ModContent.Request<Texture2D>("CalamityRebirth/Content/Particles/FlameExplosion");
+            jawsTexture = ModContent.Request<Texture2D>("CalamityRebirth/Assets/Particles/Jaws");
+            directionalRingTexture = ModContent.Request<Texture2D>(
+                "CalamityRebirth/Content/Particles/HollowCircleHardEdge");
             On_Main.DrawInfernoRings += DrawParticlesAfterEverything;
         }
         /// <summary>注销绘制钩子并释放静态资源引用。</summary>
@@ -40,6 +47,8 @@ namespace CalamityRebirth.Content.Particles
             starTexture = null;
             glowSparkTexture = null;
             flameTexture = null;
+            jawsTexture = null;
+            directionalRingTexture = null;
         }
         /// <summary>切换世界时清除旧世界粒子，避免坐标和战斗对象跨场景残留。</summary>
         public override void OnWorldUnload() => particles?.Clear();
@@ -63,25 +72,32 @@ namespace CalamityRebirth.Content.Particles
         public static void SpawnStarSpark(Vector2 position, Vector2 velocity, Color color, int lifetime
             , float scale, bool affectedByGravity = false)
         {
-            SpawnSpark(position, velocity, color, lifetime, scale, affectedByGravity, false, 1f);
+            SpawnSpark(position, velocity, color, lifetime, scale, affectedByGravity, false, 1f, true);
+        }
+        /// <summary>生成弑神者冲刺使用的双色长条火花，不添加通用白色内芯。</summary>
+        public static void SpawnGodSlayerDashSpark(Vector2 position, Vector2 velocity, Color color
+            , int lifetime, float scale)
+        {
+            SpawnSpark(position, velocity, color, lifetime, scale, false, false, 1f, false);
         }
         /// <summary>生成短寿命 GlowSpark 爆发火花，固定使用高亮压扁纹理。</summary>
         public static void SpawnGlowBurst(Vector2 position, Vector2 velocity, Color color)
         {
-            SpawnSpark(position, velocity, color, 11, Main.rand.NextFloat(0.015f, 0.025f), false, true, 1f);
+            SpawnSpark(position, velocity, color, 11, Main.rand.NextFloat(0.015f, 0.025f)
+                , false, true, 1f, true);
         }
         /// <summary>
         /// 统一创建火花粒子，并在达到上限或游戏暂停时安全跳过。
         /// 常规火光采用窄长比例，爆发火光采用更宽的快速压缩比例。
         /// </summary>
         private static void SpawnSpark(Vector2 position, Vector2 velocity, Color color, int lifetime, float scale
-            , bool affectedByGravity, bool quickShrink, float shrinkSpeed)
+            , bool affectedByGravity, bool quickShrink, float shrinkSpeed, bool glowing)
         {
             if (CanSpawn())
             {
                 particles.Add(new AtaraxiaSparkParticle(position, velocity, color, lifetime, scale
                     , quickShrink ? new Vector2(2.2f, 0.9f) : new Vector2(0.5f, 1.6f)
-                    , affectedByGravity, quickShrink, true, shrinkSpeed));
+                    , affectedByGravity, quickShrink, glowing, shrinkSpeed));
             }
         }
         /// <summary>生成从极小尺寸扩张到指定尺寸的火焰脉冲。</summary>
@@ -89,6 +105,22 @@ namespace CalamityRebirth.Content.Particles
         {
             if (CanSpawn())
                 particles.Add(new AtaraxiaPulseParticle(position, color * 0.6f, Vector2.One, rotation, 0.07f, finalScale, lifetime));
+        }
+        /// <summary>生成带自行速度的龙颚光片；颜色、压扁比例、朝向和首尾缩放由调用方决定。</summary>
+        public static void SpawnJaws(Vector2 position, Vector2 velocity, Color color, Vector2 squish
+            , float rotation, float originalScale, float finalScale, int lifetime)
+        {
+            if (CanSpawn())
+                particles.Add(new AtaraxiaJawsParticle(position, velocity, color, squish, rotation
+                    , originalScale, finalScale, lifetime));
+        }
+        /// <summary>生成带速度、朝向和椭圆压扁的定向脉冲环。</summary>
+        public static void SpawnDirectionalPulse(Vector2 position, Vector2 velocity, Color color
+            , Vector2 squish, float rotation, float originalScale, float finalScale, int lifetime)
+        {
+            if (CanSpawn())
+                particles.Add(new AtaraxiaDirectionalPulseParticle(position, velocity, color, squish
+                    , rotation, originalScale, finalScale, lifetime));
         }
         /// <summary>判断当前客户端是否允许再创建粒子。</summary>
         private static bool CanSpawn()
@@ -114,9 +146,14 @@ namespace CalamityRebirth.Content.Particles
                 foreach (AtaraxiaParticle particle in particles)
                 {
                     // 粒子类型及 QuickShrink 标记共同决定最终纹理，避免每个对象额外保存纹理引用。
-                    Texture2D texture = particle is AtaraxiaPulseParticle ? flameTexture.Value
-                        : particle is AtaraxiaSparkParticle spark && spark.QuickShrink ? glowSparkTexture.Value
-                        : starTexture.Value;
+                    Texture2D texture = particle switch
+                    {
+                        AtaraxiaPulseParticle => flameTexture.Value,
+                        AtaraxiaDirectionalPulseParticle => directionalRingTexture.Value,
+                        AtaraxiaJawsParticle => jawsTexture.Value,
+                        AtaraxiaSparkParticle { QuickShrink: true } => glowSparkTexture.Value,
+                        _ => starTexture.Value
+                    };
                     particle.Draw(Main.spriteBatch, texture);
                 }
                 Main.spriteBatch.End();

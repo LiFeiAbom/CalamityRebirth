@@ -38,7 +38,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Melee
             player.GetModPlayer<CalamityRebirthPlayer>().vexation = true;
         }
         /// <summary>
-        /// 分别注册现代 2.2.2、经典 1.4.2.101 与 CalRD 的 ReferenceMod 原配方。
+        /// 分别注册三个兼容版本对应的配方。
         /// </summary>
         public override void AddRecipes()
         {

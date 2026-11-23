@@ -37,14 +37,14 @@ namespace CalamityRebirth.Content.Projectiles.Healing
 			expandedPlayer.Inflate(50, 50);
 			if (Projectile.Hitbox.Intersects(expandedPlayer))
 			{
-				if (owner == Main.myPlayer)
+				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
 					const int heal = 15;
-					player.HealEffect(heal);
-					player.statLife += heal;
-					if (player.statLife > player.statLifeMax2)
-						player.statLife = player.statLifeMax2;
-					NetMessage.SendData(MessageID.SpiritHeal, -1, -1, null, owner, heal);
+					player.Heal(heal);
+					player.HealEffect(heal, true);
+					if (Main.netMode != NetmodeID.SinglePlayer)
+						NetMessage.SendData(MessageID.PlayerLifeMana, -1, -1, null
+							, owner, player.statLife, player.statMana);
 				}
 				Projectile.Kill();
 				return;

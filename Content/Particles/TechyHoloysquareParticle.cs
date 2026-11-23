@@ -7,7 +7,7 @@ namespace CalamityRebirth.Content.Particles
     /// <summary>
     /// 元素混合II使用的全息方条粒子。
     /// 沿用现代灾厄原始 <c>TechyHoloysquareParticle</c> 的六种短方条帧。
-    /// 绘制方式、尺寸、反位时间、更新速度和三色色差均与原版元素混合一致。
+    /// 绘制方式、尺寸、反位时间、更新速度和三色色差按元素混合效果统一处理。
     /// </summary>
     internal sealed class TechyHoloysquareParticle
     {

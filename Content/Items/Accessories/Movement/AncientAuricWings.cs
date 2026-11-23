@@ -39,7 +39,7 @@ namespace CalamityRebirth.Content.Items.Accessories.Movement
         }
         /// <summary>
         /// 设置 22×20 判定尺寸、饰品类型和 1 铂金价格。
-        /// 稀有度采用本工程的灼辉金源稀有度；价格显式保留源工程的 1 铂金，不套用同名稀有度的常见价格。
+        /// 稀有度采用灼辉金源，价格显式保留 1 铂金，不套用同名稀有度的常见价格。
         /// </summary>
         public override void SetDefaults()
         {
