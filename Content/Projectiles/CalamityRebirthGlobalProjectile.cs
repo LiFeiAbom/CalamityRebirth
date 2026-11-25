@@ -128,6 +128,8 @@ namespace CalamityRebirth.Content.Projectiles
                 return;
             Player owner = Main.player[projectile.owner];
             CalamityRebirthPlayer modPlayer = owner.GetModPlayer<CalamityRebirthPlayer>();
+            if (modPlayer.enraged)
+                modifiers.FinalDamage *= 2.25f;
             if (modPlayer.silvaRanged && modPlayer.silvaCountdown > 0 && modPlayer.hasSilvaEffect
                 && projectile.DamageType.CountsAsClass(DamageClass.Ranged))
                 modifiers.FinalDamage *= 1.40f;
@@ -149,6 +151,7 @@ namespace CalamityRebirth.Content.Projectiles
             Player attacker = Main.player[projectile.owner];
             CalamityRebirthPlayer.TryApplyMeleeHitDebuffsOnPvP(attacker, target, projectile.DamageType);
             CalamityRebirthPlayer.TryApplyPotionHitDebuffsOnPvP(attacker, target);
+            CalamityRebirthPlayer.TryApplyDemonshadeBurnOnPvP(attacker, target);
             CalamityRebirthPlayer.TryApplyCrystalSkullLightningOnPvP(attacker, target, projectile.DamageType
                 , info.Damage);
         }

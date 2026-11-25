@@ -9,6 +9,26 @@ Buffs: {
 		Description: The God Slayer's power is gathering
 	}
 
+	DemonshadeDashCooldown: {
+		DisplayName: Demonshade Dash Cooldown
+		Description: Black-red God Slayer power is gathering
+	}
+
+	DemonshadeBurn: {
+		DisplayName: Demonshade Burn
+		Description: Violet hex flames are consuming life
+	}
+
+	Enraged: {
+		DisplayName: Enraged
+		Description: Enemies are enraged
+	}
+
+	RedDevil: {
+		DisplayName: Red Devil
+		Description: A friendly Red Devil will protect you
+	}
+
 	Mechworm: {
 		DisplayName: Mechworm
 		Description: The Mechworm will protect you
@@ -2179,6 +2199,52 @@ Items: {
 			The dash has a 45-second cooldown
 			'''
 	}
+
+	DemonshadeHelm: {
+		DisplayName: Demonshade Helm
+		Tooltip:
+			'''
+			50% increased all damage and 25% increased critical strike chance
+			25% increased melee attack speed
+			+10 maximum minions and +5 maximum sentries
+			'''
+		SetBonus:
+			'''
+			100% increased all damage
+			Weapon and projectile hits inflict 5 seconds of Demonshade Burn
+			Shadowbeams and demon scythes fall when you are hit
+			A friendly Red Devil follows you
+			The Red Devil fires Unholy Tridents at enemies
+			Press [{0}] to use a black-red God Slayer Dash
+			The Demonshade dash has a 15-second cooldown
+			Double-tap left or right to use an empowered cosmic shield slam
+			Press [{1}] to enrage enemies within 3000 pixels for 10 seconds
+			Enraged enemies deal 25% more damage and take 125% more damage
+			'''
+	}
+
+	DemonshadeBreastplate: {
+		DisplayName: Demonshade Breastplate
+		Tooltip:
+			'''
+			40% increased all damage and 20% increased critical strike chance
+			+300 maximum life and +300 maximum mana
+			Enemies take 100 contact damage from thorns
+			50% chance not to consume ammo
+			50% reduced mana cost
+			30% increased whip attack speed and range
+			Standing still absorbs shadows and greatly accelerates life regeneration
+			'''
+	}
+
+	DemonshadeGreaves: {
+		DisplayName: Demonshade Greaves
+		Tooltip:
+			'''
+			30% increased all damage and 15% increased critical strike chance
+			50% increased run speed and acceleration
+			'''
+	}
 }
 
 Rarities: {
@@ -2193,6 +2259,7 @@ Rarities: {
 	TurquoiseRarity.DisplayName: Turquoise
 	PureGreenRarity.DisplayName: Pure Green
 	PostMoonLordBlueRarity.DisplayName: Post-Moon Lord Blue
+	DemonshadeRarity.DisplayName: Demonshade
 }
 
 Projectiles: {
@@ -2227,6 +2294,7 @@ Projectiles: {
 	SandTornado.DisplayName: Tornado
 	CactusHealOrb.DisplayName: Heal
 	CosmicDashExplosion.DisplayName: Cosmic Dash Explosion
+	RedDevil.DisplayName: Red Devil
 	HolyExplosionSupreme.DisplayName: Holy Explosion Supreme
 	AbaddonCrit.DisplayName: Brimstone Blast
 	Spark.DisplayName: Spark
@@ -2264,4 +2332,5 @@ Keybinds: {
 	Elysian.DisplayName: Elysian Aegis Guardian Stance
 	Tarragon.DisplayName: Tarragon Life Cloak
 	GodslayerDash.DisplayName: God Slayer Dash
+	Demonshade.DisplayName: Demonshade Enrage
 }

@@ -1,6 +1,8 @@
 来自旧日灾厄的回忆与荣光，如今再次苏醒。
-当前版本收录五职业EX饰品、血神核心系列、元素之握、射手/法师/召唤进阶饰品链、盗贼镜片潜行链与纳米技术、星云核心、元灵之心及其完整元素链、炽天使翼靴链、龙蒿、血炎、始源林海、弑神者与古圣金源系列盔甲、22种药水、天界洋葱与禅心剑，并适配现代灾厄、经典1.4.2.101与CalRD。
+收录五职业EX饰品、进阶饰品链、五套终局盔甲、22种药水、天界洋葱、禅心剑及多种自定义内容；并非旧版灾厄的完整复刻。
+适配 CalamityMod、经典 1.4.2.101 与 CalRD，建议一次只启用一个灾厄分支。
 版本：0.1.2.6
 A revival of memories and former glories from the legacy Calamity era.
-This version includes class emblem EX accessories, the Blood God Core line, the Elemental Gauntlet, advanced class accessory chains, the Tarragon, Bloodflare, Silva, God Slayer, and final Auric Tesla armor series, Nebulous Core, the complete Heart of the Elements chain, the Seraph Tracers boot chain, 22 potions, the Celestial Onion, and Ataraxia, with support for modern Calamity, Classic 1.4.2.101, and CalRD.
+Selected legacy content returns, including class emblem EX accessories, advanced accessory chains, five endgame armor sets, 22 potions, the Celestial Onion, Ataraxia, and custom effects. This is not a complete legacy restoration.
+Supports CalamityMod, Classic 1.4.2.101, and CalRD. Enable only one Calamity branch at a time.
 Version: 0.1.2.6

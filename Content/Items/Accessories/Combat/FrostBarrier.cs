@@ -12,14 +12,14 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat
     {
         /// <summary>固定提供 4 点防御。</summary>
         public const int DefenseBonus = 4;
-        /// <summary>设置 20×24 判定尺寸、4 防御、9 金价格、橙色稀有度与饰品类型。</summary>
+        /// <summary>设置 20×24 判定尺寸、4 防御、9 金价格、浅红稀有度与饰品类型。</summary>
         public override void SetDefaults()
         {
             Item.width = 20;
             Item.height = 24;
             Item.defense = DefenseBonus;
             Item.value = Item.buyPrice(0, 9, 0, 0);
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.LightRed;
             Item.accessory = true;
         }
         /// <summary>置位本帧装备标记，供玩家结算类授予寒冷免疫和受击冻结。</summary>

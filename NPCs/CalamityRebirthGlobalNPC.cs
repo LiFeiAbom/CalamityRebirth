@@ -7,9 +7,12 @@ using CalamityRebirth.Content.Items.Accessories.Combat;
 using CalamityRebirth.Content.Items.Accessories.Combat.Magic;
 using CalamityRebirth.Content.Items.Accessories.Combat.Ranged;
 using CalamityRebirth.Content.Items.Accessories.Movement;
+using CalamityRebirth.Content.Particles;
 using CalamityRebirth.Players;
 using CalamityRebirth.Utilities;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -33,6 +36,12 @@ namespace CalamityRebirth.NPCs
         public bool elementalMixII;
         /// <summary>当前 NPC 是否处于始源林海迟滞状态。</summary>
         public bool silvaHysteresis;
+        /// <summary>当前 NPC 是否处于魔影灼燃状态。</summary>
+        public bool demonshadeBurn;
+        /// <summary>当前 NPC 底部附着的紫色火簇。</summary>
+        public DemonshadeBurnParticleSet demonshadeBurnFireDrawer;
+        /// <summary>当前 NPC 是否处于狂怒状态。</summary>
+        public bool enraged;
         /// <summary>
         /// 启用按实体实例保存状态。若为 false，同一 ID 的所有 NPC 会共享标记并互相污染。
         /// </summary>
@@ -47,6 +56,8 @@ namespace CalamityRebirth.NPCs
             electrifiedII = false;
             elementalMixII = false;
             silvaHysteresis = false;
+            demonshadeBurn = false;
+            enraged = false;
         }
         /// <summary>
         /// 血腥玛丽在血月期间把玩家刷怪率提高十倍。
@@ -107,6 +118,25 @@ namespace CalamityRebirth.NPCs
                 if (damage < Content.ModBuffs.Debuffs.SilvaHysteresis.MinimumDisplayedDamage)
                     damage = Content.ModBuffs.Debuffs.SilvaHysteresis.MinimumDisplayedDamage;
             }
+            if (demonshadeBurn)
+            {
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+                npc.lifeRegen -= DemonshadeBurn.DamagePerSecond * 2;
+                if (damage < DemonshadeBurn.DamagePerSecond)
+                    damage = DemonshadeBurn.DamagePerSecond;
+            }
+        }
+        /// <summary>狂怒敌怪造成的伤害提高二十五百分点。</summary>
+        public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers)
+        {
+            if (enraged)
+                modifiers.FinalDamage *= 1.25f;
+        }
+        /// <summary>把狂怒敌怪染成暗红色。</summary>
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            return enraged ? new Color(200, 50, 50, npc.alpha) : null;
         }
         /// <summary>
         /// 在受击最终结算阶段降低防御并提高承伤倍率。
@@ -241,6 +271,71 @@ namespace CalamityRebirth.NPCs
                 ElectrifiedII.SpawnElectricVisuals(npc);
             if (elementalMixII)
                 ElementalMixII.DrawEffects(npc);
+            if (demonshadeBurn)
+                SpawnDemonshadeBurnVisuals(npc);
+        }
+        /// <summary>在 NPC 表面生成黑芯紫色火花和少量紫焰火尘。</summary>
+        private static void SpawnDemonshadeBurnVisuals(NPC npc)
+        {
+            if (Main.dedServ)
+                return;
+            Vector2 randomSpot = new(npc.position.X + Main.rand.NextFloat(npc.width)
+                , npc.position.Y + Main.rand.NextFloat(npc.height));
+            if (Main.rand.NextBool())
+            {
+                Vector2 velocity = -Vector2.UnitY.RotatedByRandom(MathHelper.Pi / 10f)
+                    * Main.rand.NextFloat(10f, 18f);
+                DemonshadeBurnSparkSystem.Spawn(randomSpot, velocity
+                    , Main.rand.NextBool() ? DemonshadeBurnParticleSet.BrightColor
+                        : Color.Lerp(DemonshadeBurnParticleSet.BrightColor, Color.Magenta, 0.45f)
+                    , Main.rand.Next(18, 27), Main.rand.NextFloat(0.02f, 0.05f));
+            }
+            if (!Main.rand.NextBool(2))
+            {
+                Dust dust = Dust.NewDustPerfect(randomSpot, Main.rand.NextBool()
+                    ? DustID.AncientLight : DustID.Shadowflame);
+                dust.scale = Main.rand.NextFloat(0.5f, 0.75f);
+                dust.velocity = -Vector2.UnitY.RotatedByRandom(MathHelper.PiOver4)
+                    * Main.rand.NextFloat(0.5f, 2.8f);
+                dust.noGravity = true;
+                if (dust.type == DustID.AncientLight)
+                    dust.color = DemonshadeBurnParticleSet.BrightColor;
+            }
+            Color light = DemonshadeBurnParticleSet.BrightColor * 0.18f;
+            Lighting.AddLight(npc.Center, light.R / 255f, light.G / 255f, light.B / 255f);
+        }
+        /// <summary>按魔影灼燃剩余时间维护 NPC 底部的紫色火簇。</summary>
+        public override void PostAI(NPC npc)
+        {
+            if (Main.dedServ)
+                return;
+            if (!demonshadeBurn)
+            {
+                demonshadeBurnFireDrawer = null;
+                return;
+            }
+            int buffIndex = npc.FindBuffIndex(ModContent.BuffType<DemonshadeBurn>());
+            int buffTime = buffIndex >= 0 ? Math.Max(1, npc.buffTime[buffIndex]) : 1;
+            if (demonshadeBurnFireDrawer is null || demonshadeBurnFireDrawer.Finished)
+            {
+                demonshadeBurnFireDrawer = new DemonshadeBurnParticleSet(buffTime
+                    , npc.width * 0.6f, npc.height / 100f);
+            }
+            else
+            {
+                demonshadeBurnFireDrawer.SetLifetime =
+                    demonshadeBurnFireDrawer.LocalTimer + buffTime;
+            }
+            demonshadeBurnFireDrawer.Update();
+        }
+        /// <summary>把紫色火簇绘制到 NPC 底部上方的十二像素处。</summary>
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos
+            , Color drawColor)
+        {
+            if (Main.dedServ || demonshadeBurnFireDrawer is null)
+                return;
+            Vector2 basePosition = npc.Bottom - Vector2.UnitY * (12f - npc.gfxOffY);
+            demonshadeBurnFireDrawer.Draw(spriteBatch, basePosition);
         }
         /// <summary>
         /// 月亮领主核心额外掉落一个天界洋葱。

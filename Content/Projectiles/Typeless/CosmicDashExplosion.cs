@@ -1,4 +1,5 @@
 using CalamityRebirth.Sounds;
+using CalamityRebirth.Players;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
@@ -34,23 +35,33 @@ namespace CalamityRebirth.Content.Projectiles.Typeless
         {
             SoundEngine.PlaySound(CalamityRebirthSounds.DevourerSegmentBreak with { PitchVariance = 0.3f }, Projectile.position);
             SoundEngine.PlaySound(SoundID.Item62 with { Volume = 0.5f, PitchVariance = 0.3f }, Projectile.position);
+            bool demonshade = Owner.GetModPlayer<CalamityRebirthPlayer>().demonshadeSetBonus;
+            Color primary = demonshade ? new Color(225, 30, 34) : Color.White;
+            Color secondary = demonshade ? new Color(92, 0, 8) : default;
             for (int i = 0; i < 35; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.GiantCursedSkullBolt
+                Dust dust = Dust.NewDustPerfect(Projectile.Center
+                    , demonshade ? DustID.LifeDrain : DustID.GiantCursedSkullBolt
                     , new Vector2(4.5f, 4.5f).RotatedByRandom(100) * Main.rand.NextFloat(0.2f, 1.9f)
-                    , 0, default, Main.rand.NextFloat(1.5f, 2.8f));
-                dust.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
+                    , 0, primary, Main.rand.NextFloat(1.5f, 2.8f));
+                if (!demonshade)
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
                 dust.noGravity = true;
             }
             for (int i = 0; i < 14; i++)
             {
                 Vector2 velocity = new Vector2(6f, 6f).RotatedByRandom(100) * Main.rand.NextFloat(0.5f, 1.2f);
-                Dust first = Dust.NewDustPerfect(Projectile.Center + velocity * 2f, DustID.WitherLightning
-                    , velocity, 0, default, 1f);
-                first.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
-                Dust second = Dust.NewDustPerfect(Projectile.Center + velocity * 2f, DustID.Electric
-                    , velocity, 0, default, 1f);
-                second.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
+                Dust first = Dust.NewDustPerfect(Projectile.Center + velocity * 2f
+                    , demonshade ? DustID.CrimsonTorch : DustID.WitherLightning
+                    , velocity, 0, demonshade ? primary : default, 1f);
+                Dust second = Dust.NewDustPerfect(Projectile.Center + velocity * 2f
+                    , demonshade ? DustID.LifeDrain : DustID.Electric
+                    , velocity, 0, demonshade ? secondary : default, 1f);
+                if (!demonshade)
+                {
+                    first.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
+                    second.shader = GameShaders.Armor.GetSecondaryShader(Owner.cShield, Owner);
+                }
             }
         }
     }

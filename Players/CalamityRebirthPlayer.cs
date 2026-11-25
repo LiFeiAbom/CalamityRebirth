@@ -215,6 +215,20 @@ namespace CalamityRebirth.Players
         public bool infectedJewel;
         /// <summary>本帧是否装备无暇粹魂晶；优先级高于感染宝石与王冠宝石。</summary>
         public bool purity;
+        /// <summary>本帧是否穿着完整魔影三件套。</summary>
+        public bool demonshadeSetBonus;
+        /// <summary>本帧是否装备魔影胸甲，用于静止暗影再生。</summary>
+        public bool demonshadeRegen;
+        /// <summary>本帧是否装备魔影胸甲，用于远程省弹。</summary>
+        public bool demonshadeAmmoSaving;
+        /// <summary>本帧是否装备魔影护腿，用于提高跑速与加速度。</summary>
+        public bool demonshadeShadowSpeed;
+        /// <summary>玩家是否持有狂怒状态。</summary>
+        public bool enraged;
+        /// <summary>魔影套装是否要求维持红魔弹幕。</summary>
+        public bool redDevil;
+        /// <summary>红魔增益是否确认对应弹幕仍然存活。</summary>
+        public bool redDevil2;
         /// <summary>本帧是否装备寒霜壁垒。</summary>
         public bool frigidBulwark;
         /// <summary>本帧是否装备神圣护符。</summary>
@@ -338,6 +352,13 @@ namespace CalamityRebirth.Players
             crownJewel = false;
             infectedJewel = false;
             purity = false;
+            demonshadeSetBonus = false;
+            demonshadeRegen = false;
+            demonshadeAmmoSaving = false;
+            demonshadeShadowSpeed = false;
+            enraged = false;
+            redDevil = false;
+            redDevil2 = false;
             frigidBulwark = false;
             deificAmulet = false;
             rampartOfDeities = false;
@@ -377,6 +398,8 @@ namespace CalamityRebirth.Players
         }
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (enraged)
+                modifiers.FinalDamage *= 2.25f;
             ApplySummonDefenseIgnore(item.DamageType, ref modifiers);
             ApplyCrystalSkullStealthModifiers(item.DamageType, ref modifiers);
             ApplySilvaMeleeDamage(item, ref modifiers);
@@ -384,6 +407,8 @@ namespace CalamityRebirth.Players
         /// <summary>弹幕攻击 NPC 时应用召唤物无视防御与版本专属原版伤害回调。</summary>
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
         {
+            if (enraged)
+                modifiers.FinalDamage *= 2.25f;
             ApplySummonDefenseIgnore(proj.DamageType, ref modifiers);
             ApplyCrystalSkullStealthModifiers(proj.DamageType, ref modifiers);
             ApplyRogueMirrorHitModifiers(proj, ref modifiers);
@@ -401,9 +426,18 @@ namespace CalamityRebirth.Players
             VanillaNerfRevertSystem.RestoreRunSpeedPenalty(Player);
             ApplySilvaRunSpeed();
             ApplyAuricTeslaRunSpeed();
+            ApplyDemonshadeRunSpeed();
             ApplyShieldSlamRunSpeedEffects();
             GodSlayerDashMovement();
             ShieldSlamDashMovement();
+        }
+        /// <summary>魔影护腿把最终跑动加速度与最大跑速各提高五十百分点。</summary>
+        private void ApplyDemonshadeRunSpeed()
+        {
+            if (!demonshadeShadowSpeed)
+                return;
+            Player.runAcceleration *= 1.50f;
+            Player.maxRunSpeed *= 1.50f;
         }
         /// <summary>
         /// 将召唤饰品的无视防御比例转换为 DefenseEffectiveness 乘数。
@@ -465,6 +499,7 @@ namespace CalamityRebirth.Players
         {
             ApplyMeleeHitDebuffs(target, hit.DamageType);
             ApplyPotionHitDebuffs(target);
+            ApplyDemonshadeBurn(target);
             ApplyCrystalSkullOnHit(target, hit, -1);
             if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.MeleeNoSpeed))
                 ApplyBloodflareMeleeHit(target);
@@ -476,6 +511,7 @@ namespace CalamityRebirth.Players
             ApplyMeleeHitDebuffs(target, hit.DamageType);
             ApplySummonAccessoryHitDebuffs(proj, target);
             ApplyPotionHitDebuffs(target);
+            ApplyDemonshadeBurn(target);
             ApplyCrystalSkullOnHit(target, hit, proj.type);
             ApplyNanotechOnHit(proj, hit);
             TrySpawnAbaddonCrit(proj, target, hit);
@@ -699,6 +735,21 @@ namespace CalamityRebirth.Players
                 CalamityCompatUtil.TryAddBuff(target, "CalRD", "ArmorCrunch", 240);
             }
         }
+        /// <summary>魔影套装持有者的任意直接攻击统一施加五秒魔影灼燃。</summary>
+        private void ApplyDemonshadeBurn(NPC target)
+        {
+            if (!demonshadeSetBonus)
+                return;
+            target.AddBuff(ModContent.BuffType<DemonshadeBurn>(), DemonshadeBurn.Duration);
+        }
+        /// <summary>PvP 中按攻击者的魔影套装状态施加同一种魔影灼燃。</summary>
+        public static void TryApplyDemonshadeBurnOnPvP(Player attacker, Player target)
+        {
+            if (attacker is null || target is null || !attacker.active || !target.active
+                || !attacker.GetModPlayer<CalamityRebirthPlayer>().demonshadeSetBonus)
+                return;
+            target.AddBuff(ModContent.BuffType<DemonshadeBurn>(), DemonshadeBurn.Duration);
+        }
         /// <summary>
         /// 玩家侧持续伤害结算。任一负面减益存在时先清零自然再生和再生计时，
         /// 再按各减益的原版 lifeRegen 口径叠加损失。
@@ -708,7 +759,7 @@ namespace CalamityRebirth.Players
             ApplySilvaDebuffRegenProtection();
             if (!Player.HasBuff<BurningIII>() && !Player.HasBuff<DaybreakII>()
                 && !Player.HasBuff<ElectrifiedII>() && !Player.HasBuff<ElementalMixII>()
-                && !Player.HasBuff<ShadowflameII>())
+                && !Player.HasBuff<ShadowflameII>() && !Player.HasBuff<DemonshadeBurn>())
                 return;
             if (Player.lifeRegen > 0)
                 Player.lifeRegen = 0;
@@ -723,6 +774,8 @@ namespace CalamityRebirth.Players
                 Player.lifeRegen -= ElementalMixII.PlayerLifeRegenLoss;
             if (Player.HasBuff<ShadowflameII>())
                 Player.lifeRegen -= 30;
+            if (Player.HasBuff<DemonshadeBurn>())
+                Player.lifeRegen -= DemonshadeBurn.DamagePerSecond * 2;
         }
         /// <summary>
         /// 结算龙舌兰日出的生命再生惩罚与通用酒醉等级。
@@ -774,6 +827,8 @@ namespace CalamityRebirth.Players
                     Player.lifeRegen += (int)timeBonus;
                 }
             }
+            if (demonshadeRegen)
+                ApplyDemonshadeRegen();
             if (tarraLifeRegen)
                 Player.lifeRegen += 10;
             if (Player.HasBuff(BuffID.Tipsy))
@@ -788,6 +843,44 @@ namespace CalamityRebirth.Players
             Player.lifeRegenTime = 0;
             Player.lifeRegen -= 3 * alcoholPoisonLevel;
             ApplyJewelAccessoryLifeRegen();
+        }
+        /// <summary>
+        /// 魔影胸甲在完全静止且未使用物品时快速提高再生计时；
+        /// Boss 战使用较低上限，非 Boss 战允许累积到更高的再生档位。
+        /// </summary>
+        private void ApplyDemonshadeRegen()
+        {
+            if (Math.Abs(Player.velocity.X) >= 0.05f
+                || Math.Abs(Player.velocity.Y) >= 0.05f
+                || Player.itemAnimation != 0)
+                return;
+            bool bossAlive = false;
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                if (!npc.boss)
+                    continue;
+                bossAlive = true;
+                break;
+            }
+            int timeLimit = bossAlive ? 900 : 3600;
+            int regenStep = bossAlive ? 2 : 8;
+            float timeRegenCap = bossAlive ? 16f : 60f;
+            if (Player.lifeRegenTime > 90 && Player.lifeRegenTime < timeLimit)
+                Player.lifeRegenTime = timeLimit;
+            Player.lifeRegenTime += regenStep;
+            Player.lifeRegen += regenStep;
+            float timeBonus = Player.lifeRegenTime * 2.5f / 300f;
+            Player.lifeRegen += (int)Math.Min(timeBonus, timeRegenCap);
+            if (Player.lifeRegen <= 0 || Player.statLife >= Player.statLifeMax2)
+                return;
+            Player.lifeRegenCount++;
+            if (Main.rand.Next(30000) >= Player.lifeRegenTime && Main.rand.Next(30) != 0)
+                return;
+            Dust dust = Dust.NewDustPerfect(Player.Center, DustID.ShadowbeamStaff
+                , Main.rand.NextVector2Circular(2f, 2f), 200, default, 1f);
+            dust.noGravity = true;
+            dust.velocity *= 0.75f;
+            dust.fadeIn = 1.3f;
         }
         /// <summary>
         /// 结算无暇粹魂晶宝石系的再生、减益时长、直接回血与动态防御。
@@ -1085,7 +1178,68 @@ namespace CalamityRebirth.Players
                 ElectrifiedII.SpawnElectricVisuals(Player);
             if (drawInfo.shadow == 0f && Player.HasBuff<ElementalMixII>())
                 ElementalMixII.DrawEffects(drawInfo);
+            if (drawInfo.shadow == 0f && Player.HasBuff<DemonshadeBurn>())
+                SpawnDemonshadeBurnPlayerVisuals();
             ApplyAuricTeslaVisuals(drawInfo, ref r, ref g, ref b, ref fullBright);
+            ApplyDemonshadeVisuals(drawInfo, ref r, ref g, ref b, ref fullBright);
+        }
+        /// <summary>玩家承受魔影灼燃时持续生成黑芯紫色火花和紫焰火尘。</summary>
+        private void SpawnDemonshadeBurnPlayerVisuals()
+        {
+            Vector2 spot = Player.position + Main.rand.NextVector2Square(0f, Player.width);
+            spot.Y += Main.rand.NextFloat(Player.height);
+            if (Main.rand.NextBool())
+            {
+                Vector2 velocity = new(0f, Main.rand.NextFloat(-10f, -6f));
+                DemonshadeBurnSparkSystem.Spawn(spot, velocity
+                    , Main.rand.NextBool() ? DemonshadeBurnParticleSet.BrightColor
+                        : Color.Lerp(DemonshadeBurnParticleSet.BrightColor, Color.Magenta, 0.55f)
+                    , Main.rand.Next(18, 27), Main.rand.NextFloat(0.015f, 0.045f));
+            }
+            Dust dust = Dust.NewDustPerfect(spot, Main.rand.NextBool()
+                ? DustID.AncientLight : DustID.Shadowflame);
+            dust.scale = Main.rand.NextFloat(0.4f, 0.62f);
+            dust.velocity = new Vector2(0f, Main.rand.NextFloat(-2.5f, -0.5f))
+                .RotatedByRandom(0.6f);
+            dust.noGravity = true;
+            if (dust.type == DustID.AncientLight)
+                dust.color = DemonshadeBurnParticleSet.BrightColor;
+        }
+        /// <summary>
+        /// 魔影套装移动时生成暗影焰尘并压成黑红色高亮外观。
+        /// 该表现不读取盗贼潜行，也不因城镇 NPC 数量改变。
+        /// </summary>
+        private void ApplyDemonshadeVisuals(PlayerDrawSet drawInfo, ref float r, ref float g
+            , ref float b, ref bool fullBright)
+        {
+            if (!demonshadeSetBonus || Player.mount.Active
+                || (Math.Abs(Player.velocity.X) <= 0.05f
+                    && Math.Abs(Player.velocity.Y) <= 0.05f))
+                return;
+            if (drawInfo.shadow == 0f && Main.rand.NextBool(2))
+            {
+                Dust dust = Dust.NewDustPerfect(drawInfo.Position + Main.rand.NextVector2Square(
+                    0f, Player.width), DustID.Shadowflame, Player.velocity * 0.4f
+                    , 100, DemonshadeDashFlameColor, 1.5f);
+                dust.noGravity = true;
+                dust.velocity *= 0.5f;
+            }
+            r *= 0.15f;
+            g *= 0.025f;
+            b *= 0.10f;
+            fullBright = true;
+        }
+        /// <summary>近战挥砍期间有三分之一概率生成黑红暗影焰尘。</summary>
+        public override void MeleeEffects(Item item, Rectangle hitbox)
+        {
+            if (!demonshadeSetBonus || !Main.rand.NextBool(3))
+                return;
+            Vector2 position = new(hitbox.X + Main.rand.NextFloat(hitbox.Width)
+                , hitbox.Y + Main.rand.NextFloat(hitbox.Height));
+            Dust dust = Dust.NewDustPerfect(position, DustID.Shadowflame
+                , Player.velocity * 0.2f + new Vector2(Player.direction * 3f, 0f)
+                , 100, DemonshadeDashFlameColor, 2.5f);
+            dust.noGravity = true;
         }
         /// <summary>
         /// 玩家受到 NPC 接触伤害前结算血肉图腾与胜利药水。
@@ -1120,6 +1274,8 @@ namespace CalamityRebirth.Players
                 modifiers.FinalDamage *= DaybreakII.DamageTakenMultiplier;
             if (Player.HasBuff<ElementalMixII>())
                 modifiers.FinalDamage *= ElementalMixII.DamageTakenMultiplier;
+            if (enraged)
+                modifiers.FinalDamage *= 1.25f;
             // NextFloat 的上界不包含 1，因此这里与该概率区间一一对应。
             if (bloodPact && Main.rand.NextFloat() < BloodPact.CriticalHitChance)
                 modifiers.FinalDamage *= BloodPact.CriticalHitDamageMultiplier;
@@ -1325,6 +1481,9 @@ namespace CalamityRebirth.Players
         /// </summary>
         public override bool CanConsumeAmmo(Item weapon, Item ammo)
         {
+            if (demonshadeAmmoSaving && weapon.CountsAsClass(DamageClass.Ranged)
+                && Main.rand.NextFloat() < 0.50f)
+                return false;
             if (rangerEmblemEX && Main.rand.NextFloat() < RangerEmblemEX.AmmoSaveChance)
                 return false;
             if (daedalusEmblem && weapon.CountsAsClass(DamageClass.Ranged)
@@ -2793,6 +2952,8 @@ namespace CalamityRebirth.Players
         public const byte MsgGodSlayerDash = 5;
         /// <summary>同步弑神者冲刺命中的网络消息码。</summary>
         public const byte MsgGodSlayerDashHit = 6;
+        /// <summary>客户端请求服务器给魔影狂怒范围内的敌怪施加状态的网络消息码。</summary>
+        public const byte MsgDemonshadeEnrage = 7;
         /// <summary>冲刺起步速度。</summary>
         private const float GodSlayerDashStartSpeed = 80f;
         /// <summary>冲刺中段速度阈值。</summary>
@@ -2821,6 +2982,12 @@ namespace CalamityRebirth.Players
         /// <summary>弑神者冲刺命中专用音效。</summary>
         private static readonly SoundStyle GodSlayerDashImpactSound =
             new("CalamityRebirth/Sounds/Custom/DevourerDeathImpact");
+        /// <summary>魔影冲刺主火光色。</summary>
+        private static readonly Color DemonshadeDashFlameColor = new(225, 30, 34);
+        /// <summary>魔影冲刺暗红内焰色。</summary>
+        private static readonly Color DemonshadeDashDarkColor = new(92, 0, 8);
+        /// <summary>魔影冲刺高亮橙红色。</summary>
+        private static readonly Color DemonshadeDashCoreColor = new(255, 104, 72);
         /// <summary>本帧是否穿着任意弑神者三件套。</summary>
         public bool godSlayer;
         /// <summary>本帧是否处于弑神保命冷却。</summary>
@@ -3198,8 +3365,9 @@ namespace CalamityRebirth.Players
         public void RequestGodSlayerDash()
         {
             if (!Player.active || Player.dead || Player.CCed
-                || !godSlayer || Player.whoAmI != Main.myPlayer
+                || (!godSlayer && !demonshadeSetBonus) || Player.whoAmI != Main.myPlayer
                 || Player.HasBuff(ModContent.BuffType<GodSlayerDashCooldown>())
+                || Player.HasBuff(ModContent.BuffType<DemonshadeDashCooldown>())
                 || Player.pulley || Player.grappling[0] != -1 || Player.tongued
                 || Player.mount.Active || Player.dashDelay != 0 || shieldSlamDashElapsed > 0)
                 return;
@@ -3260,7 +3428,10 @@ namespace CalamityRebirth.Players
             godSlayerDashTime = 0;
             godSlayerDashJawsSize = GodSlayerDashJawsStartSize;
             godSlayerDashHitSounded = false;
-            Player.AddBuff(ModContent.BuffType<GodSlayerDashCooldown>(), 45 * 60);
+            if (demonshadeSetBonus)
+                Player.AddBuff(ModContent.BuffType<DemonshadeDashCooldown>(), 15 * 60);
+            else
+                Player.AddBuff(ModContent.BuffType<GodSlayerDashCooldown>(), 45 * 60);
             godSlayerDashSoundSlot = SoundEngine.PlaySound(GodSlayerDashStartSound, Player.Center);
             GodSlayerDashStartVisuals();
             SendGodSlayerDashPacket(false);
@@ -3336,13 +3507,16 @@ namespace CalamityRebirth.Players
         /// <summary>生成冲刺起步的紫黑尘环。</summary>
         private void GodSlayerDashStartVisuals()
         {
-            AtaraxiaParticleSystem.SpawnDirectionalPulse(Player.Center, Vector2.Zero, Color.Orchid
+            Color pulseColor = demonshadeSetBonus ? DemonshadeDashFlameColor : Color.Orchid;
+            AtaraxiaParticleSystem.SpawnDirectionalPulse(Player.Center, Vector2.Zero, pulseColor
                 , new Vector2(2f), Main.rand.NextFloat(12f, 25f), 0.1f, 12f, 18);
             for (int i = 0; i < 16; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Player.position, DustID.GiantCursedSkullBolt
+                int dustType = demonshadeSetBonus ? DustID.LifeDrain : DustID.GiantCursedSkullBolt;
+                Dust dust = Dust.NewDustPerfect(Player.position, dustType
                     , -Player.velocity.RotatedByRandom(MathHelper.ToRadians(35f))
-                    * Main.rand.NextFloat(0.3f, 0.9f), 0, default
+                    * Main.rand.NextFloat(0.3f, 0.9f), 0
+                    , demonshadeSetBonus ? DemonshadeDashDarkColor : default
                     , Main.rand.NextFloat(3.1f, 3.9f));
                 dust.noGravity = false;
             }
@@ -3350,14 +3524,19 @@ namespace CalamityRebirth.Players
         /// <summary>生成龙颚、尘环、随体尾迹、双色火花和中段定向脉冲。</summary>
         private void GodSlayerDashVisuals(Vector2 center, Vector2 velocity, ref int time, ref float size)
         {
+            Color primaryColor = demonshadeSetBonus ? DemonshadeDashFlameColor : Color.Fuchsia;
+            Color secondaryColor = demonshadeSetBonus ? DemonshadeDashCoreColor : Color.Aqua;
+            Color darkColor = demonshadeSetBonus ? DemonshadeDashDarkColor : Color.Fuchsia;
+            int outerDust = demonshadeSetBonus ? DustID.LifeDrain : DustID.GiantCursedSkullBolt;
+            int trailDust = demonshadeSetBonus ? DustID.CrimsonTorch : DustID.CorruptTorch;
             time++;
             size -= 0.04f;
             if (time < 20)
             {
-                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.5f, velocity, Color.Fuchsia
+                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.5f, velocity, primaryColor
                     , new Vector2(0.8f, 1f), velocity.ToRotation() + MathHelper.PiOver2
                     , size, size, 2);
-                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.45f, velocity, Color.Aqua
+                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.45f, velocity, secondaryColor
                     , new Vector2(0.8f, 1f), velocity.ToRotation() + MathHelper.PiOver2
                     , size - 0.3f, size - 0.3f, 2);
             }
@@ -3370,16 +3549,18 @@ namespace CalamityRebirth.Players
                 Vector2 position = center + velocity * 0.8f
                     + angle.ToRotationVector2().RotatedBy(i / 5f * MathHelper.TwoPi) * ringRadius;
                 Dust dust = Dust.NewDustPerfect(position, Main.rand.NextBool(5)
-                    ? DustID.GiantCursedSkullBolt : DustID.CorruptTorch);
+                    ? outerDust : trailDust, default, 0, demonshadeSetBonus
+                    ? DemonshadeDashFlameColor : default);
                 dust.noGravity = true;
                 dust.velocity = velocity * 0.5f;
                 dust.scale = Main.rand.NextFloat(2.7f, 3f);
                 Dust trail = Dust.NewDustPerfect(center
                     + new Vector2(Main.rand.NextFloat(-6f, 6f), Main.rand.NextFloat(-15f, 15f))
                     + velocity * 0.5f
-                    , Main.rand.NextBool(14) ? DustID.DungeonSpirit : DustID.CorruptTorch
+                    , Main.rand.NextBool(14) ? trailDust : outerDust
                     , -velocity.RotatedByRandom(MathHelper.ToRadians(30f))
-                        * Main.rand.NextFloat(0.1f, 0.8f), 0, default
+                        * Main.rand.NextFloat(0.1f, 0.8f), 0, demonshadeSetBonus
+                        ? DemonshadeDashDarkColor : default
                     , Main.rand.NextFloat(2.7f, 3.9f));
                 trail.noGravity = true;
             }
@@ -3388,21 +3569,21 @@ namespace CalamityRebirth.Players
                 - velocity / 2f;
             AtaraxiaParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
                 2f * Player.direction) * 1.2f, firstSparkVelocity
-                , Main.rand.NextBool(3) ? Color.Aqua : Color.Fuchsia
+                , Main.rand.NextBool(3) ? secondaryColor : primaryColor
                 , Main.rand.Next(11, 13), sparkScale);
             Vector2 secondSparkVelocity = velocity.RotatedBy(Player.direction * 4f) * 0.08f
                 - velocity / 2f;
             AtaraxiaParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
                 -2f * Player.direction) * 1.2f, secondSparkVelocity
-                , Main.rand.NextBool(3) ? Color.Aqua : Color.Fuchsia
+                , Main.rand.NextBool(3) ? secondaryColor : primaryColor
                 , Main.rand.Next(11, 13), sparkScale);
             if (time > 20 && time < 100)
             {
                 AtaraxiaParticleSystem.SpawnDirectionalPulse(center - velocity * 0.52f
-                    , velocity / 1.5f, Color.Fuchsia, new Vector2(1f, 2f), velocity.ToRotation()
+                    , velocity / 1.5f, darkColor, new Vector2(1f, 2f), velocity.ToRotation()
                     , 0.82f, 0.32f, 60);
                 AtaraxiaParticleSystem.SpawnDirectionalPulse(center - velocity * 0.4f
-                    , velocity / 1.5f * 0.9f, Color.Aqua, new Vector2(0.8f, 1.5f)
+                    , velocity / 1.5f * 0.9f, secondaryColor, new Vector2(0.8f, 1.5f)
                     , velocity.ToRotation(), 0.58f, 0.28f, 50);
                 time = 111;
             }
@@ -3410,12 +3591,15 @@ namespace CalamityRebirth.Players
         /// <summary>命中时喷出 26 枚电光尘。</summary>
         private void GodSlayerDashHitVisuals()
         {
+            int firstDust = demonshadeSetBonus ? DustID.LifeDrain : DustID.Electric;
+            int secondDust = demonshadeSetBonus ? DustID.CrimsonTorch : DustID.WitherLightning;
             for (int i = 0; i < 26; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Player.position, Main.rand.NextBool(3)
-                    ? DustID.Electric : DustID.WitherLightning
+                    ? firstDust : secondDust
                     , Player.velocity.RotatedByRandom(MathHelper.ToRadians(15f))
-                    * Main.rand.NextFloat(0.1f, 0.5f), 0, default
+                    * Main.rand.NextFloat(0.1f, 0.5f), 0
+                    , demonshadeSetBonus ? DemonshadeDashFlameColor : default
                     , Main.rand.NextFloat(2.1f, 2.9f));
                 dust.noGravity = false;
             }
@@ -3912,6 +4096,9 @@ namespace CalamityRebirth.Players
         {
             if (GodslayerKeybinds.DashHotKey?.JustPressed == true)
                 RequestGodSlayerDash();
+            if (DemonshadeKeybinds.HotKey?.JustPressed == true && demonshadeSetBonus
+                && Player.whoAmI == Main.myPlayer)
+                ActivateDemonshadeEnrage();
             if (ShieldSlamKeybinds.ElysianHotKey?.JustPressed == true
                 && elysianAegisPower && !Player.mount.Active)
                 elysianGuard = !elysianGuard;
@@ -3919,6 +4106,49 @@ namespace CalamityRebirth.Players
             {
                 TryActivateTarragonCloak();
                 TryActivateBloodflareSoulBurst();
+            }
+        }
+        /// <summary>播放狂怒爆发表现，给玩家自身挂十秒狂怒并请求服务器同步附近敌怪。</summary>
+        private void ActivateDemonshadeEnrage()
+        {
+            SoundEngine.PlaySound(SoundID.Zombie104, Player.position);
+            for (int i = 0; i < 36; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Player.position + Main.rand.NextVector2Square(
+                    0f, Player.width), DustID.LifeDrain, Main.rand.NextVector2Circular(3f, 3f));
+                dust.velocity *= 3f;
+                dust.scale *= 1.15f;
+            }
+            for (int i = 0; i < 36; i++)
+            {
+                Vector2 offset = Main.rand.NextVector2Unit()
+                    * new Vector2(Player.width / 2f, Player.height) * 0.75f;
+                Dust dust = Dust.NewDustPerfect(Player.Center + offset * 2f, DustID.LifeDrain
+                    , offset * 1.5f, 100, default, 1.4f);
+                dust.noGravity = true;
+                dust.noLight = true;
+            }
+            Player.AddBuff(ModContent.BuffType<Enraged>(), 600, false);
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write(MsgDemonshadeEnrage);
+                packet.Send();
+                return;
+            }
+            ApplyDemonshadeEnrageToNearbyNPCs(Player, 600);
+        }
+        /// <summary>服务端或单机给三千像素内的合法敌怪施加十秒狂怒。</summary>
+        public static void ApplyDemonshadeEnrageToNearbyNPCs(Player player, int duration)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient || player is null || !player.active)
+                return;
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                if (!npc.active || npc.friendly || npc.dontTakeDamage
+                    || Vector2.Distance(player.Center, npc.Center) > 3000f)
+                    continue;
+                npc.AddBuff(ModContent.BuffType<Enraged>(), duration, false);
             }
         }
         /// <summary>更新远端玩家的拖尾表现，结束包丢失时自动过期。</summary>
@@ -4035,9 +4265,9 @@ namespace CalamityRebirth.Players
             ShieldSlamProfile profile = GetShieldSlamProfile(shieldSlamDash);
             float runSpeed = Math.Max(Player.accRunSpeed, Player.maxRunSpeed);
             if (Math.Abs(Player.velocity.X) > profile.MidDashSpeed)
-                Player.velocity.X *= ShieldSpeedDeceleration;
+                Player.velocity.X *= profile.FastDecay;
             else if (Math.Abs(Player.velocity.X) > runSpeed)
-                Player.velocity.X *= ShieldRunSpeedDeceleration;
+                Player.velocity.X *= profile.RunDecay;
             else
                 EndShieldSlamDash(runSpeed);
         }
@@ -4073,6 +4303,37 @@ namespace CalamityRebirth.Players
                         trail.alpha = 170;
                         trail.noGravity = true;
                         trail.shader = GameShaders.Armor.GetSecondaryShader(Player.cShield, Player);
+                    }
+                    break;
+                }
+                case ShieldSlamDash.Demonshade:
+                {
+                    time += 2;
+                    float radiusFactor = MathHelper.Lerp(0f, 1f
+                        , Utils.GetLerpValue(2f, 2.5f, time, true));
+                    for (int i = 0; i < 5; i++)
+                    {
+                        float angle = Player.velocity.ToRotation() + time / 5f;
+                        float radius = (18f + MathF.Cos(time / 3f) * 14f) * radiusFactor;
+                        Vector2 position = Player.Center - Player.velocity * 2f;
+                        position += angle.ToRotationVector2().RotatedBy(i / 5f * MathHelper.TwoPi)
+                            * radius;
+                        Dust ring = Dust.NewDustPerfect(position, Main.rand.NextBool(3)
+                            ? DustID.LifeDrain : DustID.CrimsonTorch);
+                        ring.alpha = 200;
+                        ring.noGravity = true;
+                        ring.velocity = Player.velocity * 0.8f;
+                        ring.scale = Main.rand.NextFloat(1.9f, 2.3f);
+                        ring.color = DemonshadeDashFlameColor;
+                        Dust trail = Dust.NewDustPerfect(
+                            Player.Center + new Vector2(
+                                Main.rand.NextFloat(-8f, 8f),
+                                Main.rand.NextFloat(-18f, 18f)) + Player.velocity * 1.5f,
+                            Main.rand.NextBool(4) ? DustID.Shadowflame : DustID.LifeDrain,
+                            -Player.velocity.RotatedByRandom(MathHelper.ToRadians(30f))
+                                * Main.rand.NextFloat(0.1f, 0.9f),
+                            150, DemonshadeDashDarkColor, Main.rand.NextFloat(1.8f, 2.2f));
+                        trail.noGravity = true;
                     }
                     break;
                 }
@@ -4202,7 +4463,7 @@ namespace CalamityRebirth.Players
                 GeneralScreenShakePower = profile.ScreenShake;
                 shieldSlamDashScreenShook = true;
             }
-            if (shieldSlamDash == ShieldSlamDash.AsgardianAegis)
+            if (shieldSlamDash is ShieldSlamDash.AsgardianAegis or ShieldSlamDash.Demonshade)
             {
                 Projectile.NewProjectile(Player.GetSource_FromThis(), Player.Center, Vector2.Zero
                     , ModContent.ProjectileType<CosmicDashExplosion>(), GetShieldExplosionDamage(profile)
@@ -4238,6 +4499,16 @@ namespace CalamityRebirth.Players
                     ShieldSlamParticleSystem.SpawnRing(center, new Vector2(2f), 0f, 0.1f, 0.85f, 36);
                     ShieldSlamParticleSystem.SpawnExplosion(center, Color.Magenta
                         , Main.rand.NextFloat(-5f, 5f), 0.65f, 26);
+                    break;
+                case ShieldSlamDash.Demonshade:
+                    ShieldSlamParticleSystem.SpawnRing(center, new Vector2(2f), 0f
+                        , 0.1f, 0.92f, 34, DemonshadeDashFlameColor);
+                    ShieldSlamParticleSystem.SpawnRing(center, new Vector2(1.7f), 0f
+                        , 0.12f, 0.58f, 24, DemonshadeDashCoreColor);
+                    ShieldSlamParticleSystem.SpawnExplosion(center, DemonshadeDashFlameColor
+                        , Main.rand.NextFloat(-5f, 5f), 0.72f, 30);
+                    ShieldSlamParticleSystem.SpawnExplosion(center, DemonshadeDashDarkColor
+                        , Main.rand.NextFloat(-5f, 5f), 0.48f, 20);
                     break;
                 case ShieldSlamDash.ElysianAegis:
                 {
@@ -4329,6 +4600,8 @@ namespace CalamityRebirth.Players
         {
             return dash switch
             {
+                ShieldSlamDash.Demonshade => new ShieldSlamProfile(
+                    31f, 16.5f, 1400, 18f, 6f, 360, 1400, 24f, 0.94f, 0.74f),
                 ShieldSlamDash.AsgardianAegis => new ShieldSlamProfile(
                     23.3f, 16f, 1000, 15f, 5f, 300, 1000, 20f),
                 ShieldSlamDash.ElysianAegis => new ShieldSlamProfile(
@@ -4359,9 +4632,15 @@ namespace CalamityRebirth.Players
             public readonly int ExplosionDamage;
             /// <summary>爆炸弹幕基础击退。</summary>
             public readonly float ExplosionKnockback;
+            /// <summary>高速阶段每帧速度衰减。</summary>
+            public readonly float FastDecay;
+            /// <summary>跑速以上阶段每帧速度衰减。</summary>
+            public readonly float RunDecay;
             /// <summary>构造一档完整冲刺数值。</summary>
             public ShieldSlamProfile(float startSpeed, float midDashSpeed, int damage, float knockback
-                , float screenShake, int debuffFrames, int explosionDamage, float explosionKnockback)
+                , float screenShake, int debuffFrames, int explosionDamage, float explosionKnockback
+                , float fastDecay = ShieldSpeedDeceleration
+                , float runDecay = ShieldRunSpeedDeceleration)
             {
                 StartSpeed = startSpeed;
                 MidDashSpeed = midDashSpeed;
@@ -4371,6 +4650,8 @@ namespace CalamityRebirth.Players
                 DebuffFrames = debuffFrames;
                 ExplosionDamage = explosionDamage;
                 ExplosionKnockback = explosionKnockback;
+                FastDecay = fastDecay;
+                RunDecay = runDecay;
             }
         }
         /// <summary>同步始源林海免死窗口状态的网络消息码。</summary>

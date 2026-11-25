@@ -9,6 +9,26 @@ Buffs: {
 		Description: 弑神者的力量正在汇聚
 	}
 
+	DemonshadeDashCooldown: {
+		DisplayName: 魔影冲刺冷却
+		Description: 黑红色的弑神者力量正在汇聚
+	}
+
+	DemonshadeBurn: {
+		DisplayName: 魔影灼燃
+		Description: 紫色巫咒火焰正在吞噬生命
+	}
+
+	Enraged: {
+		DisplayName: 狂怒
+		Description: 敌怪陷入狂怒
+	}
+
+	RedDevil: {
+		DisplayName: 红魔
+		Description: 一只友方红魔会保护你
+	}
+
 	Mechworm: {
 		DisplayName: 机械蠕虫
 		Description: 机械蠕虫会保护你
@@ -2181,6 +2201,52 @@ Items: {
 			冲刺有 45 秒冷却
 			'''
 	}
+
+	DemonshadeHelm: {
+		DisplayName: 魔影头盔
+		Tooltip:
+			'''
+			所有伤害提高 50%，暴击率提高 25%
+			近战攻击速度提高 25%
+			最大仆从数 +10，最大哨兵数 +5
+			'''
+		SetBonus:
+			'''
+			所有伤害提高 100%
+			武器与弹幕命中时施加 5 秒魔影灼燃
+			受击时天降暗影束与恶魔镰刀
+			一只友方红魔会跟随你
+			红魔会向敌人发射邪秽三叉戟
+			按 [{0}] 向八个方向发动弑神者冲刺
+			魔影冲刺使用黑红特效，冷却时间 15 秒
+			双击左右方向键发动强化宇宙冲撞
+			按 [{1}] 激怒 3000 像素内敌怪，持续 10 秒
+			狂怒敌怪造成的伤害提高 25%，受到的伤害提高 125%
+			'''
+	}
+
+	DemonshadeBreastplate: {
+		DisplayName: 魔影胸甲
+		Tooltip:
+			'''
+			所有伤害提高 40%，暴击率提高 20%
+			最大生命和最大魔力各提高 300
+			敌怪接触你时会受到 100 点反伤
+			50% 概率不消耗弹药
+			魔力消耗降低 50%
+			鞭子攻击速度与攻击范围提高 30%
+			完全静止时吸收暗影并快速提高生命再生
+			'''
+	}
+
+	DemonshadeGreaves: {
+		DisplayName: 魔影护腿
+		Tooltip:
+			'''
+			所有伤害提高 30%，暴击率提高 15%
+			奔跑速度与奔跑加速度提高 50%
+			'''
+	}
 }
 
 Rarities: {
@@ -2195,6 +2261,7 @@ Rarities: {
 	TurquoiseRarity.DisplayName: 绿松石
 	PureGreenRarity.DisplayName: 纯绿
 	PostMoonLordBlueRarity.DisplayName: 月后深蓝
+	DemonshadeRarity.DisplayName: 魔影
 }
 
 Projectiles: {
@@ -2229,6 +2296,7 @@ Projectiles: {
 	SandTornado.DisplayName: 沙尘暴
 	CactusHealOrb.DisplayName: 治疗
 	CosmicDashExplosion.DisplayName: 宇宙冲刺爆炸
+	RedDevil.DisplayName: 红魔
 	HolyExplosionSupreme.DisplayName: 至圣神圣爆炸
 	AbaddonCrit.DisplayName: 硫磺爆裂
 	Spark.DisplayName: 火花
@@ -2266,4 +2334,5 @@ Keybinds: {
 	Elysian.DisplayName: 极乐之庇护守护状态
 	Tarragon.DisplayName: 龙蒿生命护罩
 	GodslayerDash.DisplayName: 弑神者冲刺
+	Demonshade.DisplayName: 魔影狂怒
 }

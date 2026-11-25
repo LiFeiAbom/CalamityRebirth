@@ -15,6 +15,8 @@ namespace CalamityRebirth.Enums
         /// <summary>极乐之庇护的神圣冲撞。</summary>
         ElysianAegis,
         /// <summary>阿斯加德之庇护的宇宙冲撞。</summary>
-        AsgardianAegis
+        AsgardianAegis,
+        /// <summary>魔影套装授予的黑红宇宙冲撞。</summary>
+        Demonshade
     }
 }

@@ -16,13 +16,13 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Magic
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(6, 4));
 			ItemID.Sets.AnimatesAsSoul[Type] = true;
 		}
-		/// <summary>设置二十像素判定、粉红稀有度与饰品类型。</summary>
+		/// <summary>设置二十像素判定、青柠稀有度与饰品类型。</summary>
 		public override void SetDefaults()
 		{
 			Item.width = 20;
 			Item.height = 20;
 			Item.value = Item.buyPrice(0, 15, 0, 0);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Lime;
 			Item.accessory = true;
 		}
 		/// <summary>点亮混沌石标记；属性与红色照明由玩家结算类统一应用。</summary>

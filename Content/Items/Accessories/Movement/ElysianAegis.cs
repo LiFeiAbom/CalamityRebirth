@@ -1,5 +1,6 @@
 using CalamityRebirth.Enums;
 using CalamityRebirth.Players;
+using CalamityRebirth.Content.Rarities;
 using CalamityRebirth.Systems;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,14 @@ namespace CalamityRebirth.Content.Items.Accessories.Movement
     [AutoloadEquip(EquipType.Shield)]
     internal sealed class ElysianAegis : ModItem
     {
-        /// <summary>设置判定尺寸、六十金价格、专家标记、青色稀有度与十六点防御。</summary>
+        /// <summary>设置判定尺寸、六十金价格、专家标记、绿松石稀有度与十六点防御。</summary>
         public override void SetDefaults()
         {
             Item.width = 48;
             Item.height = 42;
             Item.value = Item.buyPrice(0, 60, 0, 0);
             Item.expert = true;
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ModContent.RarityType<TurquoiseRarity>();
             Item.defense = 16;
             Item.accessory = true;
         }

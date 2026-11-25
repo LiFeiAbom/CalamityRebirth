@@ -351,6 +351,7 @@ namespace CalamityRebirth.Content.Items
         {
             CalamityRebirthPlayer.TryApplyMeleeHitDebuffsOnPvP(player, target, item.DamageType);
             CalamityRebirthPlayer.TryApplyPotionHitDebuffsOnPvP(player, target);
+            CalamityRebirthPlayer.TryApplyDemonshadeBurnOnPvP(player, target);
             CalamityRebirthPlayer.TryApplyCrystalSkullLightningOnPvP(player, target, item.DamageType
                 , hurtInfo.Damage);
         }
@@ -359,6 +360,8 @@ namespace CalamityRebirth.Content.Items
             , ref Player.HurtModifiers modifiers)
         {
             CalamityRebirthPlayer modPlayer = player.GetModPlayer<CalamityRebirthPlayer>();
+            if (modPlayer.enraged)
+                modifiers.FinalDamage *= 2.25f;
             if (!modPlayer.silvaMelee || !Main.rand.NextBool(4))
                 return;
             if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.MeleeNoSpeed))

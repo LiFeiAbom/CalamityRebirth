@@ -10,13 +10,13 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Summon
     /// </summary>
     internal sealed class StatisBlessing : ModItem
     {
-        /// <summary>使用 28×32 判定尺寸、45 金价值与青色稀有度。</summary>
+        /// <summary>使用 28×32 判定尺寸、45 金价值与黄色稀有度。</summary>
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 32;
             Item.value = Item.buyPrice(0, 45, 0, 0);
-            Item.rare = ItemRarityID.Cyan;
+            Item.rare = ItemRarityID.Yellow;
             Item.accessory = true;
         }
         /// <summary>装备时只置位状态；召唤面板由 ModPlayer 按系列最高档统一结算。</summary>

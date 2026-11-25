@@ -79,7 +79,22 @@ namespace CalamityRebirth
 				case CalamityRebirthPlayer.MsgGodSlayerDashHit:
 					CalamityRebirthPlayer.HandleGodSlayerDashHitPacket(reader, whoAmI);
 					break;
+				case CalamityRebirthPlayer.MsgDemonshadeEnrage:
+					HandleDemonshadeEnrage(whoAmI);
+					break;
 			}
+		}
+		/// <summary>
+		/// 服务器以连接索引验证魔影套装后，给该玩家三千像素内的敌怪施加十秒狂怒。
+		/// </summary>
+		private static void HandleDemonshadeEnrage(int whoAmI)
+		{
+			if (Main.netMode != NetmodeID.Server
+				|| !Main.player.IndexInRange(whoAmI)
+				|| !Main.player[whoAmI].active
+				|| !Main.player[whoAmI].GetModPlayer<CalamityRebirthPlayer>().demonshadeSetBonus)
+				return;
+			CalamityRebirthPlayer.ApplyDemonshadeEnrageToNearbyNPCs(Main.player[whoAmI], 600);
 		}
 		/// <summary>
 		/// 转发盾牌冲刺的开始或结束状态。
