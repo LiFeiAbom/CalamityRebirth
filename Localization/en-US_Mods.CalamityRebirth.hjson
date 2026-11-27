@@ -129,11 +129,6 @@ Buffs: {
 		Description: Too much alcohol is eating away at your life
 	}
 
-	ShadowflameII: {
-		DisplayName: Shadowflame II
-		Description: Shadowfire is consuming your life
-	}
-
 	AbyssalWish: {
 		DisplayName: Abyssal Wish
 		Description: You can breathe underwater, even within the Abyss
@@ -1017,72 +1012,6 @@ Items: {
 	Vodka: {
 		DisplayName: Vodka
 		Tooltip: +6% damage, +2 critical strike chance, -5 defense, and reduced life regeneration
-	}
-
-	BiomeBlade: {
-		DisplayName: Biome Blade
-		Tooltip: Fires a projectile that changes color based on your current biome
-	}
-
-	TrueBiomeBlade: {
-		DisplayName: True Biome Blade
-		Tooltip: Fires enhanced biome orbs that home in on nearby enemies
-	}
-
-	OmegaBiomeBlade: {
-		DisplayName: Omega Biome Blade
-		Tooltip:
-			'''
-			Scatters five short-range homing biome orbs
-			Lunar pillar biomes and moon events alter their effects
-			'''
-	}
-
-	FourSeasonsGalaxia: {
-		DisplayName: Four Seasons Galaxia
-		Tooltip:
-			'''
-			Fires a highly homing Galaxia orb
-			Projectiles inflict different debuffs based on your biome
-			Hits grant buffs based on your biome and moon events
-			'''
-	}
-
-	ArkoftheAncients: {
-		DisplayName: Ark of the Ancients
-		Tooltip: Alternates between Eon Beams and Enchanted Beams while calling down hallowed stars
-	}
-
-	TrueArkoftheAncients: {
-		DisplayName: True Ark of the Ancients
-		Tooltip: Calls down empowered Eon Beams, hallowed stars, and homing terra balls
-	}
-
-	ArkoftheElements: {
-		DisplayName: Ark of the Elements
-		Tooltip: Fires an Eon Beam and four homing elemental orbs that inflict multiple elemental debuffs
-	}
-
-	ArkoftheCosmos: {
-		DisplayName: Ark of the Cosmos
-		Tooltip:
-			'''
-			Fires an Eon Beam alongside four full-damage Galaxia orbs
-			Projectiles inflict different debuffs based on your biome
-			Hits grant buffs based on your biome and moon events
-			'''
-	}
-
-	Ataraxia: {
-		DisplayName: Ataraxia
-		Tooltip:
-			'''
-			Fires a main missile and two side missiles when swung
-			The main missile creates a small explosion on hit
-			Side missiles split into six needle projectiles on hit
-			Melee strikes trigger a large explosion and a petal pattern
-			Hits inflict Shadowflame
-			'''
 	}
 
 	DarkSunRing: {
@@ -2254,7 +2183,6 @@ Rarities: {
 	SummonerEXRarity.DisplayName: Summoner EX
 	RogueEXRarity.DisplayName: Rogue EX
 	BurnishedAuricRarity.DisplayName: Burnished Auric
-	PostMoonLordPurpleRarity.DisplayName: Post-Moon Lord Purple
 	CosmicPurpleRarity.DisplayName: Cosmic Purple
 	TurquoiseRarity.DisplayName: Turquoise
 	PureGreenRarity.DisplayName: Pure Green
@@ -2263,17 +2191,6 @@ Rarities: {
 }
 
 Projectiles: {
-	BiomeOrb.DisplayName: Biome Orb
-	TrueBiomeOrb.DisplayName: True Biome Orb
-	OmegaBiomeOrb.DisplayName: Omega Biome Orb
-	EonBeam.DisplayName: Eon Beam
-	ElementBall.DisplayName: Element Ball
-	TerraBall.DisplayName: Terra Ball
-	Galaxia.DisplayName: Galaxia Orb
-	AtaraxiaMain.DisplayName: Ataraxia Missile
-	AtaraxiaSide.DisplayName: Ataraxia Blade
-	AtaraxiaSplit.DisplayName: Ataraxia Needle
-	AtaraxiaBoom.DisplayName: Ataraxia Blast
 	CrystalSkullLightning.DisplayName: Crystal Skull Lightning
 	CrystalSkullSpark.DisplayName: Crystal Skull Spark
 	AbyssalMirrorProjectile.DisplayName: Abyssal Mirror Projectile

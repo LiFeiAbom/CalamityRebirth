@@ -2,9 +2,9 @@ using Terraria;
 namespace CalamityRebirth.Systems.Graphic
 {
     /// <summary>
-    /// 允许胸甲把前方手臂重新绘制在肩甲之上，避免身体贴图挡住前臂。
+    /// 本工程专用的胸甲前臂重绘接口；独占名称用于避免与弱依赖模组中的同名全局接口冲突。
     /// </summary>
-    internal interface IDrawArmOverShoulderpad
+    internal interface IDrawFrontArmOverShoulderpad
     {
         /// <summary>前臂贴图的完整资源路径。</summary>
         string FrontArmTexture { get; }

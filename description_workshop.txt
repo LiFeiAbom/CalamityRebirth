@@ -1,14 +1,15 @@
 灾厄重生 / Calamity Rebirth
 将旧版灾厄中具有代表性的内容带回现版本的个人移植项目。
-当前版本：0.1.2.6
+当前版本：0.1.2.7
 【内容概览】
 · 五套终局盔甲：龙蒿、血炎、始源林海、弑神者与古圣金源，包含五职业头部与完整套装效果。
 · 五职业EX饰品、元素之握、血神核心、斯塔提斯召唤链、盗贼镜片潜行链、纳米技术、星云核心、元灵之心与天使之靴至炽天使翼靴链。
-· 22种药水与酒类、天界洋葱、禅心剑，以及多种自定义减益、稀有度和价格体系。
+· 22种药水与酒类、天界洋葱，以及多种自定义减益、稀有度和价格体系。
 · 可选的原版削弱回调，可恢复各灾厄分支对部分原版内容的调整。
 【兼容与说明】
 适配 CalamityMod、CalamityModClassicPreTrailer 1.4.2.101 与 CalRD 1.4.5.7，建议一次只启用一个灾厄分支。
 本模组是个人兴趣项目，不是旧版灾厄的完整复刻；部分属性、价格、稀有度、配方和视觉效果经过重新平衡或兼容调整。
+为避免代码与美术素材版权纠纷，本模组明确不回归、不引进任何武器，也不包含武器贴图、专属弹幕或音效。
 提供反馈时请注明模组版本、灾厄分支、单人/多人/PvP环境、复现步骤与客户端日志。
 【授权】
 未经许可，请勿重新上传完整.tmod文件，或将本模组原创代码和美术单独用于其他公开发布项目。
@@ -18,15 +19,16 @@
 [English]
 Calamity Rebirth
 Returns selected legacy Calamity content to current tModLoader versions as a personal adaptation project.
-Current version: 0.1.2.6
+Current version: 0.1.2.7
 [Highlights]
 · Five endgame armor sets: Tarragon, Bloodflare, Silva, God Slayer, and Auric Tesla, with helmets for all five classes and complete set bonuses.
 · Class emblem EX accessories, Elemental Gauntlet, Blood God Core, the Statis summoner line, rogue stealth mirrors, Nanotech, Nebulous Core, Heart of the Elements, and the Angel Treads to Seraph Tracers chain.
-· 22 potions and drinks, the Celestial Onion, Ataraxia, custom debuffs, rarities, and pricing.
+· 22 potions and drinks, the Celestial Onion, custom debuffs, rarities, and pricing.
 · Optional vanilla nerf reverts for supported Calamity branches.
 [Compatibility and Notes]
 Supports CalamityMod, CalamityModClassicPreTrailer 1.4.2.101, and CalRD 1.4.5.7. Enable only one Calamity branch at a time.
 This is a personal hobby project, not a complete legacy restoration. Some stats, prices, rarities, recipes, and visuals have been rebalanced or adapted for compatibility.
+To avoid code and artwork licensing disputes, this mod does not restore or introduce weapons and contains no weapon sprites, exclusive weapon projectiles, or weapon sounds.
 When reporting an issue, include the mod version, Calamity branch, single-player/multiplayer/PvP environment, reproduction steps, and client logs.
 [Licensing]
 Do not re-upload the complete .tmod file or reuse the mod's original code or artwork in other public releases without permission.

@@ -1,8 +1,8 @@
 来自旧日灾厄的回忆与荣光，如今再次苏醒。
-收录五职业EX饰品、进阶饰品链、五套终局盔甲、22种药水、天界洋葱、禅心剑及多种自定义内容；并非旧版灾厄的完整复刻。
+收录五职业EX饰品、进阶饰品链、五套终局盔甲、22种药水、天界洋葱及多种自定义内容；不包含任何武器，且不会进行武器的回归或引进。本模组并非旧版灾厄的完整复刻。
 适配 CalamityMod、经典 1.4.2.101 与 CalRD，建议一次只启用一个灾厄分支。
-版本：0.1.2.6
+版本：0.1.2.7
 A revival of memories and former glories from the legacy Calamity era.
-Selected legacy content returns, including class emblem EX accessories, advanced accessory chains, five endgame armor sets, 22 potions, the Celestial Onion, Ataraxia, and custom effects. This is not a complete legacy restoration.
+Selected legacy content returns, including class emblem EX accessories, advanced accessory chains, five endgame armor sets, 22 potions, the Celestial Onion, and custom effects. No weapons are included; weapon regression and introduction are intentionally excluded. This is not a complete legacy restoration.
 Supports CalamityMod, Classic 1.4.2.101, and CalRD. Enable only one Calamity branch at a time.
-Version: 0.1.2.6
+Version: 0.1.2.7

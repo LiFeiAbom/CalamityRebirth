@@ -1,10 +1,12 @@
 # CalamityRebirth — 工程记忆（新会话先读）
 > 最后整理：2026-11-26
-> 当前目标是按用户点名的内容，从 `CalamityExpansion` 与 `CalamityDemutation` 分步移植；不是一次性全量复制。
-> 当前版本：`0.1.2.6`
-> 当前代码规模：345 个手写 C# 文件，空行数 0
-> 最近审计（2026-11-26）：编译 0 警告、0 错误；中英文 Hjson 均为 555 条路径，
-> 缺失、多余与类型差异均为 0。魔影盔甲与紫色魔影灼燃已完成，待进游戏回归项见第 30 节。
+> 当前目标是按用户点名的非武器内容，从 `CalamityExpansion` 与 `CalamityDemutation` 分步移植；
+> 任何武器、武器专属弹幕、贴图和音效均不在移植范围内，也不是一次性全量复制。
+> 当前版本：`0.1.2.7`
+> 当前代码规模：324 个手写 C# 文件，空行数 0
+> 最近审计（2026-11-26）：编译 0 警告、0 错误；中英文 Hjson 均为 524 条路径，
+> 缺失、多余与类型差异均为 0；全部武器及专属内容已移除。魔影盔甲与紫色魔影灼燃已完成，
+> 待进游戏回归项见第 30 节。
 > 最近目录整理（2026-11-19）：饰品已按主用途分类，现有 `Combat 44`、`Movement 1`、
 > `HealthandMana 4`、`Construction 1`；`Information/Immunity/Fishing/Miscellaneous` 已建为空门类。
 ## 1. 工程身份与硬口径
@@ -12,6 +14,8 @@
 - 模组名：`CalamityRebirth`
 - 主类：`CalamityRebirth`
 - 玩家结算类：`CalamityRebirthPlayer`
+- 武器硬口径：不得新增、恢复或引进任何武器，也不得加入武器专属贴图、弹幕、音效和本地化。
+  饰品与盔甲自身提供的战斗效果不属于武器本体，继续保留；当前全部武器内容已于 2026-11-26 移除。
 - 饰品按主用途分类，根目录固定为：
   `Combat`、`Movement`、`Information`、`Immunity`、`Construction`、`HealthandMana`、`Fishing`、`Miscellaneous`。
   战斗职业饰品放 `Combat/<职业>`，综合战斗核心直接放 `Combat`；物品有多个效果时必须按主要用途归类。
@@ -277,22 +281,12 @@
   - 盗贼弹幕每 30 帧留下纳米刀刃；潜行弹幕 +20 穿甲且命中获得 5% 最终增伤。
   - 潜行打击每次提供一次服务器验证的 1 HP 治疗，并在前三次命中召唤 NanoFlare。
   - 不移植“概率秒杀普通敌怪”。
-### 3.7 近战武器
-- `禅心剑 / Ataraxia`
-- 3651 近战伤害、14 帧使用时间、击退 2.5、弹速 10、现代灼辉金源标准价格 2 铂金 40 金
-  - 稀有度：完整移植的 `BurnishedAuricRarity`
-  - 每次挥砍：主弹 100% 伤害，两枚侧弹各 50%
-  - 主弹死亡：半径 130 小爆炸
-  - 侧弹死亡：分裂为 6 枚针叶弹，每枚 2% 侧弹伤害
-  - 近战命中：半径 200 大爆炸，伤害为物品伤害的 70%
-  - 爆炸每额外命中一个目标，后续伤害 ×0.80，最低为 1
-  - 近战命中附加暗影焰 480 帧，弹幕命中附加 180 帧
-  - 暗影焰施加已封装：NPC 统一走 `ShadowflameII.ApplyToNPC` 使用原版 `BuffID.ShadowFlame`，
-    玩家 PvP 统一走 `ShadowflameII.ApplyToPlayer` 使用本工程的 `ShadowflameII / 暗影焰II`。
-  - `ShadowflameII` 只把玩家生命再生降到 `lifeRegen -= 30`（约 15 HP/s），没有额外减防、易伤或传染。
-    现代灾厄对 NPC 原版暗影焰的强化仍由灾厄本体负责，本工程不重复覆盖。
-  - 配方分别适配现代 2.2.2、经典 1.4.2.101 与 `CalRD 1.4.5.7`
-  - 特效使用 `AtaraxiaParticleSystem`，不依赖 DRKLoader
+### 3.7 武器内容移除状态
+- 2026-11-26 已按用户要求彻底移除全部武器，不保留武器本体、配方、贴图、专属弹幕或专属音效。
+- 原弑神者冲刺仍在使用的粒子表现已独立为 `GodSlayerDashParticleSystem`，只保留冲刺所需路径；
+  原武器专用火花、火焰脉冲、贴图和相关名称已删除。
+- 共享的 `ElementalMixII`、`BurnishedAuricRarity` 等非武器专属资源继续供饰品、
+  盔甲或全局结算使用，不得因为武器移除而误删。
 ### 3.8 灾厄原版削弱回调
 - 配置项：`VanillaNerfRevertConfig.RevertVanillaNerfs`，默认关闭，`ServerSide`，修改后重载。
 - 同时处理现代 `CalamityMod 2.2.2`、`CalamityModClassicPreTrailer 1.4.2.101` 与 `CalRD 1.4.5.7`；
@@ -418,7 +412,7 @@
   - 现代配方：王冠宝石 + `AureusCell`×10 + `StarblightSoot`×25 @ 秘银砧。
   - 经典 1.4.2.101 与 `CalRD`：王冠宝石 + `AstralJelly`×10 + `Stardust`×25 @ 秘银砧。
 - `无暇粹魂晶 / Purity`
-  - 18×44、防御 +12、`PostMoonLordPurpleRarity`、标准 1 铂金 50 金。
+  - 18×44、防御 +12、`CosmicPurpleRarity`、1 铂金 50 金。
   - 最大生命 +100、免疫击退；继承甘露安瓿（古）的常驻蜂蜜再生、站桩再生与目标战斗减益时长减半。
   - 按已损失生命从 3 HP/s 线性提高到 7 HP/s。
   - 有目标战斗减益时抵消最多 12 HP/s 的减益掉血；首个减益提供 20 防御，
@@ -428,78 +422,16 @@
   - 现代配方：甘露安瓿（古）+ 感染宝石 + 圣金源锭×5 + 化神魂精×4 @ 星宇砧。
   - 经典 1.4.2.101 使用 `CRUtil` 等价材料；1.4.2.101 与 CalRD 均使用嘉登熔炉，
     且两版都消耗本工程甘露安瓿（古），不再回引灾厄同名基础件。
-- `PostMoonLordPurpleRarity` 已移植为月后 15 级紫色稀有度，颜色 `(108, 45, 199)`；
-  现代价格表映射为 1 铂金 50 金。
+- 原月后 15 级紫色档已按用户要求映射为现代 God Slayer 使用的 `CosmicPurpleRarity`；
+  旧 `PostMoonLordPurpleRarity` 类型已删除，Purity 继续保留 1 铂金 50 金的显式价格。
 - `BuffUtil` 固定包含参照工程 2.0.3.9 的原版减益清单、本工程四种战斗减益，
   并按已加载灾厄版本弱依赖查找同名灾厄减益；酒精、药水病等长期状态不触发宝石强化。
 - 三件宝石按 `无暇粹魂晶 > 感染宝石 > 王冠宝石` 的 `else-if` 优先级结算；
   动态防御与治疗节拍跨帧保存，死亡时归零，避免复活后继承旧惩罚。
-### 3.13 鸿蒙方舟链
-- 完整链已移植，共 8 件武器、7 个自定义弹幕；分为两条支流并在顶点汇合：
-  - 环境之刃 → 真·环境之刃 → 欧米茄环境之刃 → 银河。
-  - 远古方舟 → 真·远古方舟 → 元素方舟。
-  - 顶点鸿蒙方舟同时消耗银河与元素方舟。
-- 当前最终面板：
-  - `环境之刃`：70 伤害、24 帧、击退 5。
-  - `真·环境之刃`：160 伤害、21 帧、击退 7.5。
-  - `欧米茄环境之刃`：220 伤害、18 帧、击退 8。
-  - `银河`：425 伤害、16 帧、击退 9。
-  - `远古方舟`：92 伤害、22 帧、击退 6.25。
-  - `真·远古方舟`：100 伤害、22 帧、击退 6.5。
-  - `元素方舟`：235 伤害、18 帧、击退 8.5，近战暴击 +10。
-  - `鸿蒙方舟`：680 伤害、14 帧、击退 9.5，近战暴击 +16。
-- 稀有度与价格已统一挂钩现代 2.2.2：
-  - 环境之刃：橙色，5 金；对应现代 `Broken Biome Blade`。
-  - 真·环境之刃：浅紫色，35 金。
-  - 欧米茄环境之刃：青色，80 金。
-  - 银河：绿松石，1 铂金 50 金。
-  - 远古方舟：浅红色，10 金；对应现代 `Fractured Ark`。
-  - 真·远古方舟：黄色，60 金。
-  - 元素方舟：紫色，1 铂金 20 金。
-  - 鸿蒙方舟：`BurnishedAuricRarity`，2 铂金 40 金；现代源码稀有度用灼辉金源，
-    价格显式使用 Violet 档，因此不能只按稀有度表推导价格。
-- 弹幕伤害倍率：
-  - 环境之刃、真·环境之刃、银河：主弹 100%。
-  - 欧米茄环境之刃：5 枚环境球，各 100%。
-  - 远古方舟：主光束 100%，另有 2 颗 1/3 伤害圣星。
-  - 真·远古方舟：主光束 75%，随后 2～3 组“圣星 50% + 大地弹 100%”。
-  - 元素方舟：主光束 100%，另有 4 枚 50% 伤害追踪元素球。
-  - 鸿蒙方舟：主光束 100%，另有 4 枚 100% 伤害银河弹。
-- 环境球体系：
-  - `BiomeOrb` 为基础类，承载环境解析、粉尘、残影、命中减益和 PvP 路径。
-  - `TrueBiomeOrb` 使用 4 格残影、400 像素追踪和 360 帧减益。
-  - `OmegaBiomeOrb` 使用 6 格残影、200 像素追踪、120 帧寿命、四柱配色和 600 帧减益。
-  - 环境覆盖森林、丛林、雪原、海滩、腐化、猩红、地牢、沙漠、发光蘑菇地、地狱、
-    天空、神圣、四柱和星陨感染。
-- 方舟武器弹幕：
-  - `EonBeam` 为三穿透、500 帧、10 帧本地命中的永恒光束；`ai[0] == 1` 时跳过元素减益，
-    `ai[1]` 选择紫、青、天蓝、橙色。
-  - `ElementBall` 使用工程已有 `InvisibleProj.png`，8×8、单穿透、两次额外更新、1600 像素追踪。
-  - `TerraBall` 为 20×20、单穿透、180 帧、1600 像素追踪的绿色大地弹。
-  - `Galaxia` 为 24×24、三穿透、默认 280 帧、1600 像素追踪的彩虹弹。
-  - 银河弹二次弹幕覆盖叶刃、冰锥、海泡、诅咒焰、黄金雨、水流、黑曜石、
-    蘑菇、火球、彩虹爆炸、星云烈焰、星尘细胞、日耀爆炸、星旋火箭和泰拉光束。
-- 三版本配方：
-  - 现代环境之刃沿用 Demutation 前移配方；1.4.2 使用原生秘银砧版本；
-    CalRD 使用 20 份群系材料与 `AnyEvilBlock` 版本。
-  - 两个经典版优先使用各自原生的银河奇点、生命锭、星辉锭、化神魂精等材料。
-  - 现代星宇砧配方使用 `CosmicAnvil`；1.4.2 与 CalRD 使用 `DraedonsForge`。
-- 现代 2.2.2 官方链已整体重构为 Broken/Mended Biome Blade、Fractured Ark、
-  架势、蓄力与格挡体系；本工程按要求保留 Demutation 的旧版线性链和发射弹幕玩法，
-  不混入现代重构物品与架势逻辑。
-- 2026-11-19 视觉对照修正：
-  - 银河弹恢复 Demutation 的动态彩虹 `GetAlpha`，不再错误显示为白色。
-  - 残影绘制恢复原生模式 0/1/2；环境球、银河和大地弹使用模式 0。
-  - 欧米茄环境球恢复 120 帧寿命和 `timeLeft > 105` 隐藏前摇。
-  - 环境球粉尘恢复碰撞箱内随机生成与原生默认色，环境色只用于弹幕本体。
-  - 永恒光束、元素球、大地弹的粉尘位置与原生生成框对齐。
-  - 远古方舟、真·远古方舟和元素方舟的圣星恢复“玩家至鼠标方向之间随机散布”的落点。
-  - 元素方舟元素球恢复单次随机速度，不再每枚独立重掷速度。
-  - 方舟武器近战粉尘恢复整个命中框随机生成；日耀二次爆炸恢复 0.85～2.0 随机参数。
-- 所有武器和弹幕贴图均与 `CalamityDemutation` 原件 SHA-256 一致：
-  - 8 张武器贴图。
-  - 6 张弹幕贴图。
-  - 元素球继续复用原有透明贴图，不新增重复资源。
+### 3.13 已移除的旧武器链
+- 原有多件近战武器及其整条配方、武器贴图、专属弹幕、专属音效、本地化路径均已删除。
+- 不得从参考工程重新导入这些武器，也不得以同名材料、隐藏物品或调试物品的方式变相恢复。
+- `BurnishedAuricRarity` 仍是独立稀有度资源，可由现有非武器内容继续使用。
 ### 3.14 综合战斗饰品
 - `蚀日尊戒 / Dark Sun Ring`
   - 直接移植自 `CalamityDemutation`，32×192 六帧纵向灵魂动画贴图逐字节一致；判定尺寸 26×26。
@@ -797,8 +729,6 @@
   - 宝石链顶点、甘露安瓿继承、动态再生/防御/治疗与三版本配方。
 - `Utilities/BuffUtil.cs`
   - 通用战斗减益查询、环境/月亮事件增益、星陨环境补充增益与热重载清理。
-- `Content/Rarities/PostMoonLordPurpleRarity.cs`
-  - 月后紫色稀有度及现代价格映射。
 - `Content/Items/Accessories/Combat/FleshTotem.cs`
 - `Content/Items/Accessories/Combat/Melee/BloodyWormScarf.cs`
 - `Content/Items/Accessories/Combat/Melee/BloodyWormTooth.cs`
@@ -858,12 +788,10 @@
   - 灾厄原版削弱回调开关；服务器端配置，修改后重载生效。
 - `Systems/VanillaNerfRevertSystem.cs`
   - 现代 2.2.2、1.4.2.101 与 `CalRD` 的精确原版数值、护甲、饰品、翅膀、增益、弹幕与跑速回调数据。
-- `Content/Items/Weapons/Melee/Ataraxia.cs`
-  - 禅心剑本体、三版本配方与命中特效入口。
-- `Content/Projectiles/Melee/Ataraxia*.cs`
-  - 主弹、侧弹、针叶弹与爆炸区。
-- `Content/Particles/AtaraxiaParticleSystem.cs`
-  - 禅心剑专用粒子管理，不依赖 DRKLoader。
+- `Content/Particles/GodSlayerDashParticleSystem.cs`
+  - 弑神者冲刺火花、龙颚光片与定向脉冲环；不再包含任何武器专用分支。
+- `Content/Particles/GodSlayerDashParticle.cs`
+  - 弑神者冲刺粒子的位置、寿命、淡出、缩放和绘制实现。
 - `Content/Items/Accessories/Combat/Rogue/CrystalSkull.png`
   - 显示名“晶光头骨”；内部资源名保持英文 `CrystalSkull`，采用盗贼徽章EX的暗蓝、暗紫、金属灰与冷白高光色系。
 - `Content/Rarities/BurnishedAuricRarity.cs`
@@ -879,16 +807,8 @@
   - 电工手套潜行火花，基础伤害 95。
 - `Content/Projectiles/Rogue/CrystalSkullLightning.cs`
   - 10% 盗贼命中闪电与 PvP 触电II入口。
-- `Content/Items/Weapons/Melee/BiomeBlade.cs`
-  - 鸿蒙方舟链最低层武器、现代稀有度价格与三版本配方入口。
-- `Content/Items/Weapons/Melee/ArkoftheCosmos.cs`
-  - 鸿蒙方舟顶点、终极面板、光束与四枚银河弹发射逻辑、三版本配方。
-- `Content/Projectiles/Melee/BiomeOrb.cs`
-  - 环境球基础类、环境视觉与减益结算；真·与欧米茄环境球继承该基础类。
-- `Content/Projectiles/Melee/Galaxia.cs`
-  - 银河弹、全部环境二次弹幕、PvP 路径与彩虹残影。
 - `Utilities/ProjectileUtil.cs`
-  - 原生残影模式、追踪和方舟落点生成工具。
+  - 原生残影模式、追踪和通用落点生成工具；仅供现有非武器弹幕调用。
 - `Utilities/CalamityCompatUtil.cs`
   - 三版本 `ZoneAstral` 反射缓存与外部减益入口。
 ## 6. 1.4.5.7 配方口径
@@ -932,8 +852,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   1.4.2.101 与 CalRD 继续使用各自原生银河奇点。
 - 血神核心系列已完成编译与贴图检查，仍需进游戏回归测试三版本配方、宝藏袋条件、光环生成和多人表现。
 - 2026-11-12 全量审计修复：晶光头骨、新生药水、光合作用红心治疗改为服务器验证请求；
-  天界洋葱改为服务器验证解锁、每玩家独立掉落；禅心剑改用最近点圆形碰撞；
-  血神核心低血/低防阈值延后到最终生命与防御结算；经典分支银河奇点与 CalRD 光合作用配方补回退；
+  天界洋葱改为服务器验证解锁、每玩家独立掉落；血神核心低血/低防阈值延后到最终生命与防御结算；
+  经典分支银河奇点与 CalRD 光合作用配方补回退；
   无尽饥渴只在本机所属客户端处理未归属掉落；酒类饮用动作、堆叠、粒子颜色、研究数量和暗影焰本地化已修正。
 - 1.4.2.101 没有离散潜行打击消耗字段，75% 消耗仅适用于自带该字段的现代版与 `CalRD`。
 - 2026-11-09 已删除无消费方的 `WarpShader`、`NeutronWarp`、`NeutronRingShader`、`HellfireIV`、
@@ -941,20 +861,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 破晓II火花已按灾厄 2.2.2 的 `MiracleBlight + GlowSparkParticle` 完整还原，仅把四色彩虹换成
   燃烧橙红色阶。当前实现为 `DaybreakSparkParticle` + `DaybreakParticleSystem` + `GlowSpark.png`。
   `DRKLoader`、`BaseParticle`、`DRK_Spark` 已全部删除，不要恢复；`StarProj.png` 只允许由
-  `AtaraxiaParticleSystem` 使用。
+  `GodSlayerDashParticleSystem` 使用。
 - 2026-11-10 删除破晓II的全屏渲染目标、`On_Main.DrawNPC` 着色 Hook、`EffectLoader`、
   `DaybreakII.fx/.fxc` 与 `Neurons.png`；该路径会造成命中后背景黑屏和严重卡顿，不要恢复。
   破晓II现使用 NPC 绘制颜色橙红染色与安全火花粒子。
-- 2026-11-10 已移植禅心剑（`Ataraxia`）：伤害 3651、使用 14 帧；2026-11-12 已把稀有度和价格接入
-  `RarityUtil`，灼辉金源按现代 RarityViolet 标准改为 2 铂金 40 金。普通近战爆炸伤害为
-  物品伤害的 70%，爆炸每额外命中一个目标伤害 ×0.80（最低 1）。完整包含主弹、侧弹、针叶弹、
-  爆炸区与增强版暗影焰，并为现代 2.2.2、经典 1.4.2.101 和 `CalRD 1.4.5.7` 分别注册配方。
-- 禅心剑稀有度完整移植 `BurnishedAuricRarity`，由现有 `CalamityRebirthGlobalItem` 接管物品名绘制。
-  武器特效使用专用的 `AtaraxiaParticleSystem`，不恢复 DRK 粒子系统。
+- 2026-11-26 已彻底移除全部武器、武器专属配方、贴图、弹幕、音效和本地化，并完成非武器依赖拆分；
+  该清理是不可逆口径，后续不得重新移植或变相恢复。
 - 2026-11-10 修复灼辉金源中文 tooltip 黑屏：名称效果改为在当前 UI 批次直接绘制，
   不再创建全屏渲染目标或结束/重启 `SpriteBatch`。
-- 禅心剑已进入游戏实测阶段；仍需回归确认三枚弹幕站位、五帧动画、两级爆炸、花瓣尘、
-  脉冲环、暗影焰 DoT、Burnished Auric tooltip 与三版本配方显示。
 - 晶光头骨仍需实测三版本属性、50% 潜行消耗、电工手套火花、闪电触发与触电II的 PvP/NPC 分支。
 - 天界洋葱服务器验证、每玩家掉落与多人同步已实现，仍建议在主机/客机、多人同时击杀和重连场景实测。
 - 完整打包可能因当前环境无权写入
@@ -994,15 +908,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   `GetContent<ModPlayer>()` 定位实际 CalamityPlayer，并在初始化缺失时自动重试；
   同时在 `PostUpdateEquips` 与 `PostUpdateMiscEffects` 写入同一消耗档，避免字段写入失败。
   Mod.Call 设置盗贼潜行模式后还会通过反射兜底写入 `wearingRogueArmor`。
-- 2026-11-19 鸿蒙方舟全链已完成编译、贴图哈希、本地化结构和视觉源码对照；
-  仍需进游戏回归验证：
-  - 银河弹动态彩虹色与六格残影是否与 Demutation 一致。
-  - 欧米茄环境球 120 帧寿命、前 15 帧隐藏与四柱配色。
-  - 圣星、大地弹和元素球的天空落点、追踪与爆散尘。
-  - 永恒光束四色选择、前十帧隐藏和穿透表现。
-  - 三版本环境减益、星陨感染、月亮事件增益与 PvP。
-  - 多人环境下银河二次弹幕是否只生成一次。
-  - 现代、1.4.2.101、CalRD 三套配方与当前现代稀有度/价格显示。
 - 2026-11-18 元素之握已改为只施加 `ElementalMixII`，其视觉恢复为现代原始元素混合效果，
   饰品稀有度改为与血神核心一致的 `CosmicPurpleRarity`；仍需进游戏回归三版配方、
   NPC 700 HP/s/-50 防御/+15% 易伤、
@@ -1285,7 +1190,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 保留原有 `WeaponUtil`、`MaterialUtil`、`ProjectileUtil`、`RogueUtil`、`CollisionUtil`
   五个 `CRUtil` 分部和 `CalamityCompatUtil` 不变。
 - `ModernRarityValueUtil` 已重命名为 `RarityUtil`，所有调用同步更新为 `RarityUtil.Apply`。
-- `JewelDebuffUtil` 与 `GalaxiaEnvironmentBuffUtil` 已合并为 `BuffUtil`：
+- 旧的减益查询与环境增益工具已合并为 `BuffUtil`：
   - `BuffUtil.Contains`：战斗减益查询。
   - `BuffUtil.Unload`：热重载清理。
   - `BuffUtil.ApplyEnvironmentBuffs`：月亮事件、群系与星陨环境增益。
@@ -1444,7 +1349,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   - `GodSlayerVisage`：21 防御、魔法伤害/暴击 +14%、最大魔力 +100、蓝耗 ×0.83。
   - `GodSlayerHornedHelm`：12 防御、仆从栏 +3、召唤伤害/鞭速/鞭长各 +12%。
   - `GodSlayerMask`：29 防御、盗贼伤害/暴击 +14%、移速 +18%、潜行上限 160。
-- 所有部件使用月后 14 级深蓝稀有度；三版本价格按 Demutation，头 75 金、胸 60 金、腿 45 金。
+- 所有部件使用现代 `Cosmic Purple` 稀有度；三版本价格按 Demutation，头 75 金、胸 60 金、腿 45 金。
 - 配方：
   - 现代：头宇宙锭×10 + 至尊精神×2，胸 ×20/×4，腿 ×15/×3，宇宙砧。
   - 经典 1.4.2.101：头宇宙锭×14 + 梦魇燃料×8 + 吸热能量×8，
@@ -1507,14 +1412,17 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 月后五阶防具统一映射已确认：
   - 龙蒿源 12 档 → `TurquoiseRarity`。
   - 血炎源 13 档 → `PureGreenRarity`。
-  - 弑神者源 14 档 → `PostMoonLordBlueRarity`。
-  - 始源林海源 15 档 → `PostMoonLordPurpleRarity`。
+  - 弑神者 → 现代 `CosmicPurpleRarity`。
+  - 始源林海 → 现代 `CosmicPurpleRarity`。
   - 古圣金源源 20 档 → `BurnishedAuricRarity`。
 - `RarityUtil` 补齐 14 档深蓝的标准购买价 2 铂金；所有新防具仍按源物品显式价格覆盖，
   不因档位价格改变 75/60/45 金或 1 铂金 44/8 金等具体售价。
 - 常规物品与 Demutation 稀有度差异逐项复核后，保留 AGENTS 已记录的明确用户定制：
-  代达罗斯纹章原版紫色、元素之箭袋/元素之握等 CosmicPurple、无暇粹魂晶月后紫、
-  鸿蒙方舟与禅心剑灼辉金源，以及血神核心系列指定档位。
+  代达罗斯纹章原版紫色、元素之箭袋/元素之握等 CosmicPurple、无暇粹魂晶 CosmicPurple、
+  灼辉金源之翼，以及血神核心系列指定档位。
+- 英文旧名与现代后继只用于定位候选；必须同时核对获取时期、配方和物品强度。
+  例如 `Purity → Radiance`、`ElysianTracers → Void Striders` 已有不同阶段或明确用户定制，
+  不得仅凭 `[LegacyName]` 直接套用现代 rarity。
 - 多人逻辑修正：
   - 仙人掌治疗珠、真菌治疗球改由服务端验证治疗，再广播 `PlayerLifeMana`。
   - 阴阳吸星石/涡流虹吸石的受击前治疗只由单机或服务端写入生命。
@@ -1570,7 +1478,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
 - 本轮未修改版本号，仍为 `0.1.2.6`。
 ## 30. 2026-11-25 魔影盔甲移植
 - `Content/Items/Armors/Demonshade` 已加入通用魔影头盔、胸甲与护腿，三件防御均为 50，
-  价格依次为 5、4、3 铂金，名称使用品红 `DemonshadeRarity`。
+  价格依次为 5、4、3 铂金，名称使用对应现代 `Hot Pink` 自定义色的橙红动态
+  `DemonshadeRarity`。
 - 魔影头盔提供通用伤害 +50%、通用暴击 +25%、近战攻速 +25%、仆从栏 +10、哨兵栏 +5；
   不提供通用攻击速度，也不读取或染色盗贼潜行。
 - 魔影胸甲提供通用伤害 +40%、通用暴击 +20%、生命与魔力上限各 +300、反伤 100、
@@ -1594,6 +1503,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File `
   拖尾、命中爆炸与宇宙爆炸尘同步使用魔影配色。
 - 新增 `HatExtensionLayer` 与 `FrontArmOverShoulderpadLayer`，用于完整绘制魔影头盔兜帽/角
   和胸甲前臂；两者仅在客户端绘制，不参与服务端属性结算。
+- 前臂绘制必须使用本工程独占接口 `IDrawFrontArmOverShoulderpad`，不得改回
+  `IDrawArmOverShoulderpad`；后者与灾厄同名全局接口冲突，会使 tModLoader 编译出的胸甲
+  硬绑定 `CalamityMod`，导致未启用现代灾厄时整个模组无法加载。
+- 头部附加层必须使用本工程独占接口 `IHatExtensionDrawer`，不得改回 `IExtendedHat`；
+  后者同样与灾厄全局接口冲突，并会把魔影头盔硬绑定到 `CalamityMod`。
 - 现代版稀有度复核后修正：气之石浅红、花绽石与混沌石青柠、寒霜屏障浅红、
   斯塔提斯的祝福黄色、极乐之庇护绿松石。
 - 2026-11-26 封装验证：源码 C# 文件 345 个、空行 0；`dotnet build` 为 0 警告、0 错误；

@@ -7,13 +7,13 @@ namespace CalamityRebirth.Content.Items.Armors.GodSlayer
     /// <summary>弑神者防具公共基类，统一尺寸、稀有度、价格和三版本配方。</summary>
     internal abstract class GodSlayerArmorItem : ModItem
     {
-        /// <summary>设置 18×18 判定尺寸、防御、金币价格和月后 14 级深蓝稀有度。</summary>
+        /// <summary>设置 18×18 判定尺寸、防御、金币价格和现代 Cosmic Purple 稀有度。</summary>
         protected void SetArmorDefaults(int defense, int goldPrice)
         {
             Item.width = 18;
             Item.height = 18;
             Item.defense = defense;
-            RarityUtil.Apply(Item, ModContent.RarityType<PostMoonLordBlueRarity>()
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>()
                 , Item.buyPrice(0, goldPrice, 0, 0));
         }
         /// <summary>

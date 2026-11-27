@@ -207,8 +207,6 @@ namespace CalamityRebirth.Players
         public bool electrifiedII;
         /// <summary>本帧玩家是否受到元素混合II影响。</summary>
         public bool elementalMixII;
-        /// <summary>本帧玩家是否受到本模组自定义暗影焰影响。</summary>
-        public bool shadowflameII;
         /// <summary>本帧是否装备王冠宝石；实际再生由 UpdateLifeRegen 统一结算。</summary>
         public bool crownJewel;
         /// <summary>本帧是否装备感染宝石；实际再生与动态防御由 UpdateLifeRegen 统一结算。</summary>
@@ -257,8 +255,6 @@ namespace CalamityRebirth.Players
         /// 该值不能放进 ResetEffects，否则每帧清零后无法形成持续回退效果。
         /// </summary>
         private int jewelBonusDefense;
-        /// <summary>禅心剑每次挥砍只播放一次命中音效，此标记在首次近战命中后清零。</summary>
-        public bool ataraxiaHitSound;
         /// <summary>玩家是否已经食用天界洋葱并永久获得额外饰品槽。</summary>
         public bool extraAccessoryML;
         /// <summary>法力饰品的逐帧计时器，累计到 60 帧后统一回复每秒法力值。</summary>
@@ -348,7 +344,6 @@ namespace CalamityRebirth.Players
             nanotech = false;
             electrifiedII = false;
             elementalMixII = false;
-            shadowflameII = false;
             crownJewel = false;
             infectedJewel = false;
             purity = false;
@@ -759,7 +754,7 @@ namespace CalamityRebirth.Players
             ApplySilvaDebuffRegenProtection();
             if (!Player.HasBuff<BurningIII>() && !Player.HasBuff<DaybreakII>()
                 && !Player.HasBuff<ElectrifiedII>() && !Player.HasBuff<ElementalMixII>()
-                && !Player.HasBuff<ShadowflameII>() && !Player.HasBuff<DemonshadeBurn>())
+                && !Player.HasBuff<DemonshadeBurn>())
                 return;
             if (Player.lifeRegen > 0)
                 Player.lifeRegen = 0;
@@ -772,8 +767,6 @@ namespace CalamityRebirth.Players
                 Player.lifeRegen -= ElectrifiedII.PlayerLifeRegenLoss;
             if (Player.HasBuff<ElementalMixII>())
                 Player.lifeRegen -= ElementalMixII.PlayerLifeRegenLoss;
-            if (Player.HasBuff<ShadowflameII>())
-                Player.lifeRegen -= 30;
             if (Player.HasBuff<DemonshadeBurn>())
                 Player.lifeRegen -= DemonshadeBurn.DamagePerSecond * 2;
         }
@@ -1165,15 +1158,13 @@ namespace CalamityRebirth.Players
         }
         // 仅在正常绘制通道触发，避免残影把同一份粒子重复生成。
         /// <summary>
-        /// 为破晓II和自定义暗影焰生成玩家粒子。
+        /// 为破晓II生成玩家粒子。
         /// shadow 为 0 可排除残影绘制，防止一次画面更新重复消耗粒子和视觉预算。
         /// </summary>
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
         {
             if (drawInfo.shadow == 0f && Player.HasBuff<DaybreakII>())
                 DaybreakII.DrawEffects(drawInfo);
-            if (drawInfo.shadow == 0f && Player.HasBuff<ShadowflameII>())
-                ShadowflameII.DrawEffects(drawInfo);
             if (drawInfo.shadow == 0f && Player.HasBuff<ElectrifiedII>())
                 ElectrifiedII.SpawnElectricVisuals(Player);
             if (drawInfo.shadow == 0f && Player.HasBuff<ElementalMixII>())
@@ -3508,7 +3499,7 @@ namespace CalamityRebirth.Players
         private void GodSlayerDashStartVisuals()
         {
             Color pulseColor = demonshadeSetBonus ? DemonshadeDashFlameColor : Color.Orchid;
-            AtaraxiaParticleSystem.SpawnDirectionalPulse(Player.Center, Vector2.Zero, pulseColor
+            GodSlayerDashParticleSystem.SpawnDirectionalPulse(Player.Center, Vector2.Zero, pulseColor
                 , new Vector2(2f), Main.rand.NextFloat(12f, 25f), 0.1f, 12f, 18);
             for (int i = 0; i < 16; i++)
             {
@@ -3533,10 +3524,10 @@ namespace CalamityRebirth.Players
             size -= 0.04f;
             if (time < 20)
             {
-                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.5f, velocity, primaryColor
+                GodSlayerDashParticleSystem.SpawnJaws(center + velocity * 0.5f, velocity, primaryColor
                     , new Vector2(0.8f, 1f), velocity.ToRotation() + MathHelper.PiOver2
                     , size, size, 2);
-                AtaraxiaParticleSystem.SpawnJaws(center + velocity * 0.45f, velocity, secondaryColor
+                GodSlayerDashParticleSystem.SpawnJaws(center + velocity * 0.45f, velocity, secondaryColor
                     , new Vector2(0.8f, 1f), velocity.ToRotation() + MathHelper.PiOver2
                     , size - 0.3f, size - 0.3f, 2);
             }
@@ -3567,22 +3558,22 @@ namespace CalamityRebirth.Players
             float sparkScale = size * 1.3f;
             Vector2 firstSparkVelocity = velocity.RotatedBy(Player.direction * -4f) * 0.08f
                 - velocity / 2f;
-            AtaraxiaParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
+            GodSlayerDashParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
                 2f * Player.direction) * 1.2f, firstSparkVelocity
                 , Main.rand.NextBool(3) ? secondaryColor : primaryColor
                 , Main.rand.Next(11, 13), sparkScale);
             Vector2 secondSparkVelocity = velocity.RotatedBy(Player.direction * 4f) * 0.08f
                 - velocity / 2f;
-            AtaraxiaParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
+            GodSlayerDashParticleSystem.SpawnGodSlayerDashSpark(center + velocity.RotatedBy(
                 -2f * Player.direction) * 1.2f, secondSparkVelocity
                 , Main.rand.NextBool(3) ? secondaryColor : primaryColor
                 , Main.rand.Next(11, 13), sparkScale);
             if (time > 20 && time < 100)
             {
-                AtaraxiaParticleSystem.SpawnDirectionalPulse(center - velocity * 0.52f
+                GodSlayerDashParticleSystem.SpawnDirectionalPulse(center - velocity * 0.52f
                     , velocity / 1.5f, darkColor, new Vector2(1f, 2f), velocity.ToRotation()
                     , 0.82f, 0.32f, 60);
-                AtaraxiaParticleSystem.SpawnDirectionalPulse(center - velocity * 0.4f
+                GodSlayerDashParticleSystem.SpawnDirectionalPulse(center - velocity * 0.4f
                     , velocity / 1.5f * 0.9f, secondaryColor, new Vector2(0.8f, 1.5f)
                     , velocity.ToRotation(), 0.58f, 0.28f, 50);
                 time = 111;

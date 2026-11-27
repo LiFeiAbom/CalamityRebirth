@@ -4,10 +4,10 @@ using Terraria.DataStructures;
 namespace CalamityRebirth.Systems.Graphic
 {
     /// <summary>
-    /// 允许头部装备额外绘制一张超出标准五十六像素高度的装饰层。
+    /// 本工程专用的头部装饰层接口；独占名称用于避免与弱依赖模组中的同名全局接口冲突。
     /// 魔影头盔的兜帽和角使用该接口叠加在头部层之后。
     /// </summary>
-    internal interface IExtendedHat
+    internal interface IHatExtensionDrawer
     {
         /// <summary>附加层贴图的完整资源路径。</summary>
         string ExtensionTexture { get; }

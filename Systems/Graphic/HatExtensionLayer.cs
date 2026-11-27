@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace CalamityRebirth.Systems.Graphic
 {
-    /// <summary>在原版头部层之后绘制 IExtendedHat 提供的附加贴图。</summary>
+    /// <summary>在原版头部层之后绘制 IHatExtensionDrawer 提供的附加贴图。</summary>
     internal sealed class HatExtensionLayer : PlayerDrawLayer
     {
         /// <summary>固定在原版头部层之后绘制。</summary>
@@ -23,7 +23,7 @@ namespace CalamityRebirth.Systems.Graphic
             Item headItem = drawPlayer.armor[0];
             if (drawPlayer.armor[10].type > ItemID.None)
                 headItem = drawPlayer.armor[10];
-            if (ModContent.GetModItem(headItem.type) is not IExtendedHat extendedHat
+            if (ModContent.GetModItem(headItem.type) is not IHatExtensionDrawer extendedHat
                 || !extendedHat.PreDrawExtension(drawInfo) || drawPlayer.dead)
                 return;
             string slotName = extendedHat.EquipSlotName(drawPlayer);

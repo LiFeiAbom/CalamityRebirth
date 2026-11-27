@@ -80,8 +80,7 @@ namespace CalamityRebirth.Utilities
                 ModContent.BuffType<BurningIII>(),
                 ModContent.BuffType<DaybreakII>(),
                 ModContent.BuffType<ElectrifiedII>(),
-                ModContent.BuffType<ElementalMixII>(),
-                ModContent.BuffType<ShadowflameII>()
+                ModContent.BuffType<ElementalMixII>()
             ];
             AddCalamityDebuffs("CalamityMod");
             AddCalamityDebuffs("CalamityModClassicPreTrailer");
@@ -110,8 +109,7 @@ namespace CalamityRebirth.Utilities
                 BuffID.OnFire3,
                 BuffID.Burning,
                 BuffID.CursedInferno,
-                BuffID.ShadowFlame,
-                ModContent.BuffType<ShadowflameII>()
+                BuffID.ShadowFlame
             ];
             AddIfPresent(fireDebuffs, "CalamityMod", "SearingLava");
             AddIfPresent(fireDebuffs, "CalamityMod", "BrimstoneFlames");

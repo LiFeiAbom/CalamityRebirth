@@ -11,13 +11,13 @@ namespace CalamityRebirth.Content.Items.Accessories.Combat.Summon
     /// </summary>
     internal sealed class StatisBeltOfCurses : ModItem
     {
-        /// <summary>使用 28×32 判定尺寸、90 金价值与月后紫色稀有度。</summary>
+        /// <summary>使用 28×32 判定尺寸、90 金价值与现代 Cosmic Purple 稀有度。</summary>
         public override void SetDefaults()
         {
             Item.width = 28;
             Item.height = 32;
             Item.value = Item.buyPrice(0, 90, 0, 0);
-            Item.rare = ModContent.RarityType<PostMoonLordPurpleRarity>();
+            Item.rare = ModContent.RarityType<CosmicPurpleRarity>();
             Item.accessory = true;
         }
         /// <summary>装备时置位最终档状态，并立即赋予不依赖职业系统的移动能力。</summary>

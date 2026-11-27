@@ -1,24 +1,21 @@
+using System;
 using Microsoft.Xna.Framework;
-using Terraria.ID;
+using Terraria;
 using Terraria.ModLoader;
 namespace CalamityRebirth.Content.Rarities
 {
-    /// <summary>魔影套与同档后期物品使用的品红稀有度。</summary>
+    /// <summary>魔影套使用的专属橙红动态稀有度，对应现代 Hot Pink 开发者档的自定义色。</summary>
     public class DemonshadeRarity : ModRarity
     {
-        /// <summary>使用月后 16 档的纯品红名称颜色。</summary>
-        public override Color RarityColor => new(255, 0, 255);
-        /// <summary>
-        /// 低两档回退红色，低一档回退紫色；正向重铸保持当前后期档位。
-        /// </summary>
-        public override int GetPrefixedRarity(int offset, float valueMult)
+        /// <summary>每四秒在亮橙与深橙红之间完成一次平滑往返。</summary>
+        public override Color RarityColor
         {
-            return offset switch
+            get
             {
-                -2 => ItemRarityID.Red,
-                -1 => ItemRarityID.Purple,
-                _ => Type
-            };
+                double timeMultiplier = MathHelper.TwoPi / 4.0;
+                float blend = (float)((Math.Sin(timeMultiplier * Main.GlobalTimeWrappedHourly) + 1.0) * 0.5);
+                return Color.Lerp(new Color(255, 132, 22), new Color(221, 85, 7), blend);
+            }
         }
     }
 }

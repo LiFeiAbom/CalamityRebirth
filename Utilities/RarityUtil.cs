@@ -27,8 +27,6 @@ namespace CalamityRebirth.Utilities
         /// </summary>
         private static int GetBuyPrice(int rarity)
         {
-            if (rarity == ModContent.RarityType<PostMoonLordPurpleRarity>())
-                return Item.buyPrice(1, 50, 0, 0);
             if (rarity == ModContent.RarityType<PostMoonLordBlueRarity>())
                 return Item.buyPrice(2, 0, 0, 0);
             if (rarity == ModContent.RarityType<CosmicPurpleRarity>())

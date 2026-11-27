@@ -23,7 +23,7 @@ namespace CalamityRebirth.Systems.Graphic
             Item bodyItem = drawPlayer.armor[1];
             if (drawPlayer.armor[11].type > ItemID.None)
                 bodyItem = drawPlayer.armor[11];
-            if (ModContent.GetModItem(bodyItem.type) is not IDrawArmOverShoulderpad frontArm)
+            if (ModContent.GetModItem(bodyItem.type) is not IDrawFrontArmOverShoulderpad frontArm)
                 return;
             string slotName = frontArm.EquipSlotName(drawPlayer);
             int equipSlot = slotName != ""

@@ -24,15 +24,15 @@ namespace CalamityRebirth.Content.Items.Accessories.HealthandMana
             ItemID.Sets.AnimatesAsSoul[Type] = true;
         }
         /// <summary>
-        /// 设置 18×44、十二点防御、1 铂金 50 金价格和月后 15 级紫色稀有度。
+        /// 设置 18×44、十二点防御、1 铂金 50 金价格和现代 Cosmic Purple 稀有度。
         /// </summary>
         public override void SetDefaults()
         {
             Item.width = 18;
             Item.height = 44;
             Item.defense = 12;
-            RarityUtil.Apply(
-                Item, ModContent.RarityType<PostMoonLordPurpleRarity>());
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>()
+                , Item.buyPrice(1, 50, 0, 0));
             Item.accessory = true;
         }
         /// <summary>

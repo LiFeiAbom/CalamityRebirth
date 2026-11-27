@@ -12,7 +12,7 @@ namespace CalamityRebirth.Content.Items.Armors.Demonshade
 {
     /// <summary>魔影头盔：提供通用面板、召唤栏与魔影套装核心效果。</summary>
     [AutoloadEquip(EquipType.Head)]
-    internal sealed class DemonshadeHelm : DemonshadeArmorItem, IExtendedHat
+    internal sealed class DemonshadeHelm : DemonshadeArmorItem, IHatExtensionDrawer
     {
         /// <summary>魔影头盔附加兜帽贴图路径。</summary>
         public string ExtensionTexture =>

@@ -10,13 +10,13 @@ namespace CalamityRebirth.Content.Items.Armors.Silva
     /// </summary>
     internal abstract class SilvaArmorItem : ModItem
     {
-        /// <summary>设置 18×18 判定尺寸、防御、金币价格和月后紫色稀有度。</summary>
+        /// <summary>设置 18×18 判定尺寸、防御、金币价格和现代 Cosmic Purple 稀有度。</summary>
         protected void SetArmorDefaults(int defense, int goldPrice)
         {
             Item.width = 18;
             Item.height = 18;
             Item.defense = defense;
-            RarityUtil.Apply(Item, ModContent.RarityType<PostMoonLordPurpleRarity>()
+            RarityUtil.Apply(Item, ModContent.RarityType<CosmicPurpleRarity>()
                 , Item.buyPrice(0, goldPrice, 0, 0));
         }
         /// <summary>

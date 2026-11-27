@@ -6,7 +6,7 @@ namespace CalamityRebirth.Content.Items.Armors.Demonshade
 {
     /// <summary>魔影胸甲：生命魔力、通用面板、弹药与静止再生核心。</summary>
     [AutoloadEquip(EquipType.Body)]
-    internal sealed class DemonshadeBreastplate : DemonshadeArmorItem, IDrawArmOverShoulderpad
+    internal sealed class DemonshadeBreastplate : DemonshadeArmorItem, IDrawFrontArmOverShoulderpad
     {
         /// <summary>肩甲上方重绘所需的前臂贴图。</summary>
         public string FrontArmTexture =>

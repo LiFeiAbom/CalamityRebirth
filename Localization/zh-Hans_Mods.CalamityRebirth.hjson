@@ -129,11 +129,6 @@ Buffs: {
 		Description: 过量饮酒正在侵蚀你的生命
 	}
 
-	ShadowflameII: {
-		DisplayName: 暗影焰II
-		Description: 暗影烈焰正在侵蚀生命
-	}
-
 	AbyssalWish: {
 		DisplayName: 渊洋之愿
 		Description: 你能在水下呼吸，哪怕身处深渊
@@ -1019,72 +1014,6 @@ Items: {
 	Vodka: {
 		DisplayName: 伏特加
 		Tooltip: 伤害 +6%，暴击率 +2，防御 -5，生命再生降低
-	}
-
-	BiomeBlade: {
-		DisplayName: 环境之刃
-		Tooltip: 根据你所处的环境发射不同颜色的弹幕
-	}
-
-	TrueBiomeBlade: {
-		DisplayName: 真·环境之刃
-		Tooltip: 发射会追踪敌人的强化环境球
-	}
-
-	OmegaBiomeBlade: {
-		DisplayName: 欧米茄环境之刃
-		Tooltip:
-			'''
-			散射五枚短程追踪环境球
-			四柱环境和月亮事件会改变弹幕效果
-			'''
-	}
-
-	FourSeasonsGalaxia: {
-		DisplayName: 银河
-		Tooltip:
-			'''
-			发射高追踪性的银河弹
-			弹幕会根据环境造成不同减益
-			命中时根据环境和月亮事件给予你增益
-			'''
-	}
-
-	ArkoftheAncients: {
-		DisplayName: 远古方舟
-		Tooltip: 随机发射永恒光束或附魔光束，并召唤圣星
-	}
-
-	TrueArkoftheAncients: {
-		DisplayName: 真·远古方舟
-		Tooltip: 召唤强化永恒光束、圣星与追踪大地弹
-	}
-
-	ArkoftheElements: {
-		DisplayName: 元素方舟
-		Tooltip: 发射永恒光束与四枚追踪元素球，命中附加多种元素减益
-	}
-
-	ArkoftheCosmos: {
-		DisplayName: 鸿蒙方舟
-		Tooltip:
-			'''
-			同时发射永恒光束与四枚满伤害群星
-			弹幕会根据环境造成不同减益
-			命中时根据环境和月亮事件给予你增益
-			'''
-	}
-
-	Ataraxia: {
-		DisplayName: 禅心剑
-		Tooltip:
-			'''
-			挥舞时射出一枚主弹与两枚侧弹
-			主弹命中后引发小型爆炸
-			侧弹命中后分裂为六枚针叶弹
-			近战命中触发大型爆炸与花瓣形粒子
-			命中敌人附加暗影焰
-			'''
 	}
 
 	DarkSunRing: {
@@ -2256,7 +2185,6 @@ Rarities: {
 	SummonerEXRarity.DisplayName: 召唤EX
 	RogueEXRarity.DisplayName: 盗贼EX
 	BurnishedAuricRarity.DisplayName: 灼辉金源
-	PostMoonLordPurpleRarity.DisplayName: 月后紫色
 	CosmicPurpleRarity.DisplayName: 宇宙暗紫
 	TurquoiseRarity.DisplayName: 绿松石
 	PureGreenRarity.DisplayName: 纯绿
@@ -2265,17 +2193,6 @@ Rarities: {
 }
 
 Projectiles: {
-	BiomeOrb.DisplayName: 环境球
-	TrueBiomeOrb.DisplayName: 真·环境球
-	OmegaBiomeOrb.DisplayName: 欧米茄环境球
-	EonBeam.DisplayName: 永恒光束
-	ElementBall.DisplayName: 元素球
-	TerraBall.DisplayName: 大地弹
-	Galaxia.DisplayName: 银河弹
-	AtaraxiaMain.DisplayName: 禅心主弹
-	AtaraxiaSide.DisplayName: 禅心侧弹
-	AtaraxiaSplit.DisplayName: 禅心针叶弹
-	AtaraxiaBoom.DisplayName: 禅心爆发
 	CrystalSkullLightning.DisplayName: 晶光头骨闪电
 	CrystalSkullSpark.DisplayName: 晶光头骨电火花
 	AbyssalMirrorProjectile.DisplayName: 深渊魔镜弹幕
